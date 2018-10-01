@@ -29,7 +29,23 @@ IDENTIFIER	[a-zA-Z_][a-zA-Z0-9_]*
 
 {WS}	;
 
+{GOAL}	{printf("GOAL\n");}
+
 {MAINCLASS}	{printf("MAINCLASS\n");}
+
+{CLASSDECLARATION}	{printf("CLASSDECLARATION\n");}
+
+{VARDECLARATION}	{printf("VARDECLARATION\n");}
+
+{METHODDECLARATION}	{printf("METHODDECLARATION\n");}
+
+{TYPE}	{printf("TYPE\n");}
+
+{STATEMENT}	{printf("STATEMENT\n");}
+
+{EXPRESSION}	{printf("EXPRESSION\n");}
+
+{IDENTIFIER}	{printf("IDENTIFIER\n");}
 
 
 %%
