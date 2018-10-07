@@ -1,88 +1,137 @@
 %{
 #include <stdio.h>
+#include "parser.tab.h"
 %}
 
 %option noyywrap
 %option yylineno
 
-WS [ \n\t\v]
+WS [ \n\t\v]*
 
-GOAL	{MAINCLASS}{WS}+{CLASSDECLARATION}*
+IDENTIFIER	[a-zA-Z_][a-zA-Z0-9_]*{WS}
 
-MAINCLASS	"class"{WS}+{IDENTIFIER}{WS}*"{"{WS}*"public"{WS}+"static"{WS}+"void"{WS}+"main"{WS}*"("{WS}*"String"{WS}*"["{WS}*"]"{WS}*{IDENTIFIER}{WS}*")"{WS}*"{"{WS}*{STATEMENT}{WS}*"}"{WS}*"}"
+IF	if{WS}
 
-CLASSDECLARATION	"class"{WS}+{IDENTIFIER}{WS}*({WS}*"extends"{WS}+{IDENTIFIER})?{WS}*"{"{WS}*({VARDECLARATION}|{WS})*({METHODDECLARATION}|{WS})*{WS}*"}"
+ELSE	else{WS}
 
-VARDECLARATION	{TYPE}{WS}+{IDENTIFIER}{WS}*";"
+WHILE	while{WS}
 
-METHODDECLARATION	"public"{WS}+{TYPE}{WS}+{IDENTIFIER}{WS}*"("{WS}*({TYPE}{WS}+{IDENTIFIER}{WS}*(","{WS}*{TYPE}{WS}+{IDENTIFIER})*)?{WS}*")"{WS}*"{"{WS}*({VARDECLARATION}|{WS})*({STATEMENT}|{WS})*"return"{WS}+{EXPRESSION}{WS}*";"{WS}*"}"
+INTLITERAL	(([1-9][0-9]*)|(0[0-7]*)|(O[xX][0-9a-fA-F]*)){WS}
 
-TYPE	"int""[""]"|"boolean"|"int"|{IDENTIFIER}
+TRUE	true{WS}
 
-STATEMENT	("{"({STATEMENT}|{WS})*"}")|("if"{WS}*"("{WS}*{EXPRESSION}{WS}*")"{WS}*{STATEMENT}{WS}+"else"{WS}+{STATEMENT})|("while"{WS}*"("{WS}*{EXPRESSION}{WS}*")"{WS}*{STATEMENT})|("System.out.println"{WS}*"("{WS}*{EXPRESSION}{WS}*")"{WS}*";")|({IDENTIFIER}{WS}*"="{WS}*{EXPRESSION}{WS}*";")|({IDENTIFIER}{WS}*"["{WS}*{EXPRESSION}{WS}*"]"{WS}*"="{WS}*{EXPRESSION}{WS}*";")
+FALSE	false{WS}
 
-EXPRESSION	({EXPRESSION}{WS}*("&&"|"<"|"+"|"-"|"*"){WS}*{EXPRESSION})|({EXPRESSION}{WS}*"["{WS}*{EXPRESSION}{WS}*"]")|({EXPRESSION}".""length")|({EXPRESSION}"."{IDENTIFIER}"("{WS}*({EXPRESSION}{WS}*(","{WS}*{EXPRESSION})*)?{WS}*")")|(([1-9][0-9]*)|(0[0-7]*)|(O[xX][0-9a-fA-F]*))|"true"|"false"|{IDENTIFIER}|"this"|("new"{WS}+"int"{WS}*"["{WS}*{EXPRESSION}{WS}*"]")|("new"{WS}+{IDENTIFIER}{WS}*"("{WS}*")")|("!"{WS}*{EXPRESSION})|("("{WS}*{EXPRESSION}{WS}*")")
+PUBLIC	public{WS}
 
-IDENTIFIER	[a-zA-Z_][a-zA-Z0-9_]*
+STATIC	static{WS}
+
+VOID	void{WS}
+
+MAIN	main{WS}
+
+NEW	new{WS}
+
+THIS	this{WS}
+
+TYPE	(int|boolean){WS}
+
+CLASS class{WS}
+
+LCURLYBRACE	"{"{WS}
+
+RCURLYBRACE	"}"{WS}
+
+LPAREN	"("{WS}
+
+RPAREN	")"{WS}
+
+LSQUAREBRACKET	"["{WS}
+
+RSQUAREBRACKET	"]"{WS}
+
+SEMICOLON	";"{WS}
+
+COMMA	","{WS}
+
+DOT	"."{WS}
+
+EQUALS	"="{WS}
+
+NOT	"!"{WS}
+
+LESS	"<"{WS}
+
+AND	"&&"{WS}
+
+PLUS	"+"{WS}
+
+MINUS	"-"{WS}
+
+MULTIPLY	"*"{WS}
 
 %%
 
-{WS}	;
+{IF}	{return IF;}
 
-{GOAL}	{printf("GOAL\n");}
+{ELSE}	{return ELSE;}
 
-{MAINCLASS}	{printf("MAINCLASS\n");}
+{WHILE}	{return WHILE;}
 
-{CLASSDECLARATION}	{printf("CLASSDECLARATION\n");}
+{INTLITERAL}	{yylval=atoi(yytext); return INTLITERAL;}
 
-{VARDECLARATION}	{printf("VARDECLARATION\n");}
+{TRUE}	{return _TRUE;}
 
-{METHODDECLARATION}	{printf("METHODDECLARATION\n");}
+{FALSE}	{return _FALSE;}
 
-{TYPE}	{printf("TYPE\n");}
+{PUBLIC}	{return PUBLIC;}
 
-{STATEMENT}	{printf("STATEMENT\n");}
+{STATIC}	{return STATIC;}
 
-{EXPRESSION}	{printf("EXPRESSION\n");}
+{VOID}	{return VOID;}
 
-{IDENTIFIER}	{printf("IDENTIFIER\n");}
+{MAIN}	{return MAIN;}
 
+{NEW}	{return NEW;}
+
+{THIS}	{return THIS;}
+
+{TYPE}	{return TYPE;}
+
+{CLASS} {return CLASS;}
+
+{LCURLYBRACE}	{return LCURLYBRACE;}
+
+{RCURLYBRACE}	{return RCURLYBRACE;}
+
+{LPAREN}	{return LPAREN;}
+
+{RPAREN}	{return RPAREN;}
+
+{LSQUAREBRACKET}	{return LSQUAREBRACKET;}
+
+{RSQUAREBRACKET}	{return RSQUAREBRACKET;}
+
+{SEMICOLON}	{return SEMICOLON;}
+
+{COMMA}	{return COMMA;}
+
+{DOT}	{return DOT;}
+
+{EQUALS}	{return EQUALS;}
+
+{NOT}	{return NOT;}
+
+{LESS}	{return LESS;}
+
+{AND}	{return AND;}
+
+{PLUS}	{return PLUS;}
+
+{MINUS}	{return MINUS;}
+
+{MULTIPLY}	{return MULTIPLY;}
+
+{IDENTIFIER}	{yylval = yytext;return IDENTIFIER;}
 
 %%
-/*
-
-WS [ \t\v]
-
-STATE (int|bool)
-INTEGER integer
-
-%%
-
-{WS}	;
-
-{STATE}	{printf("STATE: %s\n", yytext);}
-
-{INTEGER} {printf("INTEGER: %s\n", yytext);}
-
-\n	yylineno++;
-
-%%
-
-GOAL	{MAINCLASS}({CLASSDECLARATION})*
-MAINCLASS	"class"{IDENTIFIER}"{""public""static""void""main""(""String""[""]"{IDENTIFIER}")""{"{STATEMENT}"}""}"
-CLASSDECLARATION	.*?
-STATEMENT	.*?
-TYPE	"int""[""]"|"boolean"|"int"|{IDENTIFIER}
-IDENTIFIER	({LETTER}|_)({LETTER}|{DIGIT}|_)*
-*/
-
-
-//{TYPE}	{printf("Saw a TYPE: %s at line %d\n", yytext, yylineno);}
-//{IDENTIFIER}	{printf("Saw a IDENTIFIER: %s at line %d\n", yytext, yylineno);}
-
-int main(void)
-{
-	/* Call the lexer, then quit. */
-	yylex();
-	return 0;
-}
