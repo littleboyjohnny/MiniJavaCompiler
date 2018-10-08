@@ -2,13 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/*
-#define YYLLOC_DEFAULT(Current, Rhs, N)	\
-	Current.first_line   = Rhs[N].first_line; \
-	Current.first_column = Rhs[N].first_column; \
-	Current.last_line   = Rhs[N].last_line;	\
-	Current.last_column = Rhs[N].last_column;
-*/
 void yyerror(const char *str)
 {
         fprintf(stderr,"ошибка: %s\n",str);
@@ -23,63 +16,71 @@ int main() {
 
 %locations
 
-%token IDENTIFIER IF ELSE WHILE INTLITERAL _TRUE _FALSE PUBLIC STATIC VOID MAIN NEW THIS TYPE CLASS LCURLYBRACE RCURLYBRACE LPAREN RPAREN LSQUAREBRACKET RSQUAREBRACKET SEMICOLON COMMA DOT EQUALS NOT LESS AND PLUS MINUS MULTIPLY
+%union {
+	int intVal;
+	char *stringVal;
+}
+
+%token <stringVal> IDENTIFIER 
+%token IF ELSE WHILE
+%token <intVal> INTLITERAL
+%token _TRUE _FALSE PUBLIC STATIC VOID MAIN NEW THIS TYPE CLASS LCURLYBRACE RCURLYBRACE LPAREN RPAREN LSQUAREBRACKET RSQUAREBRACKET SEMICOLON COMMA DOT EQUALS NOT LESS AND PLUS MINUS MULTIPLY
 
 %%
 
 commands: /*EMPTY*/
-	| commands command
+	| commands command 
 	;
 
 command: boolliteral
-	| sys
+	| sys 
 	| brace
 	| type
 	| booloperator
 	| arithoperator
-	| MAIN {printf("parserMAIN ");}
-	| IDENTIFIER {printf("parserIDENTIFIER(val:%s, loc:%d, %d) ", yylval, @$.first_line, @$.first_column);}
-	| INTLITERAL {printf("parserINTLITERAL(val:%d, loc:%d, %d) ", yylval, @$.first_line, @$.first_column);}
-	| COMMA {printf("parserCOMMA ");}
-	| DOT {printf("parserDOT ");}
-	| SEMICOLON {printf("parserSEMICOLON \n");}
+	| MAIN {printf("parserMAIN(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| IDENTIFIER {printf("parserIDENTIFIER(val:%s, loc:%d, %d) ", yylval.stringVal, @1.first_line, @1.first_column);}
+	| INTLITERAL {printf("parserINTLITERAL(val:%d, loc:%d, %d) ", yylval.intVal, @1.first_line, @1.first_column);}
+	| COMMA {printf("parserCOMMA(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| DOT {printf("parserDOT(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| SEMICOLON {printf("parserSEMICOLON(loc:%d, %d) \n", @1.first_line, @1.first_column);}
 	;
 
-boolliteral: _TRUE {printf("parser_TRUE ");}
-	| _FALSE {printf("parser_FALSE ");}
+boolliteral: _TRUE {printf("parser_TRUE(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| _FALSE {printf("parser_FALSE(loc:%d, %d) ", @1.first_line, @1.first_column);}
 	;
 
-sys: PUBLIC {printf("parserPUBLIC ");}
-	| STATIC {printf("parserSTATIC ");}
-	| CLASS {printf("parserCLASS ");}
-	| IF {printf("parserIF ");}
-	| ELSE {printf("parserELSE ");}
-	| WHILE {printf("parserWHILE ");}
-	| NEW {printf("parserNEW ");}
-	| THIS {printf("parserTHIS ");}
+sys: PUBLIC {printf("parserPUBLIC(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| STATIC {printf("parserSTATIC(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| CLASS {printf("parserCLASS(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| IF {printf("parserIF(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| ELSE {printf("parserELSE(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| WHILE {printf("parserWHILE(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| NEW {printf("parserNEW(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| THIS {printf("parserTHIS(loc:%d, %d) ", @1.first_line, @1.first_column);}
 	;
 
-brace: LCURLYBRACE {printf("\nparserLCURLYBRACE \n");}
-	| RCURLYBRACE {printf("\nparserRCURLYBRACE \n");}
-	| LPAREN {printf("parserLPAREN ");}
-	| RPAREN {printf("parserRPAREN ");}
-	| LSQUAREBRACKET {printf("parserLSQUAREBRACKET ");}
-	| RSQUAREBRACKET {printf("parserRSQUAREBRACKET ");}
+brace: LCURLYBRACE {printf("parserLCURLYBRACE(loc:%d, %d) \n", @1.first_line, @1.first_column);}
+	| RCURLYBRACE {printf("\nparserRCURLYBRACE(loc:%d, %d) \n", @1.first_line, @1.first_column);}
+	| LPAREN {printf("parserLPAREN(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| RPAREN {printf("parserRPAREN(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| LSQUAREBRACKET {printf("parserLSQUAREBRACKET(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| RSQUAREBRACKET {printf("parserRSQUAREBRACKET(loc:%d, %d) ", @1.first_line, @1.first_column);}
 	;
 
-type: TYPE {printf("parserTYPE ");}
-	| VOID {printf("parserVOID ");}
+type: TYPE {printf("parserTYPE(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| VOID {printf("parserVOID(loc:%d, %d) ", @1.first_line, @1.first_column);}
 	;
 
-booloperator: NOT {printf("parserNOT ");}
-	| LESS {printf("parserLESS ");}
-	| AND {printf("parserAND ");}
+booloperator: NOT {printf("parserNOT(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| LESS {printf("parserLESS(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| AND {printf("parserAND(loc:%d, %d) ", @1.first_line, @1.first_column);}
 	;
 
-arithoperator: EQUALS {printf("parserEQUALS ");}
-	| PLUS {printf("parserPLUS ");}
-	| MINUS {printf("parserMINUS ");}
-	| MULTIPLY {printf("parserMULTIPLY ");}
+arithoperator: EQUALS {printf("parserEQUALS(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| PLUS {printf("parserPLUS(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| MINUS {printf("parserMINUS(loc:%d, %d) ", @1.first_line, @1.first_column);}
+	| MULTIPLY {printf("parserMULTIPLY(loc:%d, %d) ", @1.first_line, @1.first_column);}
 	;
 
 %%

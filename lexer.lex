@@ -1,10 +1,19 @@
+%option noyywrap
+%option yylineno
+
 %{
 #include <stdio.h>
 #include "parser.tab.h"
-%}
 
-%option noyywrap
-%option yylineno
+long TT_char_pos = 0;
+
+#define YY_USER_ACTION \
+	if (yylloc.first_line < yylineno) \
+		TT_char_pos = 0; \
+	yylloc.first_line = yylloc.last_line = yylineno; \
+	yylloc.first_column = TT_char_pos; \
+	TT_char_pos = TT_char_pos + yyleng + 1;
+%}
 
 WS [ \n\t\v]*
 
@@ -78,7 +87,7 @@ MULTIPLY	"*"{WS}
 
 {WHILE}	{return WHILE;}
 
-{INTLITERAL}	{yylval=atoi(yytext); return INTLITERAL;}
+{INTLITERAL}	{yylval.intVal = atoi(yytext); return INTLITERAL;}
 
 {TRUE}	{return _TRUE;}
 
@@ -132,6 +141,6 @@ MULTIPLY	"*"{WS}
 
 {MULTIPLY}	{return MULTIPLY;}
 
-{IDENTIFIER}	{yylval = yytext;return IDENTIFIER;}
+{IDENTIFIER}	{yylval.stringVal = yytext;return IDENTIFIER;}
 
 %%
