@@ -5,14 +5,16 @@
 #include <stdio.h>
 #include "parser.tab.h"
 
-long TT_char_pos = 0;
+
+long TT_char_pos = 1;
 
 #define YY_USER_ACTION \
 	if (yylloc.first_line < yylineno) \
-		TT_char_pos = 0; \
+		TT_char_pos = 1; \
 	yylloc.first_line = yylloc.last_line = yylineno; \
 	yylloc.first_column = TT_char_pos; \
-	TT_char_pos = TT_char_pos + yyleng + 1;
+	TT_char_pos = TT_char_pos + yyleng;
+
 %}
 
 WS [ \n\t\v]*
@@ -47,17 +49,17 @@ TYPE	(int|boolean){WS}
 
 CLASS class{WS}
 
-LCURLYBRACE	"{"{WS}
+LCURLYBRACE	"{"
 
-RCURLYBRACE	"}"{WS}
+RCURLYBRACE	"}"
 
-LPAREN	"("{WS}
+LPAREN	"("
 
-RPAREN	")"{WS}
+RPAREN	")"
 
-LSQUAREBRACKET	"["{WS}
+LSQUAREBRACKET	"["
 
-RSQUAREBRACKET	"]"{WS}
+RSQUAREBRACKET	"]"
 
 SEMICOLON	";"{WS}
 
