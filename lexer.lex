@@ -43,11 +43,21 @@ VOID	void{WS}
 
 MAIN	main{WS}
 
+RETURN return{WS}
+
 NEW	new{WS}
 
 THIS	this{WS}
 
-TYPE	(int|boolean){WS}
+PRINTLN	"System.out.println"{WS}
+
+DOTLENGTH	".length"{WS}
+
+STRING	String{WS}
+
+INT	int{WS}
+
+BOOLEAN	boolean{WS}
 
 CLASS class{WS}
 
@@ -107,11 +117,21 @@ MULTIPLY	"*"{WS}
 
 {MAIN}	{return MAIN;}
 
+{RETURN}	{return RETURN;}
+
 {NEW}	{return NEW;}
 
 {THIS}	{return THIS;}
 
-{TYPE}	{return TYPE;}
+{PRINTLN}	{return PRINTLN;}
+
+{DOTLENGTH}	{return DOTLENGTH;}
+
+{STRING}	{return STRING;}
+
+{INT}	{return INT;}
+
+{BOOLEAN}	{return BOOLEAN;}
 
 {CLASS} {return CLASS;}
 
@@ -150,3 +170,5 @@ MULTIPLY	"*"{WS}
 {IDENTIFIER}	{yylval.stringVal = yytext;return IDENTIFIER;}
 
 %%
+
+//{EOF}	{return EOF;}
