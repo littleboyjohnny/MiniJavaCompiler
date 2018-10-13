@@ -83,4 +83,47 @@ arithoperator: EQUALS {printf("parserEQUALS(loc:%d, %d) ", @1.first_line, @1.fir
 	| MULTIPLY {printf("parserMULTIPLY(loc:%d, %d) ", @1.first_line, @1.first_column);}
 	;
 
+Goal: MainClass ( ClassDeclaration )* <EOF>
+    ;
+
+MainClass: CLASS IDENTIFIER LCURLYBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LSQUAREBRACKET RSQUAREBRACKET IDENTIFIER RPAREN LCURLYBRACE STATEMENT RCURLYBRACE RCURLYBRACE
+    ;
+
+ClassDeclaration: CLASS IDENTIFIER ( EXTENDS IDENTIFIER )? LCURLYBRACE ( VarDeclaration )* ( MethodDeclaration )* RCURLYBRACE
+    ;
+
+VarDeclaration: Type LCURLYBRACE SEMICOLON
+    ;
+
+MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN ( Type IDENTIFIER ( COMMA Type IDENTIFIER )* )? RPAREN LCURLYBRACE ( VarDeclaration )*( Statement )* RETURN Expression SEMICOLON RCURLYBRACE
+    ;
+
+Type: "int" "[" "]"
+    | "boolean"
+    | "int"
+    | IDENTIFIER
+    ;
+
+Statement: LCURLYBRACE ( Statement )* RCURLYBRACE
+    | IF LPAREN Expression RPAREN Statement ELSE Statement
+    | WHILE LPAREN Expression RPAREN Statement
+    | "System.out.println" LPAREN Expression RPAREN SEMICOLON
+    | IDENTIFIER EQUALS Expression SEMICOLON
+    | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON
+    ;
+
+Expressio: Expression ( AND | LESS | PLUS | MINUS | MULTIPLY ) Expression
+    | Expression LSQUAREBRACKET Expression RSQUAREBRACKET
+    | Expression DOT "length"
+    | Expression DOT IDENTIFIER LPAREN ( Expression ( COMMA Expression )* )? RPAREN
+    | <INTEGER_LITERAL>
+    | _TRUE
+    | _FALSE
+    | IDENTIFIER
+    | THIS
+    | NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET
+    | NEW Identifier LPAREN RPAREN
+    | NOT Expression
+    | LPAREN Expression RPAREN
+    ;
 %%

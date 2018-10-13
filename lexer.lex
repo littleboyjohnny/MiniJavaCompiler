@@ -37,6 +37,8 @@ PUBLIC	public{WS}
 
 STATIC	static{WS}
 
+EXTENDS	extends{WS}
+
 VOID	void{WS}
 
 MAIN	main{WS}
@@ -98,6 +100,8 @@ MULTIPLY	"*"{WS}
 {PUBLIC}	{return PUBLIC;}
 
 {STATIC}	{return STATIC;}
+
+{EXTENDS}	{return EXTENDS;}
 
 {VOID}	{return VOID;}
 
