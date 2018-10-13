@@ -13,11 +13,11 @@ long TT_char_pos = 1;
 		TT_char_pos = 1; \
 	yylloc.first_line = yylloc.last_line = yylineno; \
 	yylloc.first_column = TT_char_pos; \
-	TT_char_pos = TT_char_pos + yyleng;
+	TT_char_pos = TT_char_pos + yyleng; 
 
 %}
 
-WS [ \n\t\v]*
+WS [ \t\v]*
 
 IDENTIFIER	[a-zA-Z_][a-zA-Z0-9_]*{WS}
 
@@ -82,6 +82,10 @@ MINUS	"-"{WS}
 MULTIPLY	"*"{WS}
 
 %%
+
+"\n"	{;}
+
+{WS}	{;}
 
 {IF}	{return IF;}
 
