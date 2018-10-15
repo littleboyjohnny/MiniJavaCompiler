@@ -11,4 +11,4 @@ lex.yy.c: lexer.lex
 	flex lexer.lex
 
 clean:
-	rm *.out *.yy.c *.tab.*
+	rm *.out *.yy.c *.tab.* *.output
