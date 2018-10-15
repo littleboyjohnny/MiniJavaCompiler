@@ -55,7 +55,7 @@ MethodDeclarationS: %empty
 	| MethodDeclarationS MethodDeclaration {printf("MethodDeclarationS MethodDeclaration\n");}
 	;
 
-MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE {printf("PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE\n");}
+MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE	{printf("PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE\n");}
     ;
 
 Params: %empty
@@ -69,14 +69,14 @@ AdditionalParamS: %empty
 AdditionalParam: COMMA Type IDENTIFIER {printf("COMMA Type IDENTIFIER\n");}
 	;
 
-Type: INT LSQUAREBRACKET RSQUAREBRACKET {printf("INT LSQUAREBRACKET RSQUAREBRACKET\n");}//"int" "[" "]" 
-    | BOOLEAN {printf("BOOLEAN\n");}
-    | INT {printf("INT\n");}
-    | IDENTIFIER {printf("IDENTIFIER\n");}
+Type: INT LSQUAREBRACKET RSQUAREBRACKET {printf("TYPE INT LSQUAREBRACKET RSQUAREBRACKET\n");}//"int" "[" "]" 
+    | BOOLEAN {printf("TYPE BOOLEAN\n");}
+    | INT {printf("TYPE INT\n");}
+    | IDENTIFIER {printf("TYPE IDENTIFIER\n");}
     ;
 
 StatementS: %empty
-	| StatementS Statement {printf("StatementS Statement\n");}
+	| Statement StatementS {printf("StatementS Statement\n");}
 	;
 
 Statement: LCURLYBRACE StatementS RCURLYBRACE {printf("LCURLYBRACE StatementS RCURLYBRACE\n");}
