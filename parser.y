@@ -41,83 +41,83 @@ ClassDeclaration: CLASS IDENTIFIER Extension LCURLYBRACE VarDeclarationS MethodD
     ;
 
 Extension: %empty
-	| EXTENDS IDENTIFIER
+	| EXTENDS IDENTIFIER {printf("EXTENDS IDENTIFIER\n");}
 	;
 
 VarDeclarationS: %empty
-	| VarDeclarationS VarDeclaration {printf("VarDeclarationS\n");}
+	| VarDeclarationS VarDeclaration {printf("VarDeclarationS VarDeclaration\n");}
 	;
 
-VarDeclaration: Type IDENTIFIER SEMICOLON
+VarDeclaration: Type IDENTIFIER SEMICOLON {printf("Type IDENTIFIER SEMICOLON\n");}
     ;
 
 MethodDeclarationS: %empty
-	| MethodDeclarationS MethodDeclaration
+	| MethodDeclarationS MethodDeclaration {printf("MethodDeclarationS MethodDeclaration\n");}
 	;
 
-MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE
+MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE {printf("PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE\n");}
     ;
 
 Params: %empty
-	| Type IDENTIFIER AdditionalParamS
+	| Type IDENTIFIER AdditionalParamS {printf("Type IDENTIFIER AdditionalParamS\n");}
 	;
 
 AdditionalParamS: %empty
-	| AdditionalParamS AdditionalParam
+	| AdditionalParamS AdditionalParam {printf("AdditionalParamS AdditionalParam\n");}
 	;
 
-AdditionalParam: COMMA Type IDENTIFIER
+AdditionalParam: COMMA Type IDENTIFIER {printf("COMMA Type IDENTIFIER\n");}
 	;
 
-Type: INT LSQUAREBRACKET RSQUAREBRACKET //"int" "[" "]"
-    | BOOLEAN
-    | INT
-    | IDENTIFIER
+Type: INT LSQUAREBRACKET RSQUAREBRACKET {printf("INT LSQUAREBRACKET RSQUAREBRACKET\n");}//"int" "[" "]" 
+    | BOOLEAN {printf("BOOLEAN\n");}
+    | INT {printf("INT\n");}
+    | IDENTIFIER {printf("IDENTIFIER\n");}
     ;
 
 StatementS: %empty
-	| StatementS Statement {printf("StatementS\n");}
+	| StatementS Statement {printf("StatementS Statement\n");}
 	;
 
-Statement: LCURLYBRACE StatementS RCURLYBRACE
-    | IF LPAREN Expression RPAREN Statement ELSE Statement
-    | WHILE LPAREN Expression RPAREN Statement
-    | PRINTLN LPAREN Expression RPAREN SEMICOLON
-    | IDENTIFIER EQUALS Expression SEMICOLON {printf("Equals\n");}
-    | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON
+Statement: LCURLYBRACE StatementS RCURLYBRACE {printf("LCURLYBRACE StatementS RCURLYBRACE\n");}
+    | IF LPAREN Expression RPAREN Statement ELSE Statement {printf("IF LPAREN Expression RPAREN Statement ELSE Statement\n");}
+    | WHILE LPAREN Expression RPAREN Statement {printf("WHILE LPAREN Expression RPAREN Statement\n");}
+    | PRINTLN LPAREN Expression RPAREN SEMICOLON {printf("PRINTLN LPAREN Expression RPAREN SEMICOLON\n");}
+    | IDENTIFIER EQUALS Expression SEMICOLON {printf("IDENTIFIER EQUALS Expression SEMICOLON\n");}
+    | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON {printf("IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON\n");}
     ;
 
-Expression: Expression Operator Expression
-    | Expression LSQUAREBRACKET Expression RSQUAREBRACKET
-    | Expression DOTLENGTH
-    | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN {printf("Dot-chtoto\n");}
-    | INTLITERAL
-    | _TRUE
-    | _FALSE
-    | IDENTIFIER
-    | THIS	{printf("FindThis\n");}
-    | NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET
-    | NEW IDENTIFIER LPAREN RPAREN
-    | NOT Expression
-    | LPAREN Expression RPAREN
+Expression: Expression Operator Expression {printf("Expression Operator Expression\n");}
+    | Expression LSQUAREBRACKET Expression RSQUAREBRACKET {printf("Expression LSQUAREBRACKET Expression RSQUAREBRACKET\n");}
+    | Expression DOTLENGTH {printf("Expression DOTLENGTH\n");}
+    | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN {printf("Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN\n");}
+    | INTLITERAL {printf("INTLITERAL\n");}
+    | _TRUE {printf("_TRUE\n");}
+    | _FALSE {printf("_FALSE\n");}
+    | IDENTIFIER {printf("IDENTIFIER\n");}
+    | THIS	{printf("THIS\n");}
+    | NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET {printf("NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET\n");}
+    | NEW IDENTIFIER LPAREN RPAREN {printf("NEW IDENTIFIER LPAREN RPAREN\n");}
+    | NOT Expression {printf("NOT Expression\n");}
+    | LPAREN Expression RPAREN {printf("LPAREN Expression RPAREN\n");}
     ;
 
-Operator: AND 
-	| LESS 
-	| PLUS 
-	| MINUS 
-	| MULTIPLY
+Operator: AND {printf("AND\n");}
+	| LESS {printf("LESS\n");}
+	| PLUS {printf("PLUS\n");}
+	| MINUS {printf("MINUS\n");}
+	| MULTIPLY {printf("MULTIPLY\n");}
 	;
 
 ExpressionParamS: %empty
-	| Expression AddittionalExpressionParamS
+	| Expression AddittionalExpressionParamS {printf("Expression AddittionalExpressionParamS\n");}
 	;
 
 AddittionalExpressionParamS: %empty
-	| AddittionalExpressionParamS AddittionalExpressionParam
+	| AddittionalExpressionParamS AddittionalExpressionParam {printf("AddittionalExpressionParamS AddittionalExpressionParam\n");}
 	;
 
-AddittionalExpressionParam: COMMA Expression
+AddittionalExpressionParam: COMMA Expression {printf("COMMA Expression\n");}
 	;
 
 %%
