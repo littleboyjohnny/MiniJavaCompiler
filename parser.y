@@ -14,6 +14,7 @@ int main() {
 %}
 
 %locations
+%verbose
 
 %union {
 	int intVal;
@@ -48,7 +49,7 @@ VarDeclarationS: %empty
 	| VarDeclarationS VarDeclaration {printf("VarDeclarationS VarDeclaration\n");}
 	;
 
-VarDeclaration: Type IDENTIFIER SEMICOLON {printf("Type IDENTIFIER SEMICOLON\n");}
+VarDeclaration: Type IDENTIFIER SEMICOLON {printf("Type IDENTIFIER SEMICOLON: %s\n", yylval);}
     ;
 
 MethodDeclarationS: %empty
@@ -72,7 +73,7 @@ AdditionalParam: COMMA Type IDENTIFIER {printf("COMMA Type IDENTIFIER\n");}
 Type: INT LSQUAREBRACKET RSQUAREBRACKET {printf("TYPE INT LSQUAREBRACKET RSQUAREBRACKET\n");}//"int" "[" "]" 
     | BOOLEAN {printf("TYPE BOOLEAN\n");}
     | INT {printf("TYPE INT\n");}
-    | IDENTIFIER {printf("TYPE IDENTIFIER\n");}
+    | IDENTIFIER {printf("TYPE IDENTIFIER:\n");}
     ;
 
 StatementS: %empty
