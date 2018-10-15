@@ -1,5 +1,5 @@
 example.out: lex.yy.c parser.tab.c
-	gcc lex.yy.c parser.tab.c -o example.out
+	gcc -DLEXER_DEBUG lex.yy.c parser.tab.c -o example.out
 
 parser.tab.c: parser.y
 	bison -d parser.y

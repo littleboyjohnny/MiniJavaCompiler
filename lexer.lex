@@ -4,20 +4,10 @@
 %{
 #include <stdio.h>
 #include "parser.tab.h"
-
-
-long TT_char_pos = 1;
-
-#define YY_USER_ACTION \
-	if (yylloc.first_line < yylineno) \
-		TT_char_pos = 1; \
-	yylloc.first_line = yylloc.last_line = yylineno; \
-	yylloc.first_column = TT_char_pos; \
-	TT_char_pos = TT_char_pos + yyleng;
-
+#include "lexer.h"
 %}
 
-WS [ \n\t\v]*
+WS [ \t\v]*
 
 IDENTIFIER	[a-zA-Z_][a-zA-Z0-9_]*{WS}
 
@@ -95,79 +85,83 @@ MULTIPLY	"*"{WS}
 
 %%
 
-{IF}	{return IF;}
+"\n"	{ ; }
 
-{ELSE}	{return ELSE;}
+{WS}	{ ; }
 
-{WHILE}	{return WHILE;}
+{IF}	{ LEXER_PROCESS_TOKEN(IF); return IF; }
 
-{INTLITERAL}	{yylval.intVal = atoi(yytext); return INTLITERAL;}
+{ELSE}	{ LEXER_PROCESS_TOKEN(ELSE); return ELSE; }
 
-{TRUE}	{return _TRUE;}
+{WHILE}	{ LEXER_PROCESS_TOKEN(WHILE); return WHILE; }
 
-{FALSE}	{return _FALSE;}
+{INTLITERAL}	{ LEXER_PROCESS_TOKEN(INTLITERAL); yylval.intVal = atoi(yytext); return INTLITERAL; }
 
-{PUBLIC}	{return PUBLIC;}
+{TRUE}	{ LEXER_PROCESS_TOKEN(_TRUE); return _TRUE; }
 
-{STATIC}	{return STATIC;}
+{FALSE}	{ LEXER_PROCESS_TOKEN(_FALSE); return _FALSE; }
 
-{EXTENDS}	{return EXTENDS;}
+{PUBLIC}	{ LEXER_PROCESS_TOKEN(PUBLIC); return PUBLIC; }
 
-{VOID}	{return VOID;}
+{STATIC}	{ LEXER_PROCESS_TOKEN(STATIC); return STATIC; }
 
-{MAIN}	{return MAIN;}
+{EXTENDS}	{ LEXER_PROCESS_TOKEN(EXTENDS); return EXTENDS; }
 
-{RETURN}	{return RETURN;}
+{VOID}	{ LEXER_PROCESS_TOKEN(VOID); return VOID; }
 
-{NEW}	{return NEW;}
+{MAIN}	{ LEXER_PROCESS_TOKEN(MAIN); return MAIN; }
 
-{THIS}	{return THIS;}
+{RETURN}	{ LEXER_PROCESS_TOKEN(RETURN); return RETURN; }
 
-{PRINTLN}	{return PRINTLN;}
+{NEW}	{ LEXER_PROCESS_TOKEN(NEW); return NEW; }
 
-{DOTLENGTH}	{return DOTLENGTH;}
+{THIS}	{ LEXER_PROCESS_TOKEN(THIS); return THIS; }
 
-{STRING}	{return STRING;}
+{PRINTLN}	{ LEXER_PROCESS_TOKEN(PRINTLN); return PRINTLN; }
 
-{INT}	{return INT;}
+{DOTLENGTH}	{ LEXER_PROCESS_TOKEN(DOTLENGTH); return DOTLENGTH; }
 
-{BOOLEAN}	{return BOOLEAN;}
+{STRING}	{ LEXER_PROCESS_TOKEN(STRING); return STRING; }
 
-{CLASS} {return CLASS;}
+{INT}	{ LEXER_PROCESS_TOKEN(INT); return INT; }
 
-{LCURLYBRACE}	{return LCURLYBRACE;}
+{BOOLEAN}	{ LEXER_PROCESS_TOKEN(BOOLEAN); return BOOLEAN; }
 
-{RCURLYBRACE}	{return RCURLYBRACE;}
+{CLASS} { LEXER_PROCESS_TOKEN(CLASS); return CLASS; }
 
-{LPAREN}	{return LPAREN;}
+{LCURLYBRACE}	{ LEXER_PROCESS_TOKEN(LCURLYBRACE); return LCURLYBRACE; }
 
-{RPAREN}	{return RPAREN;}
+{RCURLYBRACE}	{ LEXER_PROCESS_TOKEN(RCURLYBRACE); return RCURLYBRACE; }
 
-{LSQUAREBRACKET}	{return LSQUAREBRACKET;}
+{LPAREN}	{ LEXER_PROCESS_TOKEN(LPAREN); return LPAREN; }
 
-{RSQUAREBRACKET}	{return RSQUAREBRACKET;}
+{RPAREN}	{ LEXER_PROCESS_TOKEN(RPAREN); return RPAREN; }
 
-{SEMICOLON}	{return SEMICOLON;}
+{LSQUAREBRACKET}	{ LEXER_PROCESS_TOKEN(LSQUAREBRACKET); return LSQUAREBRACKET; }
 
-{COMMA}	{return COMMA;}
+{RSQUAREBRACKET}	{ LEXER_PROCESS_TOKEN(RSQUAREBRACKET); return RSQUAREBRACKET; }
 
-{DOT}	{return DOT;}
+{SEMICOLON}	{ LEXER_PROCESS_TOKEN(SEMICOLON); return SEMICOLON;}
 
-{EQUALS}	{return EQUALS;}
+{COMMA}	{ LEXER_PROCESS_TOKEN(COMMA); return COMMA; }
 
-{NOT}	{return NOT;}
+{DOT}	{ LEXER_PROCESS_TOKEN(DOT); return DOT; }
 
-{LESS}	{return LESS;}
+{EQUALS}	{ LEXER_PROCESS_TOKEN(EQUALS); return EQUALS; }
 
-{AND}	{return AND;}
+{NOT}	{ LEXER_PROCESS_TOKEN(NOT); return NOT; }
 
-{PLUS}	{return PLUS;}
+{LESS}	{ LEXER_PROCESS_TOKEN(LESS); return LESS; }
 
-{MINUS}	{return MINUS;}
+{AND}	{ LEXER_PROCESS_TOKEN(AND); return AND; }
 
-{MULTIPLY}	{return MULTIPLY;}
+{PLUS}	{ LEXER_PROCESS_TOKEN(PLUS); return PLUS; }
 
-{IDENTIFIER}	{yylval.stringVal = yytext;return IDENTIFIER;}
+{MINUS}	{ LEXER_PROCESS_TOKEN(MINUS); return MINUS; }
+
+{MULTIPLY}	{ LEXER_PROCESS_TOKEN(MULTIPLY); return MULTIPLY; }
+
+{IDENTIFIER}	{ LEXER_PROCESS_TOKEN(IDENTIFIER); yylval.stringVal = yytext; return IDENTIFIER; }
 
 %%
 
