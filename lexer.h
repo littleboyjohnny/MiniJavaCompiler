@@ -16,7 +16,7 @@ long TT_char_prev_pos = 0;
 void lexerPrintDebugMessage(const char * msg)
 {
 	const char * fmt = "LEXER_DEBUG: %s(%d, %d, %d)\n";
-	printf(fmt, msg, yylineno, TT_char_prev_pos, TT_char_pos - 1);
+	printf(fmt, msg, yylineno, TT_char_prev_pos, TT_char_pos);
 }
 
 

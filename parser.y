@@ -1,16 +1,15 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "parser.h"
 
-void yyerror(const char *str)
-{
-        fprintf(stderr,"ошибка: %s\n",str);
-}
 
+#ifdef PARSER_MAIN
 int main() {
 	yyparse();
+	return 0;
 }
-
+#endif
 
 %}
 
