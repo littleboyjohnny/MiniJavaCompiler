@@ -26,6 +26,15 @@ int main() {
 %token <intVal> INTLITERAL
 %token _TRUE _FALSE PUBLIC STATIC EXTENDS VOID MAIN RETURN NEW THIS PRINTLN DOTLENGTH STRING INT BOOLEAN CLASS LCURLYBRACE RCURLYBRACE LPAREN RPAREN LSQUAREBRACKET RSQUAREBRACKET SEMICOLON COMMA DOT EQUALS NOT LESS AND PLUS MINUS MULTIPLY
 
+%left AND
+%left LESS
+%right NOT
+%left PLUS MINUS
+%left MULTIPLY
+%left LSQUAREBRACKET
+%left DOT DOTLENGTH
+
+
 %%
 
 Goal: MainClass ClassDeclarationS {printf("Goal\n");}
@@ -88,7 +97,11 @@ Statement: LCURLYBRACE StatementS RCURLYBRACE {printf("LCURLYBRACE StatementS RC
     | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON {printf("IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON\n");}
     ;
 
-Expression: Expression Operator Expression {printf("Expression Operator Expression\n");}
+Expression: Expression AND Expression {printf("Expression AND Expression\n");}
+	| Expression LESS Expression {printf("Expression LESS Expression\n");}
+	| Expression PLUS Expression {printf("Expression PLUS Expression\n");}
+	| Expression MINUS Expression {printf("Expression MINUS Expression\n");}
+	| Expression MULTIPLY Expression {printf("Expression MULTIPLY Expression\n");}
     | Expression LSQUAREBRACKET Expression RSQUAREBRACKET {printf("Expression LSQUAREBRACKET Expression RSQUAREBRACKET\n");}
     | Expression DOTLENGTH {printf("Expression DOTLENGTH\n");}
     | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN {printf("Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN\n");}
@@ -103,13 +116,14 @@ Expression: Expression Operator Expression {printf("Expression Operator Expressi
     | LPAREN Expression RPAREN {printf("LPAREN Expression RPAREN\n");}
     ;
 
+/*
 Operator: AND {printf("AND\n");}
 	| LESS {printf("LESS\n");}
 	| PLUS {printf("PLUS\n");}
 	| MINUS {printf("MINUS\n");}
 	| MULTIPLY {printf("MULTIPLY\n");}
 	;
-
+*/
 ExpressionParamS: %empty
 	| Expression AddittionalExpressionParamS {printf("Expression AddittionalExpressionParamS\n");}
 	;
@@ -121,4 +135,22 @@ AddittionalExpressionParamS: %empty
 AddittionalExpressionParam: COMMA Expression {printf("COMMA Expression\n");}
 	;
 
+/*
+Expression: Expression PLUS Expression {printf("Expression Operator Expression\n");}
+    | INTLITERAL {printf("INTLITERAL\n");}
+    | IDENTIFIER {printf("IDENTIFIER\n");}
+    ;
+
+
+AdditionalExpressionS: %empty
+	| AdditionalExpressionS AdditionalExpression
+	;
+
+AdditionalExpression: Operator Expression
+	; 
+
+
+Operator: PLUS {printf("PLUS\n");}
+	;
+*/
 %%
