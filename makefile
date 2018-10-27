@@ -1,8 +1,8 @@
 parser: lex.yy.c parser.tab.c
-	gcc -DPARSER_MAIN -DLEXER_DEBUG lex.yy.c parser.tab.c -o parser.out
+	g++ -DPARSER_MAIN -DPARSER_DEBUG lex.yy.c parser.tab.c lexer.cpp parser.cpp -o parser.out
 
 lexer: lex.yy.c parser.tab.c
-	gcc -DLEXER_MAIN -DLEXER_DEBUG lex.yy.c parser.tab.c -o lexer.out
+	g++ -DLEXER_MAIN -DLEXER_DEBUG lex.yy.c parser.tab.c lexer.cpp -o lexer.out
 
 parser.tab.c: parser.y
 	bison -d parser.y

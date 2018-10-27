@@ -1,6 +1,5 @@
 %{
 #include <stdio.h>
-#include <string.h>
 #include "parser.h"
 
 
@@ -37,120 +36,94 @@ int main() {
 
 %%
 
-Goal: MainClass ClassDeclarationS {printf("Goal\n");}
+Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); }
     ;
 
 ClassDeclarationS: %empty
-	| ClassDeclarationS ClassDeclaration
+	| ClassDeclarationS ClassDeclaration { PARSER_PROCESS_RULE( ClassDeclarationS, ); }
 	;
 
-MainClass: CLASS IDENTIFIER LCURLYBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LSQUAREBRACKET RSQUAREBRACKET IDENTIFIER RPAREN LCURLYBRACE StatementS RCURLYBRACE RCURLYBRACE {printf("MainClass\n");}
+MainClass: CLASS IDENTIFIER LCURLYBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LSQUAREBRACKET RSQUAREBRACKET IDENTIFIER RPAREN LCURLYBRACE StatementS RCURLYBRACE RCURLYBRACE { PARSER_PROCESS_RULE( MainClass, ); }
     ;
 
-ClassDeclaration: CLASS IDENTIFIER Extension LCURLYBRACE VarDeclarationS MethodDeclarationS RCURLYBRACE {printf("ClassDeclaration\n");}
+ClassDeclaration: CLASS IDENTIFIER Extension LCURLYBRACE VarDeclarationS MethodDeclarationS RCURLYBRACE { PARSER_PROCESS_RULE( ClassDeclaration, ); }
     ;
 
 Extension: %empty
-	| EXTENDS IDENTIFIER {printf("EXTENDS IDENTIFIER\n");}
+	| EXTENDS IDENTIFIER { PARSER_PROCESS_RULE( Extension, ); }
 	;
 
 VarDeclarationS: %empty
-	| VarDeclarationS VarDeclaration {printf("VarDeclarationS VarDeclaration\n");}
+	| VarDeclarationS VarDeclaration { PARSER_PROCESS_RULE( VarDeclarationS, ); }
 	;
 
-VarDeclaration: Type IDENTIFIER SEMICOLON {printf("Type IDENTIFIER SEMICOLON: %s\n", yylval);}
+VarDeclaration: Type IDENTIFIER SEMICOLON { PARSER_PROCESS_RULE( VarDeclaration, ); }
     ;
 
 MethodDeclarationS: %empty
-	| MethodDeclarationS MethodDeclaration {printf("MethodDeclarationS MethodDeclaration\n");}
+	| MethodDeclarationS MethodDeclaration { PARSER_PROCESS_RULE( MethodDeclarationS, ); }
 	;
 
-MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE	{printf("PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE\n");}
+MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE { PARSER_PROCESS_RULE( MethodDeclaration, ); }
     ;
 
 Params: %empty
-	| Type IDENTIFIER AdditionalParamS {printf("Type IDENTIFIER AdditionalParamS\n");}
+	| Type IDENTIFIER AdditionalParamS { PARSER_PROCESS_RULE( Params, ); }
 	;
 
 AdditionalParamS: %empty
-	| AdditionalParamS AdditionalParam {printf("AdditionalParamS AdditionalParam\n");}
+	| AdditionalParamS AdditionalParam { PARSER_PROCESS_RULE( AdditionalParamS, ); }
 	;
 
-AdditionalParam: COMMA Type IDENTIFIER {printf("COMMA Type IDENTIFIER\n");}
+AdditionalParam: COMMA Type IDENTIFIER { PARSER_PROCESS_RULE( AdditionalParam, ); }
 	;
 
-Type: INT LSQUAREBRACKET RSQUAREBRACKET {printf("TYPE INT LSQUAREBRACKET RSQUAREBRACKET\n");}//"int" "[" "]" 
-    | BOOLEAN {printf("TYPE BOOLEAN\n");}
-    | INT {printf("TYPE INT\n");}
-    | IDENTIFIER {printf("TYPE IDENTIFIER:\n");}
+Type: INT LSQUAREBRACKET RSQUAREBRACKET { PARSER_PROCESS_RULE( Type, INT LSQUAREBRACKET RSQUAREBRACKET ); }
+    | BOOLEAN { PARSER_PROCESS_RULE( Type, BOOLEAN ); }
+    | INT { PARSER_PROCESS_RULE( Type, INT ); }
+    | IDENTIFIER { PARSER_PROCESS_RULE( Type, IDENTIFIER ); }
     ;
 
 StatementS: %empty
-	| Statement StatementS {printf("StatementS Statement\n");}
+	| Statement StatementS { PARSER_PROCESS_RULE( StatementS, ); }
 	;
 
-Statement: LCURLYBRACE StatementS RCURLYBRACE {printf("LCURLYBRACE StatementS RCURLYBRACE\n");}
-    | IF LPAREN Expression RPAREN Statement ELSE Statement {printf("IF LPAREN Expression RPAREN Statement ELSE Statement\n");}
-    | WHILE LPAREN Expression RPAREN Statement {printf("WHILE LPAREN Expression RPAREN Statement\n");}
-    | PRINTLN LPAREN Expression RPAREN SEMICOLON {printf("PRINTLN LPAREN Expression RPAREN SEMICOLON\n");}
-    | IDENTIFIER EQUALS Expression SEMICOLON {printf("IDENTIFIER EQUALS Expression SEMICOLON\n");}
-    | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON {printf("IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON\n");}
+Statement: LCURLYBRACE StatementS RCURLYBRACE { PARSER_PROCESS_RULE( Statement, LCURLYBRACE StatementS RCURLYBRACE ); }
+    | IF LPAREN Expression RPAREN Statement ELSE Statement { PARSER_PROCESS_RULE( Statement, IF LPAREN Expression RPAREN Statement ELSE Statement ); }
+    | WHILE LPAREN Expression RPAREN Statement { PARSER_PROCESS_RULE( Statement, WHILE LPAREN Expression RPAREN Statement ); }
+    | PRINTLN LPAREN Expression RPAREN SEMICOLON { PARSER_PROCESS_RULE( Statement, PRINTLN LPAREN Expression RPAREN SEMICOLON ); }
+    | IDENTIFIER EQUALS Expression SEMICOLON { PARSER_PROCESS_RULE( Statement, IDENTIFIER EQUALS Expression SEMICOLON ); }
+    | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON { PARSER_PROCESS_RULE( Statement, IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON ); }
     ;
 
-Expression: Expression AND Expression {printf("Expression AND Expression\n");}
-	| Expression LESS Expression {printf("Expression LESS Expression\n");}
-	| Expression PLUS Expression {printf("Expression PLUS Expression\n");}
-	| Expression MINUS Expression {printf("Expression MINUS Expression\n");}
-	| Expression MULTIPLY Expression {printf("Expression MULTIPLY Expression\n");}
-    | Expression LSQUAREBRACKET Expression RSQUAREBRACKET {printf("Expression LSQUAREBRACKET Expression RSQUAREBRACKET\n");}
-    | Expression DOTLENGTH {printf("Expression DOTLENGTH\n");}
-    | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN {printf("Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN\n");}
-    | INTLITERAL {printf("INTLITERAL\n");}
-    | _TRUE {printf("_TRUE\n");}
-    | _FALSE {printf("_FALSE\n");}
-    | IDENTIFIER {printf("IDENTIFIER\n");}
-    | THIS	{printf("THIS\n");}
-    | NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET {printf("NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET\n");}
-    | NEW IDENTIFIER LPAREN RPAREN {printf("NEW IDENTIFIER LPAREN RPAREN\n");}
-    | NOT Expression {printf("NOT Expression\n");}
-    | LPAREN Expression RPAREN {printf("LPAREN Expression RPAREN\n");}
+Expression: Expression AND Expression { PARSER_PROCESS_RULE( Expression, Expression AND Expression ); }
+	| Expression LESS Expression { PARSER_PROCESS_RULE( Expression, Expression LESS Expression ); }
+	| Expression PLUS Expression { PARSER_PROCESS_RULE( Expression, Expression PLUS Expression ); }
+	| Expression MINUS Expression { PARSER_PROCESS_RULE( Expression, Expression MINUS Expression ); }
+	| Expression MULTIPLY Expression { PARSER_PROCESS_RULE( Expression, Expression MULTIPLY Expression ); }
+    | Expression LSQUAREBRACKET Expression RSQUAREBRACKET { PARSER_PROCESS_RULE( Expression, Expression LSQUAREBRACKET Expression RSQUAREBRACKET ); }
+    | Expression DOTLENGTH { PARSER_PROCESS_RULE( Expression, Expression DOTLENGTH ); }
+    | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN { PARSER_PROCESS_RULE( Expression, Expression DOT IDENTIFIER LPAREN ExpressionParamS RPARE ); }
+    | INTLITERAL { PARSER_PROCESS_RULE( Expression, INTLITERAL ); }
+    | _TRUE { PARSER_PROCESS_RULE( Expression, _TRUE ); }
+    | _FALSE { PARSER_PROCESS_RULE( Expression, _FALSE ); }
+    | IDENTIFIER { PARSER_PROCESS_RULE( Expression, IDENTIFIER ); }
+    | THIS	{ PARSER_PROCESS_RULE( Expression, THIS ); }
+    | NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET { PARSER_PROCESS_RULE( Expression, NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET ); }
+    | NEW IDENTIFIER LPAREN RPAREN { PARSER_PROCESS_RULE( Expression, NEW IDENTIFIER LPAREN RPAREN ); }
+    | NOT Expression { PARSER_PROCESS_RULE( Expression, NOT Expression ); }
+    | LPAREN Expression RPAREN { PARSER_PROCESS_RULE( Expression, LPAREN Expression RPAREN ); }
     ;
 
-/*
-Operator: AND {printf("AND\n");}
-	| LESS {printf("LESS\n");}
-	| PLUS {printf("PLUS\n");}
-	| MINUS {printf("MINUS\n");}
-	| MULTIPLY {printf("MULTIPLY\n");}
-	;
-*/
 ExpressionParamS: %empty
-	| Expression AddittionalExpressionParamS {printf("Expression AddittionalExpressionParamS\n");}
+	| Expression AddittionalExpressionParamS { PARSER_PROCESS_RULE( ExpressionParamS, ); }
 	;
 
 AddittionalExpressionParamS: %empty
-	| AddittionalExpressionParamS AddittionalExpressionParam {printf("AddittionalExpressionParamS AddittionalExpressionParam\n");}
+	| AddittionalExpressionParamS AddittionalExpressionParam { PARSER_PROCESS_RULE( AddittionalExpressionParamS, ); }
 	;
 
-AddittionalExpressionParam: COMMA Expression {printf("COMMA Expression\n");}
+AddittionalExpressionParam: COMMA Expression { PARSER_PROCESS_RULE( AddittionalExpressionParam, ); }
 	;
 
-/*
-Expression: Expression PLUS Expression {printf("Expression Operator Expression\n");}
-    | INTLITERAL {printf("INTLITERAL\n");}
-    | IDENTIFIER {printf("IDENTIFIER\n");}
-    ;
-
-
-AdditionalExpressionS: %empty
-	| AdditionalExpressionS AdditionalExpression
-	;
-
-AdditionalExpression: Operator Expression
-	; 
-
-
-Operator: PLUS {printf("PLUS\n");}
-	;
-*/
 %%

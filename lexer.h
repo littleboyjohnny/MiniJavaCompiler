@@ -1,3 +1,5 @@
+#include "parser.tab.h"
+
 #define LEXER_PROCESS_TOKEN(token) lexerProcessToken(token, #token)
 
 #define YY_USER_ACTION \
@@ -8,22 +10,12 @@
 	yylloc.first_column = TT_char_pos; \
 	TT_char_pos = TT_char_pos + yyleng;
 
+extern long TT_char_pos;
+extern long TT_char_prev_pos;
 
-long TT_char_pos = 1;
-long TT_char_prev_pos = 0;
+extern "C" int yylex();
 
+void lexerPrintDebugMessage( const char * msg );
 
-void lexerPrintDebugMessage(const char * msg)
-{
-	const char * fmt = "LEXER_DEBUG: %s(%d, %d, %d)\n";
-	printf(fmt, msg, yylineno, TT_char_prev_pos, TT_char_pos);
-}
-
-
-void lexerProcessToken(int token, const char * msg)
-{
-#ifdef LEXER_DEBUG
-	lexerPrintDebugMessage(msg);
-#endif
-}
+void lexerProcessToken( int token, const char * msg );
 

@@ -3,14 +3,13 @@
 
 %{
 #include <stdio.h>
-#include "parser.tab.h"
 #include "lexer.h"
 
 
 #ifdef LEXER_MAIN
 int main()
 {
-	while(yylex());
+	while( yylex() );
 	return 0;
 }
 #endif
@@ -174,6 +173,5 @@ MULTIPLY	"*"{WS}
 {IDENTIFIER}	{ LEXER_PROCESS_TOKEN(IDENTIFIER); yylval.stringVal = yytext; return IDENTIFIER; }
 
 %%
-
 
 //{EOF}	{return EOF;}
