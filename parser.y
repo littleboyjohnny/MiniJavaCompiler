@@ -1,15 +1,6 @@
 %{
 #include <stdio.h>
 #include "parser.h"
-
-
-#ifdef PARSER_MAIN
-int main() {
-	yyparse();
-	return 0;
-}
-#endif
-
 %}
 
 %locations

@@ -4,16 +4,6 @@
 %{
 #include <stdio.h>
 #include "lexer.h"
-
-
-#ifdef LEXER_MAIN
-int main()
-{
-	while( yylex() );
-	return 0;
-}
-#endif
-
 %}
 
 WS [ \t\v]*

@@ -13,9 +13,13 @@
 extern long TT_char_pos;
 extern long TT_char_prev_pos;
 
+
+#ifdef LEXER_MAIN
+int main( int argc, char** argv );
+#endif
+
 extern "C" int yylex();
 
 void lexerPrintDebugMessage( const char * msg );
 
 void lexerProcessToken( int token, const char * msg );
-
