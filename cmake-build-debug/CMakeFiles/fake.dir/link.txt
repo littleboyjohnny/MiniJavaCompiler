@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++17 -g  -rdynamic CMakeFiles/fake.dir/parser.cpp.o CMakeFiles/fake.dir/lexer.cpp.o  -o fake 
