@@ -1,5 +1,0 @@
-/home/alexey/Documents/git/MiniJavaCompiler/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/alexey/Documents/git/MiniJavaCompiler/cmake-build-debug/CMakeFiles/parser.dir
-/home/alexey/Documents/git/MiniJavaCompiler/cmake-build-debug/CMakeFiles/lexer.dir
-/home/alexey/Documents/git/MiniJavaCompiler/cmake-build-debug/CMakeFiles/fake.dir
-/home/alexey/Documents/git/MiniJavaCompiler/cmake-build-debug/CMakeFiles/edit_cache.dir
