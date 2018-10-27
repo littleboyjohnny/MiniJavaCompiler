@@ -27,7 +27,7 @@
 
 %%
 
-Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); }
+Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); $$ = new Goal( $1, $2 ); }
     ;
 
 ClassDeclarationS: %empty
