@@ -1,4 +1,4 @@
-#include "parser.tab.h"
+#include "../parser/parser.tab.h"
 
 #define LEXER_PROCESS_TOKEN(token) lexerProcessToken(token, #token)
 
