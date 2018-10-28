@@ -3,7 +3,7 @@
 
 #include "IAcceptable.h"
 
-class IAddittionalExpressionParam : public IAcceptable {
+class IAdditionalExpressionParam : public IAcceptable {
 
 };
 
