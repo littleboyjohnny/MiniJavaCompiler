@@ -9,7 +9,7 @@ class CTrueExpression : public IExpression
 public:
     CTrueExpression(){}
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }

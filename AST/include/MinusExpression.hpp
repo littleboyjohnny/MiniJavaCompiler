@@ -13,7 +13,7 @@ public:
             rightExpression( _rightExpression )
     {}
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }

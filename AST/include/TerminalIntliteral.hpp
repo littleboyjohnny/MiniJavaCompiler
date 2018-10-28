@@ -8,7 +8,7 @@ class CTerminalIntliteral : public IAcceptable {
 public:
     CTerminalIntliteral( const int _intliteral ) : intliteral( _intliteral ) {}
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }
