@@ -3,6 +3,7 @@
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IStatementS.h"
+#include "../interfaces/IVisitor.h"
 
 class CCurlyBraceStatement : public IStatement {
 public:

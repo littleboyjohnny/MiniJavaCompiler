@@ -3,11 +3,13 @@
 
 #include "../interfaces/IAdditionalExpressionParam.h"
 #include "../interfaces/IExpression.h"
+#include "../interfaces/IAdditionalParam.h"
+#include "../interfaces/IVisitor.h"
 
-class AddittionalExpressionParam: public IAdditionalParam
+class CAdditionalExpressionParam: public IAdditionalExpressionParam
 {
 public:
-    AddittionalExpressionParam( const IExpression* const _expression ) : expression( _expression ) {}
+    CAdditionalExpressionParam( const IExpression* const _expression ) : expression( _expression ) {}
 
     void Accept( IVisitor* visitor )
     {

@@ -1,10 +1,10 @@
 #ifndef MINIJAVACOMPILER_GOAL_H
 #define MINIJAVACOMPILER_GOAL_H
 
-#include "IGoal.h"
-#include "../MainClass/IMainClass.h"
-#include "../ClassDeclarationS/IClassDeclarationS.h"
-#include "../Visitor/IVisitor.h"
+#include "../interfaces/IGoal.h"
+#include "../interfaces/IMainClass.h"
+#include "../interfaces/IClassDeclarationS.h"
+#include "../interfaces/IVisitor.h"
 
 class Goal : public IGoal {
 public:

@@ -3,13 +3,14 @@
 
 #include "../interfaces/IExpressionParamS.h"
 #include "../interfaces/IExpression.h"
-#include "../interfaces/IAddittionalExpressionParamS.h"
+#include "../interfaces/IAdditionalExpressionParamS.h"
+#include "../interfaces/IVisitor.h"
 
 class ExpressionParamS : public IExpressionParamS
 {
 public:
     ExpressionParamS( const IExpression* const _expression,
-            const IAddittionalExpressionParamS* const _addittionalExpressionParamS) :
+            const IAdditionalExpressionParamS* const _addittionalExpressionParamS) :
             expression(_expression),
             addittionalExpressionParamS(_addittionalExpressionParamS)
     {}
@@ -21,6 +22,6 @@ public:
 
 private:
     const IExpression* const expression;
-    const IAddittionalExpressionParamS* const addittionalExpressionParamS;
+    const IAdditionalExpressionParamS* const addittionalExpressionParamS;
 };
 #endif //MINIJAVACOMPILER_EXPRESSIONPARAMS_HPP

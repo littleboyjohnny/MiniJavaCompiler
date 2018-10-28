@@ -3,6 +3,7 @@
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
+#include "../interfaces/IVisitor.h"
 
 class CWhileStatement : public IStatement {
 public:

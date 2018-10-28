@@ -1,14 +1,15 @@
 #ifndef MINIJAVACOMPILER_ADDITTIONALEXPRESSIONPARAM_HPP
 #define MINIJAVACOMPILER_ADDITTIONALEXPRESSIONPARAM_HPP
 
-#include "../interfaces/IAddittionalExpressionParamS.h"
-#include "../interfaces/IAddittionalExpressionParam.h"
+#include "../interfaces/IAdditionalExpressionParamS.h"
+#include "../interfaces/IAdditionalExpressionParam.h"
+#include "../interfaces/IVisitor.h"
 
-class AddittionalExpressionParamS : public IAdditionalParamS
+class CAddittionalExpressionParamS : public IAdditionalExpressionParamS
 {
 public:
-    AddittionalExpressionParamS( const IAddittionalExpressionParamS* const _addittionalExpressionParamS,
-            const IAddittionalExpressionParam* const  _addittionalExpressionParam) :
+    CAddittionalExpressionParamS( const IAdditionalExpressionParamS* const _addittionalExpressionParamS,
+            const IAdditionalExpressionParam* const  _addittionalExpressionParam) :
             addittionalExpressionParamS( _addittionalExpressionParamS ),
             addittionalExpressionParam( _addittionalExpressionParam )
     {}
@@ -19,7 +20,7 @@ public:
     }
 
 private:
-    const IAddittionalExpressionParamS* const addittionalExpressionParamS;
-    const IAddittionalExpressionParam* const  addittionalExpressionParam;
+    const IAdditionalExpressionParamS* const addittionalExpressionParamS;
+    const IAdditionalExpressionParam* const  addittionalExpressionParam;
 };
 #endif //MINIJAVACOMPILER_ADDITTIONALEXPRESSIONPARAM_HPP

@@ -3,13 +3,14 @@
 
 #include "../interfaces/IAdditionalParam.h"
 #include "../interfaces/IType.h"
-#include "IdentifierExpression.hpp"
+#include "../interfaces/IVisitor.h"
+#include "TerminalIdentifier.hpp"
 
 class CAdditionalParam : public IAdditionalParam {
 public:
-    CAdditionalParam( const IType * const _type, const IdentifierExpression * const _identifier ) :
+    CAdditionalParam( const IType * const _type, const CTerminalIdentifier * const _identifier ) :
         type( _type ),
-        indentifier( _identifier )
+        identifier( _identifier )
     {}
 
     void Accept( IVisitor* visitor )
@@ -19,7 +20,7 @@ public:
 
 private:
     const IType * const type;
-    const IdentifierExpression * const identifier;
+    const CTerminalIdentifier * const identifier;
 };
 
 #endif //MINIJAVACOMPILER_ADDITIONALPARAM_HPP

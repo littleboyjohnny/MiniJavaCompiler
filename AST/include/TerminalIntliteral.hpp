@@ -1,7 +1,10 @@
 #ifndef MINIJAVACOMPILER_TERMINALINTLITERAL_HPP
 #define MINIJAVACOMPILER_TERMINALINTLITERAL_HPP
 
-class CTerminalIntliteral {
+#include "../interfaces/IAcceptable.h"
+#include "../interfaces/IVisitor.h"
+
+class CTerminalIntliteral : public IAcceptable {
 public:
     CTerminalIntliteral( const int _intliteral ) : intliteral( _intliteral ) {}
 
