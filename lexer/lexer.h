@@ -21,6 +21,9 @@
 #include "../AST/interfaces/IVarDeclaration.h"
 #include "../AST/interfaces/IVarDeclarationS.h"
 
+#include "../AST/include/TerminalIdentifier.hpp"
+#include "../AST/include/TerminalIntliteral.hpp"
+
 #define LEXER_PROCESS_TOKEN(token) lexerProcessToken(token, #token)
 
 #define YY_USER_ACTION \

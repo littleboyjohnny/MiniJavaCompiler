@@ -1,17 +1,17 @@
-#ifndef MINIJAVACOMPILER_ADDITTIONALEXPRESSIONPARAM_HPP
-#define MINIJAVACOMPILER_ADDITTIONALEXPRESSIONPARAM_HPP
+#ifndef MINIJAVACOMPILER_ADDITIONALEXPRESSIONPARAMS_HPP
+#define MINIJAVACOMPILER_ADDITIONALEXPRESSIONPARAMS_HPP
 
 #include "../interfaces/IAdditionalExpressionParamS.h"
 #include "../interfaces/IAdditionalExpressionParam.h"
 #include "../interfaces/IVisitor.h"
 
-class CAddittionalExpressionParamS : public IAdditionalExpressionParamS
+class CAdditionalExpressionParamS : public IAdditionalExpressionParamS
 {
 public:
-    CAddittionalExpressionParamS( const IAdditionalExpressionParamS* const _addittionalExpressionParamS,
-            const IAdditionalExpressionParam* const  _addittionalExpressionParam) :
-            addittionalExpressionParamS( _addittionalExpressionParamS ),
-            addittionalExpressionParam( _addittionalExpressionParam )
+    CAdditionalExpressionParamS( const IAdditionalExpressionParamS* const _additionalExpressionParamS,
+            const IAdditionalExpressionParam* const  _additionalExpressionParam) :
+            additionalExpressionParamS( _additionalExpressionParamS ),
+            additionalExpressionParam( _additionalExpressionParam )
     {}
 
     void Accept( IVisitor* visitor )
@@ -20,7 +20,7 @@ public:
     }
 
 private:
-    const IAdditionalExpressionParamS* const addittionalExpressionParamS;
-    const IAdditionalExpressionParam* const  addittionalExpressionParam;
+    const IAdditionalExpressionParamS* const additionalExpressionParamS;
+    const IAdditionalExpressionParam* const  additionalExpressionParam;
 };
 #endif //MINIJAVACOMPILER_ADDITTIONALEXPRESSIONPARAM_HPP

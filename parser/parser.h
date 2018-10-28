@@ -37,6 +37,15 @@
 #include "../AST/include/TrueExpression.hpp"
 #include "../AST/include/VarAssignmentStatement.hpp"
 #include "../AST/include/WhileStatement.hpp"
+#include "../AST/include/ClassDeclaration.hpp"
+#include "../AST/include/MainClass.hpp"
+#include "../AST/include/ClassDeclarationS.hpp"
+#include "../AST/include/Extension.hpp"
+#include "../AST/include/VarDeclarationS.hpp"
+#include "../AST/include/VarDeclaration.hpp"
+#include "../AST/include/MethodDeclarationS.hpp"
+#include "../AST/include/MethodDeclaration.hpp"
+
 
 #include "../AST/interfaces/IAcceptable.h"
 #include "../AST/interfaces/IAdditionalExpressionParam.h"

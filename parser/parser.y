@@ -7,8 +7,6 @@
 %verbose
 
 %union {
-	int intVal;
-	char *stringVal;
 	class IGoal* goal;
 	class IClassDeclarationS* classDeclarationS;
 	class IMainClass* mainClass;
@@ -28,11 +26,13 @@
 	class IExpressionParamS* expressionParamS;
 	class IAdditionalExpressionParamS* additionalExpressionParamS;
 	class IAdditionalExpressionParam* additionalExpressionParam;
+	class CTerminalIdentifier* terminalIdentifier;
+	class CTerminalIntliteral* terminalIntliteral;
 }
 
-%token <stringVal> IDENTIFIER 
+%token <terminalIdentifier> IDENTIFIER
 %token IF ELSE WHILE
-%token <intVal> INTLITERAL
+%token <terminalIntliteral> INTLITERAL
 %token _TRUE _FALSE PUBLIC STATIC EXTENDS VOID MAIN RETURN NEW THIS PRINTLN DOTLENGTH STRING INT BOOLEAN CLASS LCURLYBRACE RCURLYBRACE LPAREN RPAREN LSQUAREBRACKET RSQUAREBRACKET SEMICOLON COMMA DOT EQUALS NOT LESS AND PLUS MINUS MULTIPLY
 
 %left AND
@@ -93,7 +93,7 @@ MethodDeclarationS: %empty { $$ = nullptr; }
 	| MethodDeclarationS MethodDeclaration { PARSER_PROCESS_RULE( MethodDeclarationS, ); $$ = new CMethodDeclarationS($1, $2);}
 	;
 
-MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE { PARSER_PROCESS_RULE( MethodDeclaration, ); $$ = new CMethodDeclarationS($2, $3, $5, $8, $9, $11);}
+MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE { PARSER_PROCESS_RULE( MethodDeclaration, ); $$ = new CMethodDeclaration($2, $3, $5, $8, $9, $11);}
     ;
 
 Params: %empty { $$ = nullptr; }
@@ -104,7 +104,7 @@ AdditionalParamS: %empty { $$ = nullptr; }
 	| AdditionalParamS AdditionalParam { PARSER_PROCESS_RULE( AdditionalParamS, ); $$ = new CAdditionalParamS($1, $2);}
 	;
 
-AdditionalParam: COMMA Type IDENTIFIER { PARSER_PROCESS_RULE( AdditionalParam, ); $$ = new CAdditionalParamS($2, $3);}
+AdditionalParam: COMMA Type IDENTIFIER { PARSER_PROCESS_RULE( AdditionalParam, ); $$ = new CAdditionalParam($2, $3);}
 	;
 
 Type: INT LSQUAREBRACKET RSQUAREBRACKET { PARSER_PROCESS_RULE( Type, INT LSQUAREBRACKET RSQUAREBRACKET ); $$ = new CIntArrayType();}
@@ -145,14 +145,14 @@ Expression: Expression AND Expression { PARSER_PROCESS_RULE( Expression, Express
     ;
 
 ExpressionParamS: %empty { $$ = nullptr; }
-	| Expression AddittionalExpressionParamS { PARSER_PROCESS_RULE( ExpressionParamS, ); $$ = new CExpressionParamS($1, $2);}
+	| Expression AdditionalExpressionParamS { PARSER_PROCESS_RULE( ExpressionParamS, ); $$ = new CExpressionParamS($1, $2);}
 	;
 
-AddittionalExpressionParamS: %empty { $$ = nullptr; }
-	| AddittionalExpressionParamS AddittionalExpressionParam { PARSER_PROCESS_RULE( AddittionalExpressionParamS, ); $$ = new CAddittionalExpressionParamS($1, $2);}
+AdditionalExpressionParamS: %empty { $$ = nullptr; }
+	| AdditionalExpressionParamS AdditionalExpressionParam { PARSER_PROCESS_RULE( AdditionalExpressionParamS, ); $$ = new CAdditionalExpressionParamS($1, $2);}
 	;
 
-AddittionalExpressionParam: COMMA Expression { PARSER_PROCESS_RULE( AddittionalExpressionParam, ); $$ = new CAdditionalExpressionParam($2);}
+AdditionalExpressionParam: COMMA Expression { PARSER_PROCESS_RULE( AdditionalExpressionParam, ); $$ = new CAdditionalExpressionParam($2);}
 	;
 
 %%

@@ -94,7 +94,7 @@ MULTIPLY	"*"{WS}
 
 {WHILE}	{ LEXER_PROCESS_TOKEN(WHILE); return WHILE; }
 
-{INTLITERAL}	{ LEXER_PROCESS_TOKEN(INTLITERAL); yylval.intVal = atoi(yytext); return INTLITERAL; }
+{INTLITERAL}	{ LEXER_PROCESS_TOKEN(INTLITERAL); yylval.terminalIntliteral = new CTerminalIntliteral(atoi(yytext)); return INTLITERAL; }
 
 {TRUE}	{ LEXER_PROCESS_TOKEN(_TRUE); return _TRUE; }
 
@@ -160,7 +160,7 @@ MULTIPLY	"*"{WS}
 
 {MULTIPLY}	{ LEXER_PROCESS_TOKEN(MULTIPLY); return MULTIPLY; }
 
-{IDENTIFIER}	{ LEXER_PROCESS_TOKEN(IDENTIFIER); yylval.stringVal = yytext; return IDENTIFIER; }
+{IDENTIFIER}	{ LEXER_PROCESS_TOKEN(IDENTIFIER); yylval.terminalIdentifier = new CTerminalIdentifier(yytext); return IDENTIFIER; }
 
 %%
 
