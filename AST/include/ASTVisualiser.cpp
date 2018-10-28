@@ -61,88 +61,136 @@ void CASTVisualiser::printEdge(const void * from, const void * to) {
 }
 
 void CASTVisualiser::Visit( CAdditionalExpressionParam* acceptable ) {
-
+    printEdge(acceptable, acceptable->expression);
+    acceptable->expression->Accept(this);
 }
 
 void CASTVisualiser::Visit( CAdditionalExpressionParamS* acceptable ) {
-
+    printEdge(acceptable, acceptable->additionalExpressionParamS);
+    printEdge(acceptable, acceptable->additionalExpressionParam);
+    acceptable->additionalExpressionParamS->Accept(this);
+    acceptable->additionalExpressionParam->Accept(this);
 }
 
 void CASTVisualiser::Visit( CAdditionalParam* acceptable ) {
-
+    printEdge(acceptable, acceptable->type);
+    printEdge(acceptable, acceptable->identifier);
+    acceptable->type->Accept(this);
+    acceptable->identifier->Accept(this);
 }
 
 void CASTVisualiser::Visit( CAdditionalParamS* acceptable ) {
-
+    printEdge(acceptable, acceptable->additionalParamS);
+    printEdge(acceptable, acceptable->additionalParam);
+    acceptable->additionalParamS->Accept(this);
+    acceptable->additionalParam->Accept(this);
 }
 
 void CASTVisualiser::Visit( CAndExpression* acceptable ) {
-
+    printEdge(acceptable, acceptable->leftExpression);
+    printEdge(acceptable, acceptable->rightExpression);
+    acceptable->leftExpression->Accept(this);
+    acceptable->rightExpression->Accept(this);
 }
 
 void CASTVisualiser::Visit( CArrayAssignmentStatement* acceptable ) {
-
+    printEdge(acceptable, acceptable->arrayName);
+    printEdge(acceptable, acceptable->indexExpression);
+    printEdge(acceptable, acceptable->expression);
+    acceptable->arrayName->Accept(this);
+    acceptable->indexExpression->Accept(this);
+    acceptable->expression->Accept(this);
 }
 
 void CASTVisualiser::Visit( CBooleanType* acceptable ) {
-
+    ////TODO
 }
 
 void CASTVisualiser::Visit( CClassDeclaration* acceptable ) {
-
+    printEdge(acceptable, acceptable->className);
+    printEdge(acceptable, acceptable->extension);
+    printEdge(acceptable, acceptable->varDeclarationS);
+    printEdge(acceptable, acceptable->methodDeclarationS);
+    acceptable->className->Accept(this);
+    acceptable->extension->Accept(this);
+    acceptable->varDeclarationS->Accept(this);
+    acceptable->methodDeclarationS->Accept(this);
 }
 
 void CASTVisualiser::Visit( CClassDeclarationS* acceptable ) {
-
+    printEdge(acceptable, acceptable->classDeclarationS);
+    printEdge(acceptable, acceptable->classDeclaration);
+    acceptable->classDeclarationS->Accept(this);
+    acceptable->classDeclaration->Accept(this);
 }
 
 void CASTVisualiser::Visit( CCurlyBraceStatement* acceptable ) {
-
+    printEdge(acceptable, acceptable->statementS);
+    acceptable->statementS->Accept(this);
 }
 
 void CASTVisualiser::Visit( CCustomType* acceptable ) {
-
+    printEdge(acceptable, acceptable->typeName);
+    acceptable->typeName->Accept(this);
 }
 
 void CASTVisualiser::Visit( CDotExpression* acceptable ) {
-
+    printEdge(acceptable, acceptable->expression);
+    printEdge(acceptable, acceptable->identifier);
+    printEdge(acceptable, acceptable->expressionParamS);
+    acceptable->expression->Accept(this);
+    acceptable->identifier->Accept(this);
+    acceptable->expressionParamS->Accept(this);
 }
 
 void CASTVisualiser::Visit( CExpressionParamS* acceptable ) {
-
+    printEdge(acceptable, acceptable->expression);
+    printEdge(acceptable, acceptable->addittionalExpressionParamS);
+    acceptable->expression->Accept(this);
+    acceptable->addittionalExpressionParamS->Accept(this);
 }
 
 void CASTVisualiser::Visit( CExtension* acceptable ) {
-
+    printEdge(acceptable, acceptable->className);
+    acceptable->className->Accept(this);
 }
 
 void CASTVisualiser::Visit( CFalseExpression* acceptable ) {
-
+    ////TODO
 }
 
 void CASTVisualiser::Visit( CGoal* acceptable ) {
     printEdge(acceptable, acceptable->mainClass);
     printEdge(acceptable, acceptable->classDeclarationS);
+    acceptable->mainClass->Accept(this);
+    acceptable->classDeclarationS->Accept(this);
 }
 
 void CASTVisualiser::Visit( CIdentifierExpression* acceptable ) {
-
+    printEdge(acceptable, acceptable->identifier);
+    acceptable->identifier->Accept(this);
 }
 
 void CASTVisualiser::Visit( CIfElseStatement* acceptable ) {
-
+    printEdge(acceptable, acceptable->condition);
+    printEdge(acceptable, acceptable->ifStatement);
+    printEdge(acceptable, acceptable->elseStatement);
+    acceptable->condition->Accept(this);
+    acceptable->ifStatement->Accept(this);
+    acceptable->elseStatement->Accept(this);
 }
 
 void CASTVisualiser::Visit( CIntArrayType* acceptable ) {
-
+    ////TODO
 }
 
 void CASTVisualiser::Visit( CIntliteralExpression* acceptable ) {
-
+    printEdge(acceptable, acceptable->intliteral);
+    acceptable->intliteral->Accept(this);
 }
 
 void CASTVisualiser::Visit( CIntType* acceptable ) {
-
+    ////TODO
 }
 
 void CASTVisualiser::Visit( CLengthExpression* acceptable ) {
