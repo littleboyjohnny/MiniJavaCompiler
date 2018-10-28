@@ -17,4 +17,4 @@ add_custom_target(
 
 # fake executable
 # add all source files just for clion inspection support
-add_executable(fake parser.cpp lexer.cpp AST/interfaces/Goal/Goal.hpp)
+add_executable(fake parser/parser.cpp lexer/lexer.cpp AST/include/ AST/interfaces/)
