@@ -17,7 +17,7 @@ public:
         elseStatement( _elseStatement )
     {}
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }

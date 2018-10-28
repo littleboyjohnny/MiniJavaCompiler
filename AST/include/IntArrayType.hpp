@@ -8,7 +8,7 @@ class CIntArrayType : public IType {
 public:
     CIntArrayType() {}
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }

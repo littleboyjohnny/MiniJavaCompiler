@@ -5,7 +5,7 @@ class IVisitor;
 
 class IAcceptable {
 public:
-    virtual void Accept( IVisitor* visitor ) = 0;
+    virtual void Accept( const IVisitor* visitor ) = 0;
 };
 
 #endif //COMPILERAST_IACCEPTABLE_H
