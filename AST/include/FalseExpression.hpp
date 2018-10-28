@@ -9,7 +9,7 @@ class CFalseExpression : public IExpression
 public:
     CFalseExpression(){}
 
-    void Accept( const IVisitor* visitor )
+    void Accept( const IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }

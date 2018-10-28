@@ -51,7 +51,7 @@ class IAcceptable;
 
 class IVisitor {
 public:
-    virtual void Visit( const CAdditionalExpressionParam* acceptable ) const = 0;
+    virtual void Visit( const CAdditionalExpressionParam* const acceptable ) const = 0;
     virtual void Visit( const CAdditionalExpressionParamS* acceptable ) const = 0;
     virtual void Visit( const CAdditionalParam* acceptable ) const = 0;
     virtual void Visit( const CAdditionalParamS* acceptable ) const = 0;

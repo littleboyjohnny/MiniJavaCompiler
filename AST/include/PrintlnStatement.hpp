@@ -11,7 +11,7 @@ public:
         expression( _expression )
     {}
 
-    void Accept( const IVisitor* visitor )
+    void Accept( const IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }

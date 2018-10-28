@@ -13,7 +13,7 @@ public:
         identifier( _identifier )
     {}
 
-    void Accept( const IVisitor* visitor )
+    void Accept( const IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }

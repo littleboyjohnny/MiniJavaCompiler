@@ -56,7 +56,7 @@ CASTVisualiser::~CASTVisualiser() {
     fclose(file);
 }
 
-void CASTVisualiser::printEdge(const void * from, const void * to) {
+void CASTVisualiser::printEdge(const void * from, const void * to) const {
     fprintf(file, "\t%d -> %d;\n", (const long long)from, (const long long)to);
 }
 
@@ -246,7 +246,7 @@ void CASTVisualiser::Visit( const CMinusExpression* acceptable ) const {
     printEdge( acceptable, acceptable->rightExpression );
 
     acceptable->leftExpression->Accept( this );
-    acceptable->-rightExpression>Accept( this );
+    acceptable->rightExpression->Accept( this );
 }
 
 void CASTVisualiser::Visit( const CMultiplyExpression* acceptable ) const {
@@ -322,15 +322,11 @@ void CASTVisualiser::Visit( const CStatementS* acceptable ) const {
 }
 
 void CASTVisualiser::Visit( const CTerminalIdentifier* acceptable ) const {
-    printEdge( acceptable, acceptable->identifier );
 
-    acceptable->identifier->Accept( this );
 }
 
 void CASTVisualiser::Visit( const CTerminalIntliteral* acceptable ) const {
-    printEdge( acceptable, acceptable->intliteral );
 
-    acceptable->intliteral->Accept( this );
 }
 
 void CASTVisualiser::Visit( const CThisExpression* acceptable ) const {

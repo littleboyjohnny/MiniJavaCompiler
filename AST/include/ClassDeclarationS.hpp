@@ -13,7 +13,7 @@ public:
             classDeclaration( _classDeclaration )
     {}
 
-    void Accept( const IVisitor * visitor )
+    void Accept( const IVisitor * visitor ) const
     {
         visitor->Visit( this );
     }

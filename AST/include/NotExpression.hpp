@@ -9,7 +9,7 @@ class CNotExpression : public IExpression
 public:
     CNotExpression( const IExpression* const _expression ) : expression( _expression ) {}
 
-    void Accept( const IVisitor* visitor )
+    void Accept( const IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }

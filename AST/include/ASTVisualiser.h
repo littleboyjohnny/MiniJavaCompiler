@@ -9,7 +9,7 @@ class CASTVisualiser : public IVisitor {
 public:
     CASTVisualiser(const char *);
     ~CASTVisualiser();
-    void printEdge(const void *,const void *);
+    void printEdge(const void *,const void *) const;
     void Visit( const CAdditionalExpressionParam* acceptable ) const;
     void Visit( const CAdditionalExpressionParamS* acceptable ) const;
     void Visit( const CAdditionalParam* acceptable ) const;
