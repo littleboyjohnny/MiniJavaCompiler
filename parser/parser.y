@@ -1,5 +1,5 @@
 %{
-#include <stdio.h>
+#include <cstdio>
 #include "parser.h"
 %}
 
@@ -9,6 +9,25 @@
 %union {
 	int intVal;
 	char *stringVal;
+	class IGoal* goal;
+	class IClassDeclarationS* classDeclarationS;
+	class IMainClass* mainClass;
+	class IClassDeclaration* classDeclaration;
+	class IExtension* extension;
+	class IVarDeclarationS* varDeclarationS;
+	class IVarDeclaration* varDeclaration;
+	class IMethodDeclarationS* methodDeclarationS;
+	class IMethodDeclaration* methodDeclaration;
+	class IParams* params;
+	class IAdditionalParamS* additionalParamS;
+	class IAdditionalParam* additionalParam;
+	class IType* type;
+	class IStatementS* statementS;
+	class IStatement* statement;
+	class IExpression* expression;
+	class IExpressionParamS* expressionParamS;
+	class IAdditionalExpressionParamS* additionalExpressionParamS;
+	class IAdditionalExpressionParam* additionalExpressionParam;
 }
 
 %token <stringVal> IDENTIFIER 
@@ -24,13 +43,32 @@
 %left LSQUAREBRACKET
 %left DOT DOTLENGTH
 
+%type <goal> Goal
+%type <classDeclarationS> ClassDeclarationS
+%type <mainClass> MainClass
+%type <classDeclaration> ClassDeclaration
+%type <extension> Extension
+%type <varDeclarationS> VarDeclarationS
+%type <varDeclaration> VarDeclaration
+%type <methodDeclarationS> MethodDeclarationS
+%type <methodDeclaration> MethodDeclaration
+%type <params> Params
+%type <additionalParamS> AdditionalParamS
+%type <additionalParam> AdditionalParam
+%type <type> Type
+%type <statementS> StatementS
+%type <statement> Statement
+%type <expression> Expression
+%type <expressionParamS> ExpressionParamS
+%type <additionalExpressionParamS> AdditionalExpressionParamS
+%type <additionalExpressionParam> AdditionalExpressionParam
 
 %%
 
 Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); $$ = new CGoal($1, $2);}
     ;
 
-ClassDeclarationS: %empty
+ClassDeclarationS: %empty { $$ = nullptr; }
 	| ClassDeclarationS ClassDeclaration { PARSER_PROCESS_RULE( ClassDeclarationS, ); $$ = new CClassDeclarationS($1, $2);}
 	;
 
@@ -40,29 +78,29 @@ MainClass: CLASS IDENTIFIER LCURLYBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LS
 ClassDeclaration: CLASS IDENTIFIER Extension LCURLYBRACE VarDeclarationS MethodDeclarationS RCURLYBRACE { PARSER_PROCESS_RULE( ClassDeclaration, ); $$ = new CClassDeclaration($2, $3, $5, $6);}
     ;
 
-Extension: %empty
+Extension: %empty { $$ = nullptr; }
 	| EXTENDS IDENTIFIER { PARSER_PROCESS_RULE( Extension, ); $$ = new CExtension($2);}
 	;
 
-VarDeclarationS: %empty
+VarDeclarationS: %empty { $$ = nullptr; }
 	| VarDeclarationS VarDeclaration { PARSER_PROCESS_RULE( VarDeclarationS, ); $$ = new CVarDeclarationS($1, $2);}
 	;
 
 VarDeclaration: Type IDENTIFIER SEMICOLON { PARSER_PROCESS_RULE( VarDeclaration, ); $$ = new CVarDeclaration($1, $2);}
     ;
 
-MethodDeclarationS: %empty
+MethodDeclarationS: %empty { $$ = nullptr; }
 	| MethodDeclarationS MethodDeclaration { PARSER_PROCESS_RULE( MethodDeclarationS, ); $$ = new CMethodDeclarationS($1, $2);}
 	;
 
 MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE { PARSER_PROCESS_RULE( MethodDeclaration, ); $$ = new CMethodDeclarationS($2, $3, $5, $8, $9, $11);}
     ;
 
-Params: %empty
+Params: %empty { $$ = nullptr; }
 	| Type IDENTIFIER AdditionalParamS { PARSER_PROCESS_RULE( Params, ); $$ = new CParams($1, $2, $3);}
 	;
 
-AdditionalParamS: %empty
+AdditionalParamS: %empty { $$ = nullptr; }
 	| AdditionalParamS AdditionalParam { PARSER_PROCESS_RULE( AdditionalParamS, ); $$ = new CAdditionalParamS($1, $2);}
 	;
 
@@ -75,7 +113,7 @@ Type: INT LSQUAREBRACKET RSQUAREBRACKET { PARSER_PROCESS_RULE( Type, INT LSQUARE
     | IDENTIFIER { PARSER_PROCESS_RULE( Type, IDENTIFIER ); $$ = new CCustomType($1);}
     ;
 
-StatementS: %empty
+StatementS: %empty { $$ = nullptr; }
 	| Statement StatementS { PARSER_PROCESS_RULE( StatementS, ); $$ = new CStatementS($1, $2);}
 	;
 
@@ -106,11 +144,11 @@ Expression: Expression AND Expression { PARSER_PROCESS_RULE( Expression, Express
     | LPAREN Expression RPAREN { PARSER_PROCESS_RULE( Expression, LPAREN Expression RPAREN ); $$ = new CParensExpression($2);}
     ;
 
-ExpressionParamS: %empty
+ExpressionParamS: %empty { $$ = nullptr; }
 	| Expression AddittionalExpressionParamS { PARSER_PROCESS_RULE( ExpressionParamS, ); $$ = new CExpressionParamS($1, $2);}
 	;
 
-AddittionalExpressionParamS: %empty
+AddittionalExpressionParamS: %empty { $$ = nullptr; }
 	| AddittionalExpressionParamS AddittionalExpressionParam { PARSER_PROCESS_RULE( AddittionalExpressionParamS, ); $$ = new CAddittionalExpressionParamS($1, $2);}
 	;
 

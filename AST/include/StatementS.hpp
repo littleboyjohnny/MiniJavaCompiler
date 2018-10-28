@@ -19,7 +19,7 @@ public:
 
 private:
     const IStatement * const statement;
-    const IStatementS * const statementS
+    const IStatementS * const statementS;
 };
 
 #endif //MINIJAVACOMPILER_STATEMENTS_HPP
