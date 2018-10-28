@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class SquarebracketsExpression : public IExpression
+class CSquarebracketsExpression : public IExpression
 {
 public:
-    SquarebracketsExpression( const IExpression* const _expression,
+    CSquarebracketsExpression( const IExpression* const _expression,
                               const IExpression* const _squarebraketsExpression) :
                               expression( _expression ),
                               squarebraketsExpression( _squarebraketsExpression )

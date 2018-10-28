@@ -6,9 +6,9 @@
 #include "../interfaces/IClassDeclarationS.h"
 #include "../interfaces/IVisitor.h"
 
-class Goal : public IGoal {
+class CGoal : public IGoal {
 public:
-    Goal( const IMainClass* const mainClass1, const IClassDeclarationS* const classDeclarationS1 ) :
+    CGoal( const IMainClass* const mainClass1, const IClassDeclarationS* const classDeclarationS1 ) :
             mainClass( mainClass1 ),
             classDeclarationS( classDeclarationS1 )
             {}

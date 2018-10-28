@@ -8,7 +8,7 @@
 
 class CArrayAssignmentStatement : public IStatement {
 public:
-    CArrayAssignmentStatement( const IdentifierExpression * const _arrayName,
+    CArrayAssignmentStatement( const CIdentifierExpression * const _arrayName,
                                const IExpression * const _indexExpression,
                                const IExpression * const _expression ) :
         arrayName( _arrayName ),
@@ -22,7 +22,7 @@ public:
     }
 
 private:
-    const IdentifierExpression * const arrayName;
+    const CIdentifierExpression * const arrayName;
     const IExpression * const indexExpression;
     const IExpression * const expression;
 };

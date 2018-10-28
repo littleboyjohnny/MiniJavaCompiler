@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class DotExpression : public IExpression
+class CDotExpression : public IExpression
 {
 public:
-    DotExpression( const IExpression* const _expression,
+    CDotExpression( const IExpression* const _expression,
             const IExpression* const _parenExpression ) :
             expression( _expression ),
             parenExpression( _parenExpression )

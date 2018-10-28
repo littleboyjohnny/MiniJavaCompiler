@@ -7,7 +7,7 @@
 
 class CVarAssignmentStatement : public IStatement {
 public:
-    CVarAssignmentStatement( const IdentifierExpression * const _varName,
+    CVarAssignmentStatement( const CIdentifierExpression * const _varName,
                              const IExpression * const _expression ) :
         varName( _varName ),
         expression( _expression )
@@ -19,7 +19,7 @@ public:
     }
 
 private:
-    const IdentifierExpression * const varName;
+    const CIdentifierExpression * const varName;
     const IExpression * const expression;
 };
 

@@ -5,10 +5,10 @@
 #include "../interfaces/IVisitor.h"
 #include "IdentifierExpression.hpp"
 
-class NewIdentifierExpression : public IExpression
+class CNewIdentifierExpression : public IExpression
 {
 public:
-    NewIdentifierExpression( const IdentifierExpression* const _identifier ) : identifier( _identifier ) {}
+    CNewIdentifierExpression( const CIdentifierExpression* const _identifier ) : identifier( _identifier ) {}
 
     void Accept( IVisitor* visitor )
     {
@@ -16,7 +16,7 @@ public:
     }
 
 private:
-    const IdentifierExpression* const identifier;
+    const CIdentifierExpression* const identifier;
 };
 
 #endif //MINIJAVACOMPILER_NEWIDENTIFIEREXPRESSION_HPP

@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class LengthExpression : public IExpression
+class CLengthExpression : public IExpression
 {
 public:
-    LengthExpression( const IExpression* const _expression ) : expression( _expression ) {}
+    CLengthExpression( const IExpression* const _expression ) : expression( _expression ) {}
 
     void Accept( IVisitor* visitor )
     {

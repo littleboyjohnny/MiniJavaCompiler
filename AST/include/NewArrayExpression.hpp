@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class NewArrayExpression : public IExpression
+class CNewArrayExpression : public IExpression
 {
 public:
-    NewArrayExpression( const IExpression* const _expression ) : expression( _expression ) {}
+    CNewArrayExpression( const IExpression* const _expression ) : expression( _expression ) {}
 
     void Accept( IVisitor* visitor )
     {

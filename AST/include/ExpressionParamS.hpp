@@ -6,10 +6,10 @@
 #include "../interfaces/IAdditionalExpressionParamS.h"
 #include "../interfaces/IVisitor.h"
 
-class ExpressionParamS : public IExpressionParamS
+class CExpressionParamS : public IExpressionParamS
 {
 public:
-    ExpressionParamS( const IExpression* const _expression,
+    CExpressionParamS( const IExpression* const _expression,
             const IAdditionalExpressionParamS* const _addittionalExpressionParamS) :
             expression(_expression),
             addittionalExpressionParamS(_addittionalExpressionParamS)

@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class LessExpression : public IExpression
+class CLessExpression : public IExpression
 {
 public:
-    LessExpression( const IExpression* const _leftExpression,
+    CLessExpression( const IExpression* const _leftExpression,
                     const IExpression* const _rightExpression ) :
             leftExpression( _leftExpression ),
             rightExpression( _rightExpression )

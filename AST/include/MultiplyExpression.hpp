@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class MultiplyExpression : public IExpression
+class CMultiplyExpression : public IExpression
 {
 public:
-    MultiplyExpression( const IExpression* const _leftExpression,
+    CMultiplyExpression( const IExpression* const _leftExpression,
                         const IExpression* const _rightExpression ) :
             leftExpression( _leftExpression ),
             rightExpression( _rightExpression )

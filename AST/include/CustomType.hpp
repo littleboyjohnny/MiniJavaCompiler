@@ -7,7 +7,7 @@
 
 class CCustomType : public IType {
 public:
-    CCustomType( const IdentifierExpression * const _typeName ) :
+    CCustomType( const CIdentifierExpression * const _typeName ) :
         typeName( _typeName )
     {}
 
@@ -17,7 +17,7 @@ public:
     }
 
 private:
-    const IdentifierExpression * const typeName;
+    const CIdentifierExpression * const typeName;
 };
 
 #endif //MINIJAVACOMPILER_CUSTOMTYPE_HPP

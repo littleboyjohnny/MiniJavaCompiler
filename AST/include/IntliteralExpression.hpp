@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class IntliteralExpression : public IExpression
+class CIntliteralExpression : public IExpression
 {
 public:
-    IntliteralExpression( const int _intliteral ) : intliteral( _intliteral ) {}
+    CIntliteralExpression( const int _intliteral ) : intliteral( _intliteral ) {}
 
     void Accept( IVisitor* visitor )
     {

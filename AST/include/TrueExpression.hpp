@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class TrueExpression : public IExpression
+class CTrueExpression : public IExpression
 {
 public:
-    TrueExpression(){}
+    CTrueExpression(){}
 
     void Accept( IVisitor* visitor )
     {

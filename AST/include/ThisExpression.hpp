@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class ThisExpression : public IExpression
+class CThisExpression : public IExpression
 {
 public:
-    ThisExpression(){}
+    CThisExpression(){}
 
     void Accept( IVisitor* visitor )
     {

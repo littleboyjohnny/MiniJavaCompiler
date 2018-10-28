@@ -4,10 +4,10 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
-class NotExpression : public IExpression
+class CNotExpression : public IExpression
 {
 public:
-    NotExpression( const IExpression* const _expression ) : expression( _expression ) {}
+    CNotExpression( const IExpression* const _expression ) : expression( _expression ) {}
 
     void Accept( IVisitor* visitor )
     {

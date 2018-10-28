@@ -13,7 +13,7 @@
 class CParams : public IParams {
 public:
     CParams( const IType * const _type,
-             const IdentifierExpression * const _identifier,
+             const CIdentifierExpression * const _identifier,
              const IAdditionalParamS * const _additionalParamS ) :
         type( _type ),
         identifier( _identifier ),
@@ -27,7 +27,7 @@ public:
 
 private:
     const IType * const type;
-    const IdentifierExpression * const identifier;
+    const CIdentifierExpression * const identifier;
     const IAdditionalParamS * const additionalParamS;
 };
 
