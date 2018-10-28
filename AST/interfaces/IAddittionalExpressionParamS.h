@@ -1,7 +1,7 @@
-#include "IAcceptable.h"
-
 #ifndef COMPILERAST_IADDITTIONALEXPRESSIONPARAMS_H
 #define COMPILERAST_IADDITTIONALEXPRESSIONPARAMS_H
+
+#include "IAcceptable.h"
 
 class IAddittionalExpressionParamS : public IAcceptable {
 

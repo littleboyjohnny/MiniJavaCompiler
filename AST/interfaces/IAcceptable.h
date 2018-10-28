@@ -1,7 +1,7 @@
-#include "IVisitor.h"
-
 #ifndef COMPILERAST_IACCEPTABLE_H
 #define COMPILERAST_IACCEPTABLE_H
+
+class IVisitor;
 
 class IAcceptable {
 public:

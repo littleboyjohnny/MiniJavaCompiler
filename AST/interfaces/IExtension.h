@@ -1,7 +1,7 @@
-#include "IAcceptable.h"
-
 #ifndef COMPILERAST_IEXTENSION_H
 #define COMPILERAST_IEXTENSION_H
+
+#include "IAcceptable.h"
 
 class IExtension : public IAcceptable {
 

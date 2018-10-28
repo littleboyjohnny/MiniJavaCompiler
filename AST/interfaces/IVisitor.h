@@ -1,5 +1,3 @@
-#include "IAcceptable.h"
-
 #ifndef COMPILERAST_IVISITOR_H
 #define COMPILERAST_IVISITOR_H
 
