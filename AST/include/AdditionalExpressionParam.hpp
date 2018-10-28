@@ -16,7 +16,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IExpression* const expression;
 };
 #endif //MINIJAVACOMPILER_ADDITTIONALEXPRESSIONPARAM_HPP

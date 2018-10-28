@@ -18,7 +18,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const CTerminalIdentifier * const varName;
     const IExpression * const expression;
 };

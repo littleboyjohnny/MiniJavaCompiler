@@ -16,7 +16,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const CTerminalIntliteral* const intliteral;
 };
 

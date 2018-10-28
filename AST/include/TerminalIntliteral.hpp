@@ -13,7 +13,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const int intliteral;
 };
 

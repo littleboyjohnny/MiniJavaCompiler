@@ -14,7 +14,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
 };
 
 #endif //MINIJAVACOMPILER_TRUEEXPRESSION_HPP

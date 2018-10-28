@@ -20,7 +20,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IExpression* const expression;
     const IAdditionalExpressionParamS* const addittionalExpressionParamS;
 };

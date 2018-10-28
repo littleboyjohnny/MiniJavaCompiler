@@ -19,7 +19,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IAdditionalExpressionParamS* const additionalExpressionParamS;
     const IAdditionalExpressionParam* const  additionalExpressionParam;
 };

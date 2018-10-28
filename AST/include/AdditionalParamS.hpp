@@ -18,7 +18,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IAdditionalParamS * const additionalParamS;
     const IAdditionalParam * const additionalParam;
 };

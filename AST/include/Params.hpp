@@ -26,7 +26,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IType * const type;
     const CTerminalIdentifier * const identifier;
     const IAdditionalParamS * const additionalParamS;

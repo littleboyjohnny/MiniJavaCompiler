@@ -13,7 +13,7 @@ public:
     {
         visitor->Visit( this );
     }
-private:
+
 };
 
 #endif //MINIJAVACOMPILER_FALSEEXPRESSION_HPP

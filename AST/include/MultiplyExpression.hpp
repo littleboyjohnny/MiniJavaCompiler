@@ -18,7 +18,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IExpression* const leftExpression;
     const IExpression* const rightExpression;
 };

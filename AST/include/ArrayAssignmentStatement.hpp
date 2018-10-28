@@ -21,7 +21,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const CTerminalIdentifier * const arrayName;
     const IExpression * const indexExpression;
     const IExpression * const expression;

@@ -32,7 +32,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IType * const returnType;
     const CTerminalIdentifier * const methodIdentifier;
     const IParams * const params;

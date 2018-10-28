@@ -18,7 +18,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IMethodDeclarationS * const methodDeclarationS;
     const IMethodDeclaration * const methodDeclaration;
 };

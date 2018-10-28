@@ -15,7 +15,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const CTerminalIdentifier* const identifier;
 };
 

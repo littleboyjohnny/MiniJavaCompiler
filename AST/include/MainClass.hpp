@@ -22,11 +22,9 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const CTerminalIdentifier * const className;
     const CTerminalIdentifier * const argName;
     const IStatementS * const statementS;
-
 };
 
 #endif //MINIJAVACOMPILER_MAINCLASS_HPP

@@ -18,7 +18,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     char* identifier;
 };
 

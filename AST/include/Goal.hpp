@@ -18,7 +18,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IMainClass* const mainClass;
     const IClassDeclarationS* const classDeclarationS;
 };

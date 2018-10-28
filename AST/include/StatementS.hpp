@@ -17,7 +17,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IStatement * const statement;
     const IStatementS * const statementS;
 };

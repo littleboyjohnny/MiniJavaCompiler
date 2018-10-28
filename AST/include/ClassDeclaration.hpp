@@ -26,7 +26,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const CTerminalIdentifier * const className;
     const IExtension * const extension;
     const IVarDeclarationS * const varDeclarationS;

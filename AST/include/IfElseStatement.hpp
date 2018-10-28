@@ -22,7 +22,6 @@ public:
         visitor->Visit( this );
     }
 
-private:
     const IExpression * const condition;
     const IStatement * const ifStatement;
     const IStatement * const elseStatement;
