@@ -3,11 +3,11 @@
 
 #include "../interfaces/IType.h"
 #include "../interfaces/IVisitor.h"
-#include "IdentifierExpression.hpp"
+#include "TerminalIdentifier.hpp"
 
 class CCustomType : public IType {
 public:
-    CCustomType( const CIdentifierExpression * const _typeName ) :
+    CCustomType( const CTerminalIdentifier * const _typeName ) :
         typeName( _typeName )
     {}
 
@@ -17,7 +17,7 @@ public:
     }
 
 private:
-    const CIdentifierExpression * const typeName;
+    const CTerminalIdentifier * const typeName;
 };
 
 #endif //MINIJAVACOMPILER_CUSTOMTYPE_HPP

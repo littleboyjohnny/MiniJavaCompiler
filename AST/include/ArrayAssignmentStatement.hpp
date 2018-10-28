@@ -4,11 +4,11 @@
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
-#include "IdentifierExpression.hpp"
+#include "TerminalIdentifier.hpp"
 
 class CArrayAssignmentStatement : public IStatement {
 public:
-    CArrayAssignmentStatement( const CIdentifierExpression * const _arrayName,
+    CArrayAssignmentStatement( const CTerminalIdentifier * const _arrayName,
                                const IExpression * const _indexExpression,
                                const IExpression * const _expression ) :
         arrayName( _arrayName ),
@@ -22,7 +22,7 @@ public:
     }
 
 private:
-    const CIdentifierExpression * const arrayName;
+    const CTerminalIdentifier * const arrayName;
     const IExpression * const indexExpression;
     const IExpression * const expression;
 };

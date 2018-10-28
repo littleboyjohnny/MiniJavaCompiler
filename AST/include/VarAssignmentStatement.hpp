@@ -3,11 +3,11 @@
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
-#include "IdentifierExpression.hpp"
+#include "TerminalIdentifier.hpp"
 
 class CVarAssignmentStatement : public IStatement {
 public:
-    CVarAssignmentStatement( const CIdentifierExpression * const _varName,
+    CVarAssignmentStatement( const CTerminalIdentifier * const _varName,
                              const IExpression * const _expression ) :
         varName( _varName ),
         expression( _expression )
@@ -19,7 +19,7 @@ public:
     }
 
 private:
-    const CIdentifierExpression * const varName;
+    const CTerminalIdentifier * const varName;
     const IExpression * const expression;
 };
 

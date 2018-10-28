@@ -7,13 +7,14 @@
 
 #include "../interfaces/IParams.h"
 #include "../interfaces/IType.h"
-#include "IdentifierExpression.hpp"
 #include "../interfaces/IAdditionalParamS.h"
+#include "TerminalIdentifier.hpp"
+
 
 class CParams : public IParams {
 public:
     CParams( const IType * const _type,
-             const CIdentifierExpression * const _identifier,
+             const CTerminalIdentifier * const _identifier,
              const IAdditionalParamS * const _additionalParamS ) :
         type( _type ),
         identifier( _identifier ),
@@ -27,7 +28,7 @@ public:
 
 private:
     const IType * const type;
-    const CIdentifierExpression * const identifier;
+    const CTerminalIdentifier * const identifier;
     const IAdditionalParamS * const additionalParamS;
 };
 

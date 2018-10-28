@@ -3,12 +3,12 @@
 
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
-#include "IdentifierExpression.hpp"
+#include "TerminalIdentifier.hpp"
 
 class CNewIdentifierExpression : public IExpression
 {
 public:
-    CNewIdentifierExpression( const CIdentifierExpression* const _identifier ) : identifier( _identifier ) {}
+    CNewIdentifierExpression( const CTerminalIdentifier* const _identifier ) : identifier( _identifier ) {}
 
     void Accept( IVisitor* visitor )
     {
@@ -16,7 +16,7 @@ public:
     }
 
 private:
-    const CIdentifierExpression* const identifier;
+    const CTerminalIdentifier* const identifier;
 };
 
 #endif //MINIJAVACOMPILER_NEWIDENTIFIEREXPRESSION_HPP
