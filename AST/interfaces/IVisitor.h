@@ -1,11 +1,101 @@
 #ifndef COMPILERAST_IVISITOR_H
 #define COMPILERAST_IVISITOR_H
 
+class CAdditionalExpressionParam;
+class CAdditionalExpressionParamS;
+class CAdditionalParam;
+class CAdditionalParamS;
+class CAndExpression;
+class CArrayAssignmentStatement;
+class CBooleanType;
+class CCurlyBraceStatement;
+class CCustomType;
+class CDotExpression;
+class CExpressionParamS;
+class CFalseExpression;
+class CGoal;
+class CIdentifierExpression;
+class CIfElseStatement;
+class CIntArrayType;
+class CIntliteralExpression;
+class CIntType;
+class CLengthExpression;
+class CLessExpression;
+class CMinusExpression;
+class CMultiplyExpression;
+class CNewArrayExpression;
+class CNewIdentifierExpression;
+class CNotExpression;
+class CParams;
+class CParensExpression;
+class CPlusExpression;
+class CPrintlnStatement;
+class CSquarebracketsExpression;
+class CStatementS;
+class CTerminalIdentifier;
+class CTerminalIntliteral;
+class CThisExpression;
+class CTrueExpression;
+class CVarAssignmentStatement;
+class CWhileStatement;
+class CClassDeclaration;
+class CMainClass;
+class CClassDeclarationS;
+class CExtension;
+class CVarDeclarationS;
+class CVarDeclaration;
+class CMethodDeclarationS;
+class CMethodDeclaration;
+
 class IAcceptable;
 
 class IVisitor {
 public:
-    virtual void Visit( IAcceptable* acceptable ) = 0; //// TODO: добавить перегрузку для каждого нетерминала
+    virtual void Visit( CAdditionalExpressionParam* acceptable ) = 0;
+    virtual void Visit( CAdditionalExpressionParamS* acceptable ) = 0;
+    virtual void Visit( CAdditionalParam* acceptable ) = 0;
+    virtual void Visit( CAdditionalParamS* acceptable ) = 0;
+    virtual void Visit( CAndExpression* acceptable ) = 0;
+    virtual void Visit( CArrayAssignmentStatement* acceptable ) = 0;
+    virtual void Visit( CBooleanType* acceptable ) = 0;
+    virtual void Visit( CClassDeclaration* acceptable ) = 0;
+    virtual void Visit( CClassDeclarationS* acceptable ) = 0;
+    virtual void Visit( CCurlyBraceStatement* acceptable ) = 0;
+    virtual void Visit( CCustomType* acceptable ) = 0;
+    virtual void Visit( CDotExpression* acceptable ) = 0;
+    virtual void Visit( CExpressionParamS* acceptable ) = 0;
+    virtual void Visit( CExtension* acceptable ) = 0;
+    virtual void Visit( CFalseExpression* acceptable ) = 0;
+    virtual void Visit( CGoal* acceptable ) = 0;
+    virtual void Visit( CIdentifierExpression* acceptable ) = 0;
+    virtual void Visit( CIfElseStatement* acceptable ) = 0;
+    virtual void Visit( CIntArrayType* acceptable ) = 0;
+    virtual void Visit( CIntliteralExpression* acceptable ) = 0;
+    virtual void Visit( CIntType* acceptable ) = 0;
+    virtual void Visit( CLengthExpression* acceptable ) = 0;
+    virtual void Visit( CLessExpression* acceptable ) = 0;
+    virtual void Visit( CMainClass* acceptable ) = 0;
+    virtual void Visit( CMethodDeclaration* acceptable ) = 0;
+    virtual void Visit( CMethodDeclarationS* acceptable ) = 0;
+    virtual void Visit( CMinusExpression* acceptable ) = 0;
+    virtual void Visit( CMultiplyExpression* acceptable ) = 0;
+    virtual void Visit( CNewArrayExpression* acceptable ) = 0;
+    virtual void Visit( CNewIdentifierExpression* acceptable ) = 0;
+    virtual void Visit( CNotExpression* acceptable ) = 0;
+    virtual void Visit( CParams* acceptable ) = 0;
+    virtual void Visit( CParensExpression* acceptable ) = 0;
+    virtual void Visit( CPlusExpression* acceptable ) = 0;
+    virtual void Visit( CPrintlnStatement* acceptable ) = 0;
+    virtual void Visit( CSquarebracketsExpression* acceptable ) = 0;
+    virtual void Visit( CStatementS* acceptable ) = 0;
+    virtual void Visit( CTerminalIdentifier* acceptable ) = 0;
+    virtual void Visit( CTerminalIntliteral* acceptable ) = 0;
+    virtual void Visit( CThisExpression* acceptable ) = 0;
+    virtual void Visit( CTrueExpression* acceptable ) = 0;
+    virtual void Visit( CVarAssignmentStatement* acceptable ) = 0;
+    virtual void Visit( CVarDeclaration* acceptable ) = 0;
+    virtual void Visit( CVarDeclarationS* acceptable ) = 0;
+    virtual void Visit( CWhileStatement* acceptable ) = 0;
 };
 
-#endif //COMPILERAST_IVISITOR_H
+#endif
