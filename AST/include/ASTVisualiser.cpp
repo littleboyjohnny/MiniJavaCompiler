@@ -56,8 +56,8 @@ CASTVisualiser::~CASTVisualiser() {
     fclose(file);
 }
 
-void CASTVisualiser::printEdge(const char * from, const char * to) {
-    fprintf(file, "\t%s -> %s;\n", from, to);
+void CASTVisualiser::printEdge(const void * from, const void * to) {
+    fprintf(file, "\t%d -> %d;\n", (const long long)from, (const long long)to);
 }
 
 void CASTVisualiser::Visit( CAdditionalExpressionParam* acceptable ) {
@@ -121,8 +121,8 @@ void CASTVisualiser::Visit( CFalseExpression* acceptable ) {
 }
 
 void CASTVisualiser::Visit( CGoal* acceptable ) {
-    printEdge("Goal", "MainClass");
-    printEdge("Goal", "ClassDeclarationS");
+    printEdge(acceptable, acceptable->mainClass);
+    printEdge(acceptable, acceptable->classDeclarationS);
 }
 
 void CASTVisualiser::Visit( CIdentifierExpression* acceptable ) {
