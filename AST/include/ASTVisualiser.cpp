@@ -193,13 +193,13 @@ void CASTVisualiser::Visit( const CIntType* acceptable ) {
     ////TODO
 }
 
-void CASTVisualiser::Visit( const CLengthExpression* acceptable ) {
+void CASTVisualiser::Visit( const CLengthExpression* acceptable ) const {
     printEdge( acceptable, acceptable->expression );
 
     acceptable->expression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CLessExpression* acceptable ) {
+void CASTVisualiser::Visit( const CLessExpression* acceptable ) const {
     printEdge( acceptable, acceptable->leftExpression );
     printEdge( acceptable, acceptable->rightExpression );
 
@@ -207,7 +207,7 @@ void CASTVisualiser::Visit( const CLessExpression* acceptable ) {
     acceptable->rightExpression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CMainClass* acceptable ) {
+void CASTVisualiser::Visit( const CMainClass* acceptable ) const {
     printEdge( acceptable, acceptable->className );
     printEdge( acceptable, acceptable->argName );
     printEdge( acceptable, acceptable->statementS );
@@ -217,7 +217,7 @@ void CASTVisualiser::Visit( const CMainClass* acceptable ) {
     acceptable->statementS->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CMethodDeclaration* acceptable ) {
+void CASTVisualiser::Visit( const CMethodDeclaration* acceptable ) const {
     printEdge( acceptable, acceptable->returnType );
     printEdge( acceptable, acceptable->methodIdentifier );
     printEdge( acceptable, acceptable->params );
@@ -233,7 +233,7 @@ void CASTVisualiser::Visit( const CMethodDeclaration* acceptable ) {
     acceptable->returnExpression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CMethodDeclarationS* acceptable ) {
+void CASTVisualiser::Visit( const CMethodDeclarationS* acceptable ) const {
     printEdge( acceptable, acceptable->methodDeclarationS );
     printEdge( acceptable, acceptable->methodDeclaration );
 
@@ -241,7 +241,7 @@ void CASTVisualiser::Visit( const CMethodDeclarationS* acceptable ) {
     acceptable->methodDeclaration->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CMinusExpression* acceptable ) {
+void CASTVisualiser::Visit( const CMinusExpression* acceptable ) const {
     printEdge( acceptable, acceptable->leftExpression );
     printEdge( acceptable, acceptable->rightExpression );
 
@@ -249,7 +249,7 @@ void CASTVisualiser::Visit( const CMinusExpression* acceptable ) {
     acceptable->-rightExpression>Accept( this );
 }
 
-void CASTVisualiser::Visit( const CMultiplyExpression* acceptable ) {
+void CASTVisualiser::Visit( const CMultiplyExpression* acceptable ) const {
     printEdge( acceptable, acceptable->leftExpression );
     printEdge( acceptable, acceptable->rightExpression );
 
@@ -257,25 +257,25 @@ void CASTVisualiser::Visit( const CMultiplyExpression* acceptable ) {
     acceptable->rightExpression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CNewArrayExpression* acceptable ) {
+void CASTVisualiser::Visit( const CNewArrayExpression* acceptable ) const {
     printEdge( acceptable, acceptable->expression );
 
     acceptable->expression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CNewIdentifierExpression* acceptable ) {
+void CASTVisualiser::Visit( const CNewIdentifierExpression* acceptable ) const {
     printEdge( acceptable, acceptable->identifier );
 
     acceptable->identifier->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CNotExpression* acceptable ) {
+void CASTVisualiser::Visit( const CNotExpression* acceptable ) const {
     printEdge( acceptable, acceptable->expression );
 
     acceptable->expression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CParams* acceptable ) {
+void CASTVisualiser::Visit( const CParams* acceptable ) const {
     printEdge( acceptable, acceptable->type );
     printEdge( acceptable, acceptable->identifier );
     printEdge( acceptable, acceptable->additionalParamS );
@@ -285,13 +285,13 @@ void CASTVisualiser::Visit( const CParams* acceptable ) {
     acceptable->additionalParamS->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CParensExpression* acceptable ) {
+void CASTVisualiser::Visit( const CParensExpression* acceptable ) const {
     printEdge( acceptable, acceptable->expression );
 
     acceptable->expression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CPlusExpression* acceptable ) {
+void CASTVisualiser::Visit( const CPlusExpression* acceptable ) const {
     printEdge( acceptable, acceptable->leftExpression );
     printEdge( acceptable, acceptable->rightExpression );
 
@@ -299,13 +299,13 @@ void CASTVisualiser::Visit( const CPlusExpression* acceptable ) {
     acceptable->rightExpression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CPrintlnStatement* acceptable ) {
+void CASTVisualiser::Visit( const CPrintlnStatement* acceptable ) const {
     printEdge( acceptable, acceptable->expression );
 
     acceptable->expression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CSquarebracketsExpression* acceptable ) {
+void CASTVisualiser::Visit( const CSquarebracketsExpression* acceptable ) const {
     printEdge( acceptable, acceptable->expression );
     printEdge( acceptable, acceptable->squarebraketsExpression );
 
@@ -313,7 +313,7 @@ void CASTVisualiser::Visit( const CSquarebracketsExpression* acceptable ) {
     acceptable->squarebraketsExpression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CStatementS* acceptable ) {
+void CASTVisualiser::Visit( const CStatementS* acceptable ) const {
     printEdge( acceptable, acceptable->statement );
     printEdge( acceptable, acceptable->statementS );
 
@@ -321,27 +321,27 @@ void CASTVisualiser::Visit( const CStatementS* acceptable ) {
     acceptable->statementS->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CTerminalIdentifier* acceptable ) {
+void CASTVisualiser::Visit( const CTerminalIdentifier* acceptable ) const {
     printEdge( acceptable, acceptable->identifier );
 
     acceptable->identifier->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CTerminalIntliteral* acceptable ) {
+void CASTVisualiser::Visit( const CTerminalIntliteral* acceptable ) const {
     printEdge( acceptable, acceptable->intliteral );
 
     acceptable->intliteral->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CThisExpression* acceptable ) {
+void CASTVisualiser::Visit( const CThisExpression* acceptable ) const {
 
 }
 
-void CASTVisualiser::Visit( const CTrueExpression* acceptable ) {
+void CASTVisualiser::Visit( const CTrueExpression* acceptable ) const {
 
 }
 
-void CASTVisualiser::Visit( const CVarAssignmentStatement* acceptable ) {
+void CASTVisualiser::Visit( const CVarAssignmentStatement* acceptable ) const {
     printEdge( acceptable, acceptable->varName );
     printEdge( acceptable, acceptable->expression );
 
@@ -349,7 +349,7 @@ void CASTVisualiser::Visit( const CVarAssignmentStatement* acceptable ) {
     acceptable->expression->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CVarDeclaration* acceptable ) {
+void CASTVisualiser::Visit( const CVarDeclaration* acceptable ) const {
     printEdge( acceptable, acceptable->type );
     printEdge( acceptable, acceptable->identifier );
 
@@ -357,7 +357,7 @@ void CASTVisualiser::Visit( const CVarDeclaration* acceptable ) {
     acceptable->identifier->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CVarDeclarationS* acceptable ) {
+void CASTVisualiser::Visit( const CVarDeclarationS* acceptable ) const {
     printEdge( acceptable, acceptable->varDeclarationS );
     printEdge( acceptable, acceptable->varDeclaration );
 
@@ -365,7 +365,7 @@ void CASTVisualiser::Visit( const CVarDeclarationS* acceptable ) {
     acceptable->varDeclaration->Accept( this );
 }
 
-void CASTVisualiser::Visit( const CWhileStatement* acceptable ) {
+void CASTVisualiser::Visit( const CWhileStatement* acceptable ) const {
     printEdge( acceptable, acceptable->condition );
     printEdge( acceptable, acceptable->statement );
 

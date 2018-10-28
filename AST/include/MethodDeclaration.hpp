@@ -27,7 +27,7 @@ public:
         returnExpression( _returnExpression )
     {}
 
-    void Accept( IVisitor * visitor )
+    void Accept( const IVisitor * visitor )
     {
         visitor->Visit( this );
     }

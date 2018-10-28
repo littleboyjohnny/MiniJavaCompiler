@@ -9,7 +9,7 @@ class CParensExpression : public IExpression
 public:
     CParensExpression( const IExpression* const _expression ) : expression( _expression ) {}
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }

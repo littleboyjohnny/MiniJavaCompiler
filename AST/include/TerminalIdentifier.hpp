@@ -13,7 +13,7 @@ public:
         identifier[size] = '\0';
     }
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }

@@ -9,7 +9,7 @@ class CThisExpression : public IExpression
 public:
     CThisExpression(){}
 
-    void Accept( IVisitor* visitor )
+    void Accept( const IVisitor* visitor )
     {
         visitor->Visit( this );
     }
