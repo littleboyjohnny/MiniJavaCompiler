@@ -160,7 +160,7 @@ MULTIPLY	"*"{WS}
 
 {MULTIPLY}	{ LEXER_PROCESS_TOKEN(MULTIPLY); return MULTIPLY; }
 
-{IDENTIFIER}	{ LEXER_PROCESS_TOKEN(IDENTIFIER); yylval.terminalIdentifier = new CTerminalIdentifier(yytext); return IDENTIFIER; }
+{IDENTIFIER}	{ LEXER_PROCESS_TOKEN(IDENTIFIER); yylval.terminalIdentifier = new CTerminalIdentifier(yytext, yyleng); return IDENTIFIER; }
 
 %%
 
