@@ -5,6 +5,7 @@
 
 %locations
 %verbose
+%parse-param {void*& node}
 
 %union {
 	class IGoal* goal;
@@ -65,7 +66,7 @@
 
 %%
 
-Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); $$ = new CGoal($1, $2);}
+Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); node = new CGoal($1, $2); $$ = (CGoal*)node;}
     ;
 
 ClassDeclarationS: %empty { $$ = nullptr; }

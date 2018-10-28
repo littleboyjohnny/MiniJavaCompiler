@@ -1,3 +1,6 @@
+ast: lex.yy.c parser.tab.c AST/include/ASTVisualiser.cpp
+	g++ -ggdb -std=c++17 lexer/lex.yy.c parser/parser.tab.c lexer/lexer.cpp parser/parser.cpp astBuilder.cpp AST/include/ASTVisualiser.cpp -o build/tree.out
+
 parser: lex.yy.c parser.tab.c
 	g++ -ggdb -std=c++17 -DPARSER_MAIN -DPARSER_DEBUG lexer/lex.yy.c parser/parser.tab.c lexer/lexer.cpp parser/parser.cpp -o build/parser.out
 

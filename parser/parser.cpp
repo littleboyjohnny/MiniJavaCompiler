@@ -12,9 +12,9 @@ int main( int argc, char** argv )
 }
 #endif
 
-void yyerror( const char * str )
+void yyerror (void*& node, char const *msg)
 {
-	fprintf( stderr,"ошибка: %s\n", str );
+	fprintf( stderr,"ошибка: %s\n", msg );
 }
 
 void parserPrintDebugMessage( const char * left, const char * right )

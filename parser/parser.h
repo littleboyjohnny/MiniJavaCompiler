@@ -76,7 +76,7 @@ int main( int argc, char** argv );
 extern "C" int yylex();
 extern "C" int yyparse();
 
-void yyerror( const char * str );
+void yyerror (void*& node, char const *msg);
 
 void parserPrintDebugMessage( const char * left, const char * right );
 

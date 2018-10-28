@@ -15,6 +15,12 @@ add_custom_target(
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+add_custom_target(
+        ast
+        COMMAND make ast
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 # fake executable
 # add all source files just for clion inspection support
-add_executable(fake parser/parser.cpp lexer/lexer.cpp AST/include/ AST/interfaces/)
+add_executable(fake parser/parser.cpp lexer/lexer.cpp AST/include/ AST/interfaces/ astBuilder.cpp)
