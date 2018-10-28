@@ -2,15 +2,20 @@
 #define MINIJAVACOMPILER_DOTEXPRESSION_HPP
 
 #include "../interfaces/IExpression.h"
+#include "../interfaces/IExpressionParamS.h"
 #include "../interfaces/IVisitor.h"
+
+#include "../include/TerminalIdentifier.hpp"
 
 class CDotExpression : public IExpression
 {
 public:
     CDotExpression( const IExpression* const _expression,
-            const IExpression* const _parenExpression ) :
+            const CTerminalIdentifier * const _identifier,
+            const IExpressionParamS* const _expressionParamS ) :
             expression( _expression ),
-            parenExpression( _parenExpression )
+            identifier( _identifier ),
+            expressionParamS( _expressionParamS )
     {}
 
     void Accept( IVisitor* visitor )
@@ -19,8 +24,9 @@ public:
     }
 
 private:
-    const IExpression* const expression;
-    const IExpression* const parenExpression;
+    const IExpression * const expression;
+    const CTerminalIdentifier * const identifier;
+    const IExpressionParamS * const expressionParamS;
 };
 
 #endif //MINIJAVACOMPILER_DOTEXPRESSION_HPP

@@ -19,12 +19,12 @@ public:
             const IVarDeclarationS * const _varDeclarationS,
             const IStatementS * const _statementS,
             const IExpression * const _returnExpression ) :
-            returnType( _returnType ),
-            methodIdentifier( _methodIdentifier ),
-            params( _params ),
-            varDeclarationS( _varDeclarationS ),
-            statementS( _statementS ),
-            returnExpression( _returnExpression )
+        returnType( _returnType ),
+        methodIdentifier( _methodIdentifier ),
+        params( _params ),
+        varDeclarationS( _varDeclarationS ),
+        statementS( _statementS ),
+        returnExpression( _returnExpression )
     {}
 
     void Accept( IVisitor * visitor )

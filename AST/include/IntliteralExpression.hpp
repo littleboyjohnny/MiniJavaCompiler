@@ -4,10 +4,12 @@
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IVisitor.h"
 
+#include "../include/TerminalIntliteral.hpp"
+
 class CIntliteralExpression : public IExpression
 {
 public:
-    CIntliteralExpression( const int _intliteral ) : intliteral( _intliteral ) {}
+    CIntliteralExpression( const CTerminalIntliteral* const _intliteral ) : intliteral( _intliteral ) {}
 
     void Accept( IVisitor* visitor )
     {
@@ -15,7 +17,7 @@ public:
     }
 
 private:
-    const int intliteral;
+    const CTerminalIntliteral* const intliteral;
 };
 
 #endif //MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP

@@ -27,94 +27,94 @@
 
 %%
 
-Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); }
+Goal: MainClass ClassDeclarationS { PARSER_PROCESS_RULE( Goal, ); $$ = new CGoal($1, $2);}
     ;
 
 ClassDeclarationS: %empty
-	| ClassDeclarationS ClassDeclaration { PARSER_PROCESS_RULE( ClassDeclarationS, ); }
+	| ClassDeclarationS ClassDeclaration { PARSER_PROCESS_RULE( ClassDeclarationS, ); $$ = new CClassDeclarationS($1, $2);}
 	;
 
-MainClass: CLASS IDENTIFIER LCURLYBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LSQUAREBRACKET RSQUAREBRACKET IDENTIFIER RPAREN LCURLYBRACE StatementS RCURLYBRACE RCURLYBRACE { PARSER_PROCESS_RULE( MainClass, ); }
+MainClass: CLASS IDENTIFIER LCURLYBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LSQUAREBRACKET RSQUAREBRACKET IDENTIFIER RPAREN LCURLYBRACE StatementS RCURLYBRACE RCURLYBRACE { PARSER_PROCESS_RULE( MainClass, ); $$ = new CMainClass($2, $12, $15);}
     ;
 
-ClassDeclaration: CLASS IDENTIFIER Extension LCURLYBRACE VarDeclarationS MethodDeclarationS RCURLYBRACE { PARSER_PROCESS_RULE( ClassDeclaration, ); }
+ClassDeclaration: CLASS IDENTIFIER Extension LCURLYBRACE VarDeclarationS MethodDeclarationS RCURLYBRACE { PARSER_PROCESS_RULE( ClassDeclaration, ); $$ = new CClassDeclaration($2, $3, $5, $6);}
     ;
 
 Extension: %empty
-	| EXTENDS IDENTIFIER { PARSER_PROCESS_RULE( Extension, ); }
+	| EXTENDS IDENTIFIER { PARSER_PROCESS_RULE( Extension, ); $$ = new CExtension($2);}
 	;
 
 VarDeclarationS: %empty
-	| VarDeclarationS VarDeclaration { PARSER_PROCESS_RULE( VarDeclarationS, ); }
+	| VarDeclarationS VarDeclaration { PARSER_PROCESS_RULE( VarDeclarationS, ); $$ = new CVarDeclarationS($1, $2);}
 	;
 
-VarDeclaration: Type IDENTIFIER SEMICOLON { PARSER_PROCESS_RULE( VarDeclaration, ); }
+VarDeclaration: Type IDENTIFIER SEMICOLON { PARSER_PROCESS_RULE( VarDeclaration, ); $$ = new CVarDeclaration($1, $2);}
     ;
 
 MethodDeclarationS: %empty
-	| MethodDeclarationS MethodDeclaration { PARSER_PROCESS_RULE( MethodDeclarationS, ); }
+	| MethodDeclarationS MethodDeclaration { PARSER_PROCESS_RULE( MethodDeclarationS, ); $$ = new CMethodDeclarationS($1, $2);}
 	;
 
-MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE { PARSER_PROCESS_RULE( MethodDeclaration, ); }
+MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE { PARSER_PROCESS_RULE( MethodDeclaration, ); $$ = new CMethodDeclarationS($2, $3, $5, $8, $9, $11);}
     ;
 
 Params: %empty
-	| Type IDENTIFIER AdditionalParamS { PARSER_PROCESS_RULE( Params, ); }
+	| Type IDENTIFIER AdditionalParamS { PARSER_PROCESS_RULE( Params, ); $$ = new CParams($1, $2, $3);}
 	;
 
 AdditionalParamS: %empty
-	| AdditionalParamS AdditionalParam { PARSER_PROCESS_RULE( AdditionalParamS, ); }
+	| AdditionalParamS AdditionalParam { PARSER_PROCESS_RULE( AdditionalParamS, ); $$ = new CAdditionalParamS($1, $2);}
 	;
 
-AdditionalParam: COMMA Type IDENTIFIER { PARSER_PROCESS_RULE( AdditionalParam, ); }
+AdditionalParam: COMMA Type IDENTIFIER { PARSER_PROCESS_RULE( AdditionalParam, ); $$ = new CAdditionalParamS($2, $3);}
 	;
 
-Type: INT LSQUAREBRACKET RSQUAREBRACKET { PARSER_PROCESS_RULE( Type, INT LSQUAREBRACKET RSQUAREBRACKET ); }
-    | BOOLEAN { PARSER_PROCESS_RULE( Type, BOOLEAN ); }
-    | INT { PARSER_PROCESS_RULE( Type, INT ); }
-    | IDENTIFIER { PARSER_PROCESS_RULE( Type, IDENTIFIER ); }
+Type: INT LSQUAREBRACKET RSQUAREBRACKET { PARSER_PROCESS_RULE( Type, INT LSQUAREBRACKET RSQUAREBRACKET ); $$ = new CIntArrayType();}
+    | BOOLEAN { PARSER_PROCESS_RULE( Type, BOOLEAN ); $$ = new CBooleanType();}
+    | INT { PARSER_PROCESS_RULE( Type, INT ); $$ = new CIntType();}
+    | IDENTIFIER { PARSER_PROCESS_RULE( Type, IDENTIFIER ); $$ = new CCustomType($1);}
     ;
 
 StatementS: %empty
-	| Statement StatementS { PARSER_PROCESS_RULE( StatementS, ); }
+	| Statement StatementS { PARSER_PROCESS_RULE( StatementS, ); $$ = new CStatementS($1, $2);}
 	;
 
-Statement: LCURLYBRACE StatementS RCURLYBRACE { PARSER_PROCESS_RULE( Statement, LCURLYBRACE StatementS RCURLYBRACE ); }
-    | IF LPAREN Expression RPAREN Statement ELSE Statement { PARSER_PROCESS_RULE( Statement, IF LPAREN Expression RPAREN Statement ELSE Statement ); }
-    | WHILE LPAREN Expression RPAREN Statement { PARSER_PROCESS_RULE( Statement, WHILE LPAREN Expression RPAREN Statement ); }
-    | PRINTLN LPAREN Expression RPAREN SEMICOLON { PARSER_PROCESS_RULE( Statement, PRINTLN LPAREN Expression RPAREN SEMICOLON ); }
-    | IDENTIFIER EQUALS Expression SEMICOLON { PARSER_PROCESS_RULE( Statement, IDENTIFIER EQUALS Expression SEMICOLON ); }
-    | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON { PARSER_PROCESS_RULE( Statement, IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON ); }
+Statement: LCURLYBRACE StatementS RCURLYBRACE { PARSER_PROCESS_RULE( Statement, LCURLYBRACE StatementS RCURLYBRACE ); $$ = new CCurlyBraceStatement($2);}
+    | IF LPAREN Expression RPAREN Statement ELSE Statement { PARSER_PROCESS_RULE( Statement, IF LPAREN Expression RPAREN Statement ELSE Statement ); $$ = new CIfElseStatement($3, $5, $7);}
+    | WHILE LPAREN Expression RPAREN Statement { PARSER_PROCESS_RULE( Statement, WHILE LPAREN Expression RPAREN Statement ); $$ = new CWhileStatement($3, $5);}
+    | PRINTLN LPAREN Expression RPAREN SEMICOLON { PARSER_PROCESS_RULE( Statement, PRINTLN LPAREN Expression RPAREN SEMICOLON ); $$ = new CPrintlnStatement($3);}
+    | IDENTIFIER EQUALS Expression SEMICOLON { PARSER_PROCESS_RULE( Statement, IDENTIFIER EQUALS Expression SEMICOLON ); $$ = new CVarAssignmentStatement($1, $3);}
+    | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON { PARSER_PROCESS_RULE( Statement, IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON ); $$ = new CArrayAssignmentStatement($1, $3, $6);}
     ;
 
-Expression: Expression AND Expression { PARSER_PROCESS_RULE( Expression, Expression AND Expression ); }
-	| Expression LESS Expression { PARSER_PROCESS_RULE( Expression, Expression LESS Expression ); }
-	| Expression PLUS Expression { PARSER_PROCESS_RULE( Expression, Expression PLUS Expression ); }
-	| Expression MINUS Expression { PARSER_PROCESS_RULE( Expression, Expression MINUS Expression ); }
-	| Expression MULTIPLY Expression { PARSER_PROCESS_RULE( Expression, Expression MULTIPLY Expression ); }
-    | Expression LSQUAREBRACKET Expression RSQUAREBRACKET { PARSER_PROCESS_RULE( Expression, Expression LSQUAREBRACKET Expression RSQUAREBRACKET ); }
-    | Expression DOTLENGTH { PARSER_PROCESS_RULE( Expression, Expression DOTLENGTH ); }
-    | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN { PARSER_PROCESS_RULE( Expression, Expression DOT IDENTIFIER LPAREN ExpressionParamS RPARE ); }
-    | INTLITERAL { PARSER_PROCESS_RULE( Expression, INTLITERAL ); }
-    | _TRUE { PARSER_PROCESS_RULE( Expression, _TRUE ); }
-    | _FALSE { PARSER_PROCESS_RULE( Expression, _FALSE ); }
-    | IDENTIFIER { PARSER_PROCESS_RULE( Expression, IDENTIFIER ); }
-    | THIS	{ PARSER_PROCESS_RULE( Expression, THIS ); }
-    | NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET { PARSER_PROCESS_RULE( Expression, NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET ); }
-    | NEW IDENTIFIER LPAREN RPAREN { PARSER_PROCESS_RULE( Expression, NEW IDENTIFIER LPAREN RPAREN ); }
-    | NOT Expression { PARSER_PROCESS_RULE( Expression, NOT Expression ); }
-    | LPAREN Expression RPAREN { PARSER_PROCESS_RULE( Expression, LPAREN Expression RPAREN ); }
+Expression: Expression AND Expression { PARSER_PROCESS_RULE( Expression, Expression AND Expression ); $$ = new CAndExpression($1, $3);}
+	| Expression LESS Expression { PARSER_PROCESS_RULE( Expression, Expression LESS Expression ); $$ = new CLessExpression($1, $3);}
+	| Expression PLUS Expression { PARSER_PROCESS_RULE( Expression, Expression PLUS Expression ); $$ = new CPlusExpression($1, $3);}
+	| Expression MINUS Expression { PARSER_PROCESS_RULE( Expression, Expression MINUS Expression ); $$ = new CMinusExpression($1, $3);}
+	| Expression MULTIPLY Expression { PARSER_PROCESS_RULE( Expression, Expression MULTIPLY Expression ); $$ = new CMultiplyExpression($1, $3);}
+    | Expression LSQUAREBRACKET Expression RSQUAREBRACKET { PARSER_PROCESS_RULE( Expression, Expression LSQUAREBRACKET Expression RSQUAREBRACKET ); $$ = new CSquarebracketsExpression($1, $3);}
+    | Expression DOTLENGTH { PARSER_PROCESS_RULE( Expression, Expression DOTLENGTH ); $$ = new CLengthExpression($1);}
+    | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN { PARSER_PROCESS_RULE( Expression, Expression DOT IDENTIFIER LPAREN ExpressionParamS RPARE ); $$ = new CDotExpression($1, $3, $5);}
+    | INTLITERAL { PARSER_PROCESS_RULE( Expression, INTLITERAL ); $$ = new CIntliteralExpression($1);}
+    | _TRUE { PARSER_PROCESS_RULE( Expression, _TRUE ); $$ = new CTrueExpression();}
+    | _FALSE { PARSER_PROCESS_RULE( Expression, _FALSE ); $$ = new CFalseExpression();}
+    | IDENTIFIER { PARSER_PROCESS_RULE( Expression, IDENTIFIER ); $$ = new CIdentifierExpression($1);}
+    | THIS	{ PARSER_PROCESS_RULE( Expression, THIS ); $$ = new CThisExpression();}
+    | NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET { PARSER_PROCESS_RULE( Expression, NEW INT LSQUAREBRACKET Expression RSQUAREBRACKET ); $$ = new CNewArrayExpression($4);}
+    | NEW IDENTIFIER LPAREN RPAREN { PARSER_PROCESS_RULE( Expression, NEW IDENTIFIER LPAREN RPAREN ); $$ = new CNewIdentifierExpression($2);}
+    | NOT Expression { PARSER_PROCESS_RULE( Expression, NOT Expression ); $$ = new CNotExpression($2);}
+    | LPAREN Expression RPAREN { PARSER_PROCESS_RULE( Expression, LPAREN Expression RPAREN ); $$ = new CParensExpression($2);}
     ;
 
 ExpressionParamS: %empty
-	| Expression AddittionalExpressionParamS { PARSER_PROCESS_RULE( ExpressionParamS, ); }
+	| Expression AddittionalExpressionParamS { PARSER_PROCESS_RULE( ExpressionParamS, ); $$ = new CExpressionParamS($1, $2);}
 	;
 
 AddittionalExpressionParamS: %empty
-	| AddittionalExpressionParamS AddittionalExpressionParam { PARSER_PROCESS_RULE( AddittionalExpressionParamS, ); }
+	| AddittionalExpressionParamS AddittionalExpressionParam { PARSER_PROCESS_RULE( AddittionalExpressionParamS, ); $$ = new CAddittionalExpressionParamS($1, $2);}
 	;
 
-AddittionalExpressionParam: COMMA Expression { PARSER_PROCESS_RULE( AddittionalExpressionParam, ); }
+AddittionalExpressionParam: COMMA Expression { PARSER_PROCESS_RULE( AddittionalExpressionParam, ); $$ = new CAdditionalExpressionParam($2);}
 	;
 
 %%
