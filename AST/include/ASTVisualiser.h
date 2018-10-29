@@ -21,7 +21,7 @@ public:
     void Visit( const CClassDeclarationS* acceptable ) const;
     void Visit( const CCurlyBraceStatement* acceptable ) const;
     void Visit( const CCustomType* acceptable ) const;
-    void Visit( const CDotExpression* acceptable ) const;
+    void Visit( const CCallExpression* acceptable ) const;
     void Visit( const CExpressionParamS* acceptable ) const;
     void Visit( const CExtension* acceptable ) const;
     void Visit( const CFalseExpression* acceptable ) const;

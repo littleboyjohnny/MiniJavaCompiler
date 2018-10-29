@@ -7,10 +7,10 @@
 
 #include "../include/TerminalIdentifier.hpp"
 
-class CDotExpression : public IExpression
+class CCallExpression : public IExpression
 {
 public:
-    CDotExpression( const IExpression* const _expression,
+    CCallExpression( const IExpression* const _expression,
             const CTerminalIdentifier * const _identifier,
             const IExpressionParamS* const _expressionParamS ) :
             expression( _expression ),

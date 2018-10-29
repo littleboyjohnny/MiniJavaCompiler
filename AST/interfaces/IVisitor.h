@@ -9,7 +9,7 @@ class CArrayAssignmentStatement;
 class CBooleanType;
 class CCurlyBraceStatement;
 class CCustomType;
-class CDotExpression;
+class CCallExpression;
 class CExpressionParamS;
 class CFalseExpression;
 class CGoal;
@@ -58,7 +58,7 @@ public:
     virtual void Visit( const CClassDeclarationS* acceptable ) const = 0;
     virtual void Visit( const CCurlyBraceStatement* acceptable ) const = 0;
     virtual void Visit( const CCustomType* acceptable ) const = 0;
-    virtual void Visit( const CDotExpression* acceptable ) const = 0;
+    virtual void Visit( const CCallExpression* acceptable ) const = 0;
     virtual void Visit( const CExpressionParamS* acceptable ) const = 0;
     virtual void Visit( const CExtension* acceptable ) const = 0;
     virtual void Visit( const CFalseExpression* acceptable ) const = 0;

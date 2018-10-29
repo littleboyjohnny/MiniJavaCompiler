@@ -174,7 +174,7 @@ void CASTVisualiser::Visit( const CCustomType* acceptable ) const {
     addLabel(acceptable, "CustomType");
 }
 
-void CASTVisualiser::Visit( const CDotExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CCallExpression* acceptable ) const {
     if (acceptable->expression) {
         printEdge(acceptable, acceptable->expression);
         acceptable->expression->Accept(this);
