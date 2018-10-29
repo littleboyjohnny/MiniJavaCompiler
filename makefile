@@ -18,4 +18,4 @@ lex.yy.c: lexer/lexer.lex
 	mv lex.yy.c lexer/
 
 clean:
-	rm -rf build/* lexer/*.yy.c parser/*.tab.* parser/*.output
+	rm -rf build/* lexer/*.yy.c parser/*.tab.* parser/*.output graph.jpg

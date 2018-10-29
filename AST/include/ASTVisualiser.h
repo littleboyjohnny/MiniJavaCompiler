@@ -7,9 +7,10 @@
 
 class CASTVisualiser : public IVisitor {
 public:
-    CASTVisualiser(const char *);
+    CASTVisualiser( const char * );
     ~CASTVisualiser();
-    void printEdge(const void *,const void *) const;
+    void printEdge( const void *,const void * ) const;
+    void addLabel( const void *, const char * ) const;
     void Visit( const CAdditionalExpressionParam* acceptable ) const;
     void Visit( const CAdditionalExpressionParamS* acceptable ) const;
     void Visit( const CAdditionalParam* acceptable ) const;
@@ -47,14 +48,23 @@ public:
     void Visit( const CPrintlnStatement* acceptable ) const;
     void Visit( const CSquarebracketsExpression* acceptable ) const;
     void Visit( const CStatementS* acceptable ) const;
-    void Visit( const CTerminalIdentifier* acceptable ) const;
-    void Visit( const CTerminalIntliteral* acceptable ) const;
     void Visit( const CThisExpression* acceptable ) const;
     void Visit( const CTrueExpression* acceptable ) const;
     void Visit( const CVarAssignmentStatement* acceptable ) const;
     void Visit( const CVarDeclaration* acceptable ) const;
     void Visit( const CVarDeclarationS* acceptable ) const;
     void Visit( const CWhileStatement* acceptable ) const;
+
+    void Visit( const CTerminalIdentifier* acceptable ) const;
+    void Visit( const CTerminalIntliteral* acceptable ) const;
+    void Visit( const CTerminalAnd* acceptable ) const;
+    void Visit( const CTerminalFalse* acceptable ) const;
+    void Visit( const CTerminalLess* acceptable ) const;
+    void Visit( const CTerminalMinus* acceptable ) const;
+    void Visit( const CTerminalMultiply* acceptable ) const;
+    void Visit( const CTerminalPlus* acceptable ) const;
+    void Visit( const CTerminalThis* acceptable ) const;
+    void Visit( const CTerminalTrue* acceptable ) const;
 
 private:
     FILE* file;
