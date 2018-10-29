@@ -6,7 +6,6 @@
 #include "AdditionalExpressionParamS.hpp"
 #include "AdditionalParam.hpp"
 #include "AdditionalParamS.hpp"
-#include "AndExpression.hpp"
 #include "ArrayAssignmentStatement.hpp"
 #include "BooleanType.hpp"
 #include "CurlyBraceStatement.hpp"
@@ -21,15 +20,11 @@
 #include "IntliteralExpression.hpp"
 #include "IntType.hpp"
 #include "LengthExpression.hpp"
-#include "LessExpression.hpp"
-#include "MinusExpression.hpp"
-#include "MultiplyExpression.hpp"
 #include "NewArrayExpression.hpp"
 #include "NewIdentifierExpression.hpp"
 #include "NotExpression.hpp"
 #include "Params.hpp"
 #include "ParensExpression.hpp"
-#include "PlusExpression.hpp"
 #include "PrintlnStatement.hpp"
 #include "SquarebracketsExpression.hpp"
 #include "StatementS.hpp"
@@ -47,6 +42,7 @@
 #include "VarDeclaration.hpp"
 #include "MethodDeclarationS.hpp"
 #include "MethodDeclaration.hpp"
+#include "BinaryOpExpression.hpp"
 
 CASTVisualiser::CASTVisualiser(const char * filename) {
     file = fopen(filename, "w");
@@ -108,18 +104,6 @@ void CASTVisualiser::Visit( const CAdditionalParamS* acceptable ) const {
         acceptable->additionalParam->Accept(this);
     }
     addLabel(acceptable, "AdditionalParamS");
-}
-
-void CASTVisualiser::Visit( const CAndExpression* acceptable ) const {
-    if (acceptable->leftExpression) {
-        printEdge(acceptable, acceptable->leftExpression);
-        acceptable->leftExpression->Accept(this);
-    }
-    if (acceptable->rightExpression) {
-        printEdge(acceptable, acceptable->rightExpression);
-        acceptable->rightExpression->Accept(this);
-    }
-    addLabel(acceptable, "AndExpression");
 }
 
 void CASTVisualiser::Visit( const CArrayAssignmentStatement* acceptable ) const {
@@ -290,18 +274,6 @@ void CASTVisualiser::Visit( const CLengthExpression* acceptable ) const {
     addLabel(acceptable, "LengthExpression");
 }
 
-void CASTVisualiser::Visit( const CLessExpression* acceptable ) const {
-    if( acceptable->leftExpression ) {
-        printEdge( acceptable, acceptable->leftExpression );
-        acceptable->leftExpression->Accept( this );
-    }
-    if( acceptable->rightExpression ) {
-        printEdge( acceptable, acceptable->rightExpression );
-        acceptable->rightExpression->Accept( this );
-    }
-    addLabel(acceptable, "LessExpression");
-}
-
 void CASTVisualiser::Visit( const CMainClass* acceptable ) const {
     if( acceptable->className ) {
         printEdge( acceptable, acceptable->className );
@@ -358,30 +330,6 @@ void CASTVisualiser::Visit( const CMethodDeclarationS* acceptable ) const {
     addLabel(acceptable, "MethodDeclarationS");
 }
 
-void CASTVisualiser::Visit( const CMinusExpression* acceptable ) const {
-    if( acceptable->leftExpression ) {
-        printEdge( acceptable, acceptable->leftExpression );
-        acceptable->leftExpression->Accept( this );
-    }
-    if( acceptable->rightExpression ) {
-        printEdge( acceptable, acceptable->rightExpression );
-        acceptable->rightExpression->Accept( this );
-    }
-    addLabel(acceptable, "MinusExpression");
-}
-
-void CASTVisualiser::Visit( const CMultiplyExpression* acceptable ) const {
-    if( acceptable->leftExpression ) {
-        printEdge( acceptable, acceptable->leftExpression );
-        acceptable->leftExpression->Accept( this );
-    }
-    if( acceptable->rightExpression ) {
-        printEdge( acceptable, acceptable->rightExpression );
-        acceptable->rightExpression->Accept( this );
-    }
-    addLabel(acceptable, "MultiplyExpression");
-}
-
 void CASTVisualiser::Visit( const CNewArrayExpression* acceptable ) const {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
@@ -428,18 +376,6 @@ void CASTVisualiser::Visit( const CParensExpression* acceptable ) const {
         acceptable->expression->Accept( this );
     }
     addLabel(acceptable, "ParensExpression");
-}
-
-void CASTVisualiser::Visit( const CPlusExpression* acceptable ) const {
-    if( acceptable->leftExpression ) {
-        printEdge( acceptable, acceptable->leftExpression );
-        acceptable->leftExpression->Accept( this );
-    }
-    if( acceptable->rightExpression ) {
-        printEdge( acceptable, acceptable->rightExpression );
-        acceptable->rightExpression->Accept( this );
-    }
-    addLabel(acceptable, "PlusExpression");
 }
 
 void CASTVisualiser::Visit( const CPrintlnStatement* acceptable ) const {
@@ -536,4 +472,19 @@ void CASTVisualiser::Visit( const CWhileStatement* acceptable ) const {
         acceptable->statement->Accept( this );
     }
     addLabel(acceptable, "WhileStatement");
+}
+
+void CASTVisualiser::Visit( const CBinaryOpExpression* acceptable ) const {
+    if( acceptable->left ) {
+        printEdge( acceptable, acceptable->left );
+        acceptable->left->Accept( this );
+    }
+    char str[2] = { acceptable->opType, '\0'};
+    printEdge( acceptable, &acceptable->opType );
+    addLabel( &acceptable->opType, str );
+    if( acceptable->right ) {
+        printEdge( acceptable, acceptable->right );
+        acceptable->right->Accept( this );
+    }
+    addLabel(acceptable, "BinaryOpExpression");
 }

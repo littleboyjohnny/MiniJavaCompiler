@@ -126,11 +126,11 @@ Statement: LCURLYBRACE StatementS RCURLYBRACE { PARSER_PROCESS_RULE( Statement, 
     | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON { PARSER_PROCESS_RULE( Statement, IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON ); $$ = new CArrayAssignmentStatement($1, $3, $6);}
     ;
 
-Expression: Expression AND Expression { PARSER_PROCESS_RULE( Expression, Expression AND Expression ); $$ = new CAndExpression($1, $3);}
-	| Expression LESS Expression { PARSER_PROCESS_RULE( Expression, Expression LESS Expression ); $$ = new CLessExpression($1, $3);}
-	| Expression PLUS Expression { PARSER_PROCESS_RULE( Expression, Expression PLUS Expression ); $$ = new CPlusExpression($1, $3);}
-	| Expression MINUS Expression { PARSER_PROCESS_RULE( Expression, Expression MINUS Expression ); $$ = new CMinusExpression($1, $3);}
-	| Expression MULTIPLY Expression { PARSER_PROCESS_RULE( Expression, Expression MULTIPLY Expression ); $$ = new CMultiplyExpression($1, $3);}
+Expression: Expression AND Expression { PARSER_PROCESS_RULE( Expression, Expression AND Expression ); $$ = new CBinaryOpExpression($1, CBinaryOpExpression::AND, $3);}
+	| Expression LESS Expression { PARSER_PROCESS_RULE( Expression, Expression LESS Expression ); $$ = new CBinaryOpExpression($1, CBinaryOpExpression::LESS, $3);}
+	| Expression PLUS Expression { PARSER_PROCESS_RULE( Expression, Expression PLUS Expression ); $$ = new CBinaryOpExpression($1, CBinaryOpExpression::PLUS, $3);}
+	| Expression MINUS Expression { PARSER_PROCESS_RULE( Expression, Expression MINUS Expression ); $$ = new CBinaryOpExpression($1, CBinaryOpExpression::MINUS, $3);}
+	| Expression MULTIPLY Expression { PARSER_PROCESS_RULE( Expression, Expression MULTIPLY Expression ); $$ = new CBinaryOpExpression($1, CBinaryOpExpression::MULTIPLY, $3);}
     | Expression LSQUAREBRACKET Expression RSQUAREBRACKET { PARSER_PROCESS_RULE( Expression, Expression LSQUAREBRACKET Expression RSQUAREBRACKET ); $$ = new CSquarebracketsExpression($1, $3);}
     | Expression DOTLENGTH { PARSER_PROCESS_RULE( Expression, Expression DOTLENGTH ); $$ = new CLengthExpression($1);}
     | Expression DOT IDENTIFIER LPAREN ExpressionParamS RPAREN { PARSER_PROCESS_RULE( Expression, Expression DOT IDENTIFIER LPAREN ExpressionParamS RPARE ); $$ = new CDotExpression($1, $3, $5);}

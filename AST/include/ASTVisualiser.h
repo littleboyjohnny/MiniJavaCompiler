@@ -15,7 +15,6 @@ public:
     void Visit( const CAdditionalExpressionParamS* acceptable ) const;
     void Visit( const CAdditionalParam* acceptable ) const;
     void Visit( const CAdditionalParamS* acceptable ) const;
-    void Visit( const CAndExpression* acceptable ) const;
     void Visit( const CArrayAssignmentStatement* acceptable ) const;
     void Visit( const CBooleanType* acceptable ) const;
     void Visit( const CClassDeclaration* acceptable ) const;
@@ -33,18 +32,14 @@ public:
     void Visit( const CIntliteralExpression* acceptable ) const;
     void Visit( const CIntType* acceptable ) const;
     void Visit( const CLengthExpression* acceptable ) const;
-    void Visit( const CLessExpression* acceptable ) const;
     void Visit( const CMainClass* acceptable ) const;
     void Visit( const CMethodDeclaration* acceptable ) const;
     void Visit( const CMethodDeclarationS* acceptable ) const;
-    void Visit( const CMinusExpression* acceptable ) const;
-    void Visit( const CMultiplyExpression* acceptable ) const;
     void Visit( const CNewArrayExpression* acceptable ) const;
     void Visit( const CNewIdentifierExpression* acceptable ) const;
     void Visit( const CNotExpression* acceptable ) const;
     void Visit( const CParams* acceptable ) const;
     void Visit( const CParensExpression* acceptable ) const;
-    void Visit( const CPlusExpression* acceptable ) const;
     void Visit( const CPrintlnStatement* acceptable ) const;
     void Visit( const CSquarebracketsExpression* acceptable ) const;
     void Visit( const CStatementS* acceptable ) const;
@@ -54,6 +49,7 @@ public:
     void Visit( const CVarDeclaration* acceptable ) const;
     void Visit( const CVarDeclarationS* acceptable ) const;
     void Visit( const CWhileStatement* acceptable ) const;
+    void Visit( const CBinaryOpExpression* acceptable ) const;
 
     void Visit( const CTerminalIdentifier* acceptable ) const;
     void Visit( const CTerminalIntliteral* acceptable ) const;
