@@ -537,35 +537,3 @@ void CASTVisualiser::Visit( const CWhileStatement* acceptable ) const {
     }
     addLabel(acceptable, "WhileStatement");
 }
-
-void CASTVisualiser::Visit( const CTerminalAnd* acceptable ) const {
-
-}
-
-void CASTVisualiser::Visit( const CTerminalFalse* acceptable ) const {
-
-}
-
-void CASTVisualiser::Visit( const CTerminalLess* acceptable ) const {
-
-}
-
-void CASTVisualiser::Visit( const CTerminalMinus* acceptable ) const {
-
-}
-
-void CASTVisualiser::Visit( const CTerminalMultiply* acceptable ) const {
-
-}
-
-void CASTVisualiser::Visit( const CTerminalPlus* acceptable ) const {
-
-}
-
-void CASTVisualiser::Visit( const CTerminalThis* acceptable ) const {
-
-}
-
-void CASTVisualiser::Visit( const CTerminalTrue* acceptable ) const {
-
-}

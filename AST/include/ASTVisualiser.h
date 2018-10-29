@@ -57,14 +57,6 @@ public:
 
     void Visit( const CTerminalIdentifier* acceptable ) const;
     void Visit( const CTerminalIntliteral* acceptable ) const;
-    void Visit( const CTerminalAnd* acceptable ) const;
-    void Visit( const CTerminalFalse* acceptable ) const;
-    void Visit( const CTerminalLess* acceptable ) const;
-    void Visit( const CTerminalMinus* acceptable ) const;
-    void Visit( const CTerminalMultiply* acceptable ) const;
-    void Visit( const CTerminalPlus* acceptable ) const;
-    void Visit( const CTerminalThis* acceptable ) const;
-    void Visit( const CTerminalTrue* acceptable ) const;
 
 private:
     FILE* file;

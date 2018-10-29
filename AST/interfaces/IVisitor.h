@@ -47,14 +47,6 @@ class CMethodDeclaration;
 
 class CTerminalIdentifier;
 class CTerminalIntliteral;
-class CTerminalAnd;
-class CTerminalFalse;
-class CTerminalLess;
-class CTerminalMinus;
-class CTerminalMultiply;
-class CTerminalPlus;
-class CTerminalThis;
-class CTerminalTrue;
 
 class IAcceptable;
 
@@ -106,14 +98,6 @@ public:
 
     virtual void Visit( const CTerminalIdentifier* acceptable ) const = 0;
     virtual void Visit( const CTerminalIntliteral* acceptable ) const = 0;
-    virtual void Visit( const CTerminalAnd* acceptable ) const = 0;
-    virtual void Visit( const CTerminalFalse* acceptable ) const = 0;
-    virtual void Visit( const CTerminalLess* acceptable ) const = 0;
-    virtual void Visit( const CTerminalMinus* acceptable ) const = 0;
-    virtual void Visit( const CTerminalMultiply* acceptable ) const = 0;
-    virtual void Visit( const CTerminalPlus* acceptable ) const = 0;
-    virtual void Visit( const CTerminalThis* acceptable ) const = 0;
-    virtual void Visit( const CTerminalTrue* acceptable ) const = 0;
 
 };
 
