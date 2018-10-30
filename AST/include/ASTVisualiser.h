@@ -39,6 +39,7 @@ public:
     void Visit( const CNewIdentifierExpression* acceptable ) const;
     void Visit( const CNotExpression* acceptable ) const;
     void Visit( const CParams* acceptable ) const;
+    void Visit( const CParam* acceptable ) const;
     void Visit( const CParensExpression* acceptable ) const;
     void Visit( const CPrintlnStatement* acceptable ) const;
     void Visit( const CSquarebracketsExpression* acceptable ) const;

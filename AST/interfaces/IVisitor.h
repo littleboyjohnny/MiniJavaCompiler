@@ -23,6 +23,7 @@ class CNewArrayExpression;
 class CNewIdentifierExpression;
 class CNotExpression;
 class CParams;
+class CParam;
 class CParensExpression;
 class CPrintlnStatement;
 class CSquarebracketsExpression;
@@ -76,6 +77,7 @@ public:
     virtual void Visit( const CNewIdentifierExpression* acceptable ) const = 0;
     virtual void Visit( const CNotExpression* acceptable ) const = 0;
     virtual void Visit( const CParams* acceptable ) const = 0;
+    virtual void Visit( const CParam* acceptable ) const = 0;
     virtual void Visit( const CParensExpression* acceptable ) const = 0;
     virtual void Visit( const CPrintlnStatement* acceptable ) const = 0;
     virtual void Visit( const CSquarebracketsExpression* acceptable ) const = 0;

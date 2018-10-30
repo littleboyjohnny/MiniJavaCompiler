@@ -2,15 +2,13 @@
 #define MINIJAVACOMPILER_ADDITIONALPARAM_HPP
 
 #include "../interfaces/IAdditionalParam.h"
-#include "../interfaces/IType.h"
+#include "../interfaces/IParam.h"
 #include "../interfaces/IVisitor.h"
-#include "TerminalIdentifier.hpp"
 
 class CAdditionalParam : public IAdditionalParam {
 public:
-    CAdditionalParam( const IType * const _type, const CTerminalIdentifier * const _identifier ) :
-        type( _type ),
-        identifier( _identifier )
+    CAdditionalParam( const IParam * const _param ) :
+        param( _param )
     {}
 
     void Accept( const IVisitor* visitor ) const
@@ -18,8 +16,7 @@ public:
         visitor->Visit( this );
     }
 
-    const IType * const type;
-    const CTerminalIdentifier * const identifier;
+    const IParam * const param;
 };
 
 #endif //MINIJAVACOMPILER_ADDITIONALPARAM_HPP

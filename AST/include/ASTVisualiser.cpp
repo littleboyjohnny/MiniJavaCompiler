@@ -24,6 +24,7 @@
 #include "NewIdentifierExpression.hpp"
 #include "NotExpression.hpp"
 #include "Params.hpp"
+#include "Param.hpp"
 #include "ParensExpression.hpp"
 #include "PrintlnStatement.hpp"
 #include "SquarebracketsExpression.hpp"
@@ -83,13 +84,9 @@ void CASTVisualiser::Visit( const CAdditionalExpressionParamS* acceptable ) cons
 }
 
 void CASTVisualiser::Visit( const CAdditionalParam* acceptable ) const {
-    if (acceptable->type) {
-        printEdge(acceptable, acceptable->type);
-        acceptable->type->Accept(this);
-    }
-    if (acceptable->identifier) {
-        printEdge(acceptable, acceptable->identifier);
-        acceptable->identifier->Accept(this);
+    if (acceptable->param) {
+        printEdge(acceptable, acceptable->param);
+        acceptable->param->Accept(this);
     }
     addLabel(acceptable, "AdditionalParam");
 }
@@ -355,6 +352,18 @@ void CASTVisualiser::Visit( const CNotExpression* acceptable ) const {
 }
 
 void CASTVisualiser::Visit( const CParams* acceptable ) const {
+    if( acceptable->param ) {
+        printEdge( acceptable, acceptable->param );
+        acceptable->param->Accept( this );
+    }
+    if( acceptable->additionalParamS ) {
+        printEdge( acceptable, acceptable->additionalParamS );
+        acceptable->additionalParamS->Accept( this );
+    }
+    addLabel(acceptable, "Params");
+}
+
+void CASTVisualiser::Visit( const CParam* acceptable ) const {
     if( acceptable->type ) {
         printEdge( acceptable, acceptable->type );
         acceptable->type->Accept( this );
@@ -363,11 +372,7 @@ void CASTVisualiser::Visit( const CParams* acceptable ) const {
         printEdge( acceptable, acceptable->identifier );
         acceptable->identifier->Accept( this );
     }
-    if( acceptable->additionalParamS ) {
-        printEdge( acceptable, acceptable->additionalParamS );
-        acceptable->additionalParamS->Accept( this );
-    }
-    addLabel(acceptable, "Params");
+    addLabel(acceptable, "Param");
 }
 
 void CASTVisualiser::Visit( const CParensExpression* acceptable ) const {

@@ -7,7 +7,8 @@
 int main( int argc, char** argv )
 {
 	freopen( argv[1], "r", stdin );
-	yyparse();
+	void* node;
+	yyparse(node);
 	return 0;
 }
 #endif

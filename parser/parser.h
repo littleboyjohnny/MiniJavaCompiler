@@ -22,6 +22,7 @@
 #include "../AST/include/NewIdentifierExpression.hpp"
 #include "../AST/include/NotExpression.hpp"
 #include "../AST/include/Params.hpp"
+#include "../AST/include/Param.hpp"
 #include "../AST/include/ParensExpression.hpp"
 #include "../AST/include/PrintlnStatement.hpp"
 #include "../AST/include/SquarebracketsExpression.hpp"
@@ -58,6 +59,7 @@
 #include "../AST/interfaces/IMethodDeclaration.h"
 #include "../AST/interfaces/IMethodDeclarationS.h"
 #include "../AST/interfaces/IParams.h"
+#include "../AST/interfaces/IParam.h"
 #include "../AST/interfaces/IStatement.h"
 #include "../AST/interfaces/IStatementS.h"
 #include "../AST/interfaces/IType.h"
@@ -70,7 +72,7 @@ int main( int argc, char** argv );
 #endif
 
 extern "C" int yylex();
-extern "C" int yyparse();
+extern "C" int yyparse( void*& node );
 
 void yyerror (void*& node, char const *msg);
 

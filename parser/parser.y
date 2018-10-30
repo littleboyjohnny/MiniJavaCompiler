@@ -20,6 +20,7 @@
 	class IParams* params;
 	class IAdditionalParamS* additionalParamS;
 	class IAdditionalParam* additionalParam;
+	class IParam* param;
 	class IType* type;
 	class IStatementS* statementS;
 	class IStatement* statement;
@@ -56,6 +57,7 @@
 %type <params> Params
 %type <additionalParamS> AdditionalParamS
 %type <additionalParam> AdditionalParam
+%type <param> Param
 %type <type> Type
 %type <statementS> StatementS
 %type <statement> Statement
@@ -98,14 +100,17 @@ MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDe
     ;
 
 Params: %empty { $$ = nullptr; }
-	| Type IDENTIFIER AdditionalParamS { PARSER_PROCESS_RULE( Params, ); $$ = new CParams($1, $2, $3);}
+	| Param AdditionalParamS { PARSER_PROCESS_RULE( Params, ); $$ = new CParams($1, $2);}
 	;
 
 AdditionalParamS: %empty { $$ = nullptr; }
 	| AdditionalParamS AdditionalParam { PARSER_PROCESS_RULE( AdditionalParamS, ); $$ = new CAdditionalParamS($1, $2);}
 	;
 
-AdditionalParam: COMMA Type IDENTIFIER { PARSER_PROCESS_RULE( AdditionalParam, ); $$ = new CAdditionalParam($2, $3);}
+AdditionalParam: COMMA Param { PARSER_PROCESS_RULE( AdditionalParam, ); $$ = new CAdditionalParam($2);}
+	;
+
+Param: Type IDENTIFIER {PARSER_PROCESS_RULE( Param, ); $$ = new CParam($1, $2);}
 	;
 
 Type: INT LSQUAREBRACKET RSQUAREBRACKET { PARSER_PROCESS_RULE( Type, INT LSQUAREBRACKET RSQUAREBRACKET ); $$ = new CIntArrayType();}
