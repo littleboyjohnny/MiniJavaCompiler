@@ -1,4 +1,6 @@
 #include <string>
+#include <list>
+#include <vector>
 
 #include "ASTBuilder.h"
 
@@ -12,6 +14,7 @@
 #include "CustomType.hpp"
 #include "DotExpression.hpp"
 #include "ExpressionParamS.hpp"
+#include "ExpressionParamList.hpp"
 #include "FalseExpression.hpp"
 #include "Goal.hpp"
 #include "IdentifierExpression.hpp"
@@ -25,10 +28,12 @@
 #include "NotExpression.hpp"
 #include "Params.hpp"
 #include "Param.hpp"
+#include "ParamList.hpp"
 #include "ParensExpression.hpp"
 #include "PrintlnStatement.hpp"
 #include "SquarebracketsExpression.hpp"
 #include "StatementS.hpp"
+#include "StatementList.hpp"
 #include "TerminalIdentifier.hpp"
 #include "TerminalIntliteral.hpp"
 #include "ThisExpression.hpp"
@@ -38,36 +43,47 @@
 #include "ClassDeclaration.hpp"
 #include "MainClass.hpp"
 #include "ClassDeclarationS.hpp"
+#include "ClassDeclarationList.hpp"
 #include "Extension.hpp"
 #include "VarDeclarationS.hpp"
+#include "VarDeclarationList.hpp"
 #include "VarDeclaration.hpp"
 #include "MethodDeclarationS.hpp"
 #include "MethodDeclaration.hpp"
+#include "MethodDeclarationList.hpp"
 #include "BinaryOpExpression.hpp"
 
-CASTBuilder::CASTBuilder(const char * filename) {
-    file = fopen(filename, "w");
-    fprintf(file, "digraph AST {\n");
-}
+CASTBuilder::CASTBuilder() {}
 
 CASTBuilder::~CASTBuilder() {
-    fprintf(file, "}");
-    fclose(file);
+
 }
 
 void CASTBuilder::addLabel(const void * pMemory, const char * label) const {
-    fprintf( file, "\t%d [label=\"%s\"];\n", (const long long)pMemory, label );
+
 }
 
 void CASTBuilder::printEdge(const void * from, const void * to) const {
-    fprintf( file, "\t%d -> %d;\n", (const long long)from, (const long long)to );
+
+}
+
+
+const CGoal* CASTBuilder::buildAST(const CGoal * goal) {
+    goal->Accept( this );
+    ast = static_cast<const CGoal *>(child);
+    return ast;
 }
 
 void CASTBuilder::Visit( const CAdditionalExpressionParam* acceptable ) const {
+    const IExpression * expression = nullptr;
+
     if(acceptable->expression) {
-        printEdge(listHeadsExpressionParams.back(), acceptable->expression);
         acceptable->expression->Accept(this);
+        expression = static_cast<const IExpression *> ( child );
+        listHeadsExpressionParams.back()->children.push_back( expression );
     }
+
+    child = expression;
 }
 
 void CASTBuilder::Visit( const CAdditionalExpressionParamS* acceptable ) const {
@@ -80,9 +96,12 @@ void CASTBuilder::Visit( const CAdditionalExpressionParamS* acceptable ) const {
 }
 
 void CASTBuilder::Visit( const CAdditionalParam* acceptable ) const {
+    const IParam * param = nullptr;
+
     if (acceptable->param) {
-        printEdge(headParams, acceptable->param);
         acceptable->param->Accept(this);
+        param = static_cast<const IParam *> ( child );
+        headParams->children.push_back( param );
     }
 }
 
@@ -96,399 +115,592 @@ void CASTBuilder::Visit( const CAdditionalParamS* acceptable ) const {
 }
 
 void CASTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) const {
+    const CArrayAssignmentStatement * arrayAssignmentStatement = nullptr;
+    const CTerminalIdentifier * arrayName = nullptr;
+    const IExpression * indexExpression = nullptr;
+    const IExpression * expression = nullptr;
+
     if (acceptable->arrayName) {
-        printEdge(acceptable, acceptable->arrayName);
         acceptable->arrayName->Accept(this);
+        arrayName = static_cast<const CTerminalIdentifier *> ( child );
     }
     if (acceptable->indexExpression) {
-        printEdge(acceptable, acceptable->indexExpression);
         acceptable->indexExpression->Accept(this);
+        indexExpression = static_cast<const IExpression *> ( child );
     }
     if (acceptable->expression) {
-        printEdge(acceptable, acceptable->expression);
         acceptable->expression->Accept(this);
+        expression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "ArrayAssignmentStatement");
+
+    arrayAssignmentStatement = new CArrayAssignmentStatement(arrayName, indexExpression, expression);
+    child = arrayAssignmentStatement;
 }
 
 void CASTBuilder::Visit( const CBooleanType* acceptable ) const {
-    addLabel(acceptable, "boolean");
+    const CBooleanType * booleanType = new CBooleanType();
+    child = booleanType;
 }
 
 void CASTBuilder::Visit( const CClassDeclaration* acceptable ) const {
+    const CClassDeclaration * classDeclaration = nullptr;
+    const CTerminalIdentifier * className = nullptr;
+    const IExtension * extension = nullptr;
+    const CVarDeclarationList * varDeclarationList = nullptr;
+    const CMethodDeclarationList * methodDeclarationList = nullptr;
+
     if (acceptable->className) {
-        printEdge(acceptable, acceptable->className);
         acceptable->className->Accept(this);
+        className = static_cast<const CTerminalIdentifier *> ( child );
     }
     if (acceptable->extension) {
-        printEdge(acceptable, acceptable->extension);
         acceptable->extension->Accept(this);
+        extension = static_cast<const IExtension *> ( child );
     }
     if (acceptable->varDeclarationS) {
-        printEdge(acceptable, acceptable->varDeclarationS);
-        headVarDeclarationS = acceptable->varDeclarationS;
-        addLabel(headVarDeclarationS, "VarDeclarationS");
+        varDeclarationList = new CVarDeclarationList();
+        headVarDeclarationS = varDeclarationList;
         acceptable->varDeclarationS->Accept(this);
     }
     if (acceptable->methodDeclarationS) {
-        printEdge(acceptable, acceptable->methodDeclarationS);
-        headMethodDeclarationS = acceptable->methodDeclarationS;
-        addLabel(headMethodDeclarationS, "MethodDeclarationS");
+        methodDeclarationList = new CMethodDeclarationList();
+        headMethodDeclarationS = methodDeclarationList;
         acceptable->methodDeclarationS->Accept(this);
     }
-    addLabel(acceptable, "ClassDeclaration");
+    classDeclaration = new CClassDeclaration(className, extension, varDeclarationList, methodDeclarationList);
+    child = classDeclaration;
 }
 
 void CASTBuilder::Visit( const CClassDeclarationS* acceptable ) const {
+    const IClassDeclaration * classDeclaration = nullptr;
+
     if (acceptable->classDeclarationS) {
         acceptable->classDeclarationS->Accept(this);
     }
     if (acceptable->classDeclaration) {
-        printEdge(headClassDeclarationS, acceptable->classDeclaration);
         acceptable->classDeclaration->Accept(this);
+        classDeclaration = static_cast<const IClassDeclaration *> ( child );
+        headClassDeclarationS->children.push_back( classDeclaration );
     }
+    child = classDeclaration;
 }
 
 void CASTBuilder::Visit( const CCurlyBraceStatement* acceptable ) const {
+    const CCurlyBraceStatement * curlyBraceStatement = nullptr;
+    const CStatementList * statementList = nullptr;
+
     if (acceptable->statementS) {
-        printEdge(acceptable, acceptable->statementS);
-        listHeadsStatements.push_back(acceptable->statementS);
+        statementList = new CStatementList();
+        listHeadsStatements.push_back(statementList);
         acceptable->statementS->Accept(this);
+        listHeadsStatements.pop_back();
     }
-    addLabel(acceptable, "CurlyBraceStatement");
+
+    curlyBraceStatement = new CCurlyBraceStatement(statementList);
+    child = curlyBraceStatement;
 }
 
 void CASTBuilder::Visit( const CCustomType* acceptable ) const {
+    const CCustomType * customType = nullptr;
+    const CTerminalIdentifier * typeName = nullptr;
+
     if (acceptable->typeName) {
-        printEdge(acceptable, acceptable->typeName);
         acceptable->typeName->Accept(this);
+        typeName = static_cast<const CTerminalIdentifier *> ( child );
     }
-    addLabel(acceptable, "CustomType");
+
+    customType = new CCustomType(typeName);
+    child = customType;
 }
 
 void CASTBuilder::Visit( const CCallExpression* acceptable ) const {
+    const CCallExpression * callExpression = nullptr;
+    const IExpression * expression = nullptr;
+    const CTerminalIdentifier * identifier = nullptr;
+    const CExpressionParamList * expressionParamList = nullptr;
+
     if (acceptable->expression) {
-        printEdge(acceptable, acceptable->expression);
         acceptable->expression->Accept(this);
+        expression = static_cast<const IExpression *> ( child );
     }
     if (acceptable->identifier) {
-        printEdge(acceptable, acceptable->identifier);
         acceptable->identifier->Accept(this);
+        identifier = static_cast<const CTerminalIdentifier *> ( child );
     }
     if (acceptable->expressionParamS) {
-        printEdge(acceptable, acceptable->expressionParamS);
-        listHeadsExpressionParams.push_back(acceptable->expressionParamS);
+        expressionParamList = new CExpressionParamList();
+        listHeadsExpressionParams.push_back(expressionParamList);
         acceptable->expressionParamS->Accept(this);
+        listHeadsExpressionParams.pop_back();
     }
-    addLabel(acceptable, "DotExpression");
+
+    callExpression = new CCallExpression(expression, identifier, expressionParamList);
+    child = callExpression;
 }
 
 void CASTBuilder::Visit( const CExpressionParamS* acceptable ) const {
+    const IExpression * expression = nullptr;
+
     if (acceptable->expression) {
-        printEdge(listHeadsExpressionParams.back(), acceptable->expression);
         acceptable->expression->Accept(this);
+        expression = static_cast<const IExpression *> ( child );
+        listHeadsExpressionParams.back()->children.push_back( expression );
     }
     if (acceptable->addittionalExpressionParamS) {
         acceptable->addittionalExpressionParamS->Accept(this);
     }
-    addLabel(listHeadsExpressionParams.back(), "ExpressionParamS");
-    listHeadsExpressionParams.pop_back();
+
+    child = expression;
 }
 
 void CASTBuilder::Visit( const CExtension* acceptable ) const {
+    const CExtension * extension = nullptr;
+    const CTerminalIdentifier * className = nullptr;
+
     if (acceptable->className) {
-        printEdge(acceptable, acceptable->className);
         acceptable->className->Accept(this);
+        className = static_cast<const CTerminalIdentifier *> ( child );
     }
-    addLabel(acceptable, "Extension");
+
+    extension = new CExtension(className);
+    child = extension;
 }
 
-void CASTBuilder::Visit( const CFalseExpression* acceptable ) const {
-    addLabel(acceptable, "false");
+void CASTBuilder::Visit( const CFalseExpression * acceptable ) const {
+    const CFalseExpression * falseExpression = new CFalseExpression();
+    child = falseExpression;
 }
 
-void CASTBuilder::Visit( const CGoal* acceptable ) const {
-    if (acceptable->mainClass) {
-        printEdge(acceptable, acceptable->mainClass);
-        acceptable->mainClass->Accept(this);
+void CASTBuilder::Visit( const CGoal * acceptable ) const {
+    const CGoal * goal = nullptr;
+    const IMainClass * mainClass = nullptr;
+    const CClassDeclarationList * classDeclarationList = nullptr;
+
+    if ( acceptable->mainClass ) {
+        acceptable->mainClass->Accept( this );
+        mainClass = static_cast<const IMainClass *> ( child );
     }
-    if (acceptable->classDeclarationS) {
-        printEdge(acceptable, acceptable->classDeclarationS);
-        headClassDeclarationS = acceptable->classDeclarationS;
-        addLabel(headClassDeclarationS, "ClassDeclarationS");
-        acceptable->classDeclarationS->Accept(this);
+    if ( acceptable->classDeclarationS ) {
+        classDeclarationList = new CClassDeclarationList();
+        headClassDeclarationS = classDeclarationList;
+        acceptable->classDeclarationS->Accept( this );
     }
-    addLabel(acceptable, "Goal");
+
+    goal = new CGoal( mainClass, classDeclarationList );
+    child = goal;
 }
 
 void CASTBuilder::Visit( const CIdentifierExpression* acceptable ) const {
+    const CIdentifierExpression * identifierExpression = nullptr;
+    const CTerminalIdentifier * identifier = nullptr;
+
     if (acceptable->identifier) {
-        printEdge(acceptable, acceptable->identifier);
         acceptable->identifier->Accept(this);
+        identifier = static_cast<const CTerminalIdentifier *> ( child );
     }
-    addLabel(acceptable, "IdentifierExpression");
+
+    identifierExpression = new CIdentifierExpression( identifier );
+    child = identifierExpression;
 }
 
 void CASTBuilder::Visit( const CIfElseStatement* acceptable ) const {
+    const CIfElseStatement * ifElseStatement = nullptr;
+    const IExpression * condition = nullptr;
+    const IStatement * ifStatement = nullptr;
+    const IStatement * elseStatement = nullptr;
+
     if (acceptable->condition) {
-        printEdge(acceptable, acceptable->condition);
         acceptable->condition->Accept(this);
+        condition = static_cast<const IExpression *> ( child );
     }
     if (acceptable->ifStatement) {
-        printEdge(acceptable, acceptable->ifStatement);
         acceptable->ifStatement->Accept(this);
+        ifStatement = static_cast<const IStatement *> ( child );
     }
     if (acceptable->elseStatement) {
-        printEdge(acceptable, acceptable->elseStatement);
         acceptable->elseStatement->Accept(this);
+        elseStatement = static_cast<const IStatement *> ( child );
     }
-    addLabel(acceptable, "IfElseStatement");
+
+    ifElseStatement = new CIfElseStatement(condition, ifStatement, elseStatement);
+    child = ifElseStatement;
 }
 
 void CASTBuilder::Visit( const CIntArrayType* acceptable ) const {
-    addLabel(acceptable, "int[]");
+    const CIntArrayType * intArrayType = new CIntArrayType();
+    child = intArrayType;
 }
 
 void CASTBuilder::Visit( const CIntliteralExpression* acceptable ) const {
+    const CIntliteralExpression * intliteralExpression = nullptr;
+    const CTerminalIntliteral * intliteral = nullptr;
+
     if (acceptable->intliteral) {
-        printEdge(acceptable, acceptable->intliteral);
         acceptable->intliteral->Accept(this);
+        intliteral = static_cast<const CTerminalIntliteral *> ( child );
     }
-    addLabel(acceptable, "IntliteralExpression");
+    intliteralExpression = new CIntliteralExpression( intliteral );
+    child = intliteralExpression;
 }
 
 void CASTBuilder::Visit( const CIntType* acceptable ) const {
-    addLabel(acceptable, "int");
+    const CIntType * intType = new CIntType();
+    child = intType;
 }
 
 void CASTBuilder::Visit( const CLengthExpression* acceptable ) const {
+    const CLengthExpression * lengthExpression = nullptr;
+    const IExpression * expression = nullptr;
+
     if( acceptable->expression ) {
-        printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
+        expression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "LengthExpression");
+
+    lengthExpression= new CLengthExpression(expression);
+    child = lengthExpression;
 }
 
 void CASTBuilder::Visit( const CMainClass* acceptable ) const {
+    const CMainClass * mainClass = nullptr;
+    const CTerminalIdentifier * className = nullptr;
+    const CTerminalIdentifier * argName = nullptr;
+    const CStatementList * statementList = nullptr;
+
     if( acceptable->className ) {
-        printEdge( acceptable, acceptable->className );
         acceptable->className->Accept( this );
+        className = static_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->argName ) {
-        printEdge( acceptable, acceptable->argName );
         acceptable->argName->Accept( this );
+        argName = static_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->statementS ) {
-        printEdge( acceptable, acceptable->statementS );
-        listHeadsStatements.push_back(acceptable->statementS);
+        statementList = new CStatementList();
+        listHeadsStatements.push_back(statementList);
         acceptable->statementS->Accept( this );
+        listHeadsStatements.pop_back();
     }
-    addLabel(acceptable, "MainClass");
+    mainClass = new CMainClass(className, argName, statementList);
+    child = mainClass;
 }
 
 void CASTBuilder::Visit( const CMethodDeclaration* acceptable ) const {
+    const CMethodDeclaration * methodDeclaration = nullptr;
+    const IType * returnType = nullptr;
+    const CTerminalIdentifier * methodIdentifier = nullptr;
+    const CParamList * paramList = nullptr;
+    const CVarDeclarationList * varDeclarationList = nullptr;
+    const CStatementList * statementList = nullptr;
+    const IExpression * returnExpression = nullptr;
+
     if( acceptable->returnType ) {
-        printEdge( acceptable, acceptable->returnType );
         acceptable->returnType->Accept( this );
+        returnType = static_cast<const IType *> ( child );
     }
     if( acceptable->methodIdentifier ) {
-        printEdge( acceptable, acceptable->methodIdentifier );
         acceptable->methodIdentifier->Accept( this );
+        methodIdentifier = static_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->params ) {
-        printEdge( acceptable, acceptable->params );
-        headParams = acceptable->params;
-        addLabel(headParams, "Params");
+        paramList = new CParamList();
+        headParams = paramList;
         acceptable->params->Accept( this );
     }
     if( acceptable->varDeclarationS ) {
-        printEdge( acceptable, acceptable->varDeclarationS );
-        headVarDeclarationS = acceptable->varDeclarationS;
-        addLabel(headVarDeclarationS, "VarDeclarationS");
+        varDeclarationList = new CVarDeclarationList();
+        headVarDeclarationS = varDeclarationList;
         acceptable->varDeclarationS->Accept( this );
     }
     if( acceptable->statementS ) {
-        printEdge( acceptable, acceptable->statementS );
-        listHeadsStatements.push_back(acceptable->statementS);
+        statementList = new CStatementList();
+        listHeadsStatements.push_back(statementList);
         acceptable->statementS->Accept( this );
+        listHeadsStatements.pop_back();
     }
     if( acceptable->returnExpression ) {
-        printEdge( acceptable, acceptable->returnExpression );
         acceptable->returnExpression->Accept( this );
+        returnExpression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "MethodDeclaration");
+
+    methodDeclaration = new CMethodDeclaration(returnType, methodIdentifier,
+            paramList, varDeclarationList, statementList, returnExpression);
+    child = methodDeclaration;
 }
 
 void CASTBuilder::Visit( const CMethodDeclarationS* acceptable ) const {
+    const IMethodDeclaration * methodDeclaration = nullptr;
+
     if (acceptable->methodDeclarationS) {
         acceptable->methodDeclarationS->Accept(this);
     }
     if (acceptable->methodDeclaration) {
-        printEdge(headMethodDeclarationS, acceptable->methodDeclaration);
         acceptable->methodDeclaration->Accept(this);
+        methodDeclaration = static_cast<const IMethodDeclaration *> ( child );
+        headMethodDeclarationS->children.push_back(methodDeclaration);
     }
+
+    child = methodDeclaration;
 }
 
 void CASTBuilder::Visit( const CNewArrayExpression* acceptable ) const {
+    const CNewArrayExpression * newArrayExpression = nullptr;
+    const IExpression * expression = nullptr;
+
     if( acceptable->expression ) {
-        printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
+        expression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "NewArrayExpression");
+
+    newArrayExpression = new CNewArrayExpression( expression );
+    child = newArrayExpression;
 }
 
 void CASTBuilder::Visit( const CNewIdentifierExpression* acceptable ) const {
+    const CNewIdentifierExpression * newIdentifierExpression = nullptr;
+    const CTerminalIdentifier * identifier = nullptr;
+
     if( acceptable->identifier ) {
-        printEdge( acceptable, acceptable->identifier );
         acceptable->identifier->Accept( this );
+        identifier = static_cast<const CTerminalIdentifier *> ( child );
     }
-    addLabel(acceptable, "NewIdentifierExpression");
+
+    newIdentifierExpression = new CNewIdentifierExpression( identifier );
+    child = newIdentifierExpression;
 }
 
 void CASTBuilder::Visit( const CNotExpression* acceptable ) const {
+    const CNotExpression * notExpression = nullptr;
+    const IExpression * expression = nullptr;
+
     if( acceptable->expression ) {
-        printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
+        expression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "NotExpression");
+
+    notExpression = new CNotExpression( expression );
+    child = notExpression;
 }
 
 void CASTBuilder::Visit( const CParams* acceptable ) const {
+    const IParam * param = nullptr;
+
     if( acceptable->param ) {
-        printEdge( headParams, acceptable->param );
         acceptable->param->Accept( this );
+        param = static_cast<const IParam *> ( child );
+        headParams->children.push_back( param );
     }
     if( acceptable->additionalParamS ) {
         acceptable->additionalParamS->Accept( this );
     }
+
+    child = param;
 }
 
 void CASTBuilder::Visit( const CParam* acceptable ) const {
+    const CParam * param = nullptr;
+    const IType * type = nullptr;
+    const CTerminalIdentifier * identifier = nullptr;
+
     if( acceptable->type ) {
-        printEdge( acceptable, acceptable->type );
         acceptable->type->Accept( this );
+        type = static_cast<const IType *> ( child );
     }
     if( acceptable->identifier ) {
-        printEdge( acceptable, acceptable->identifier );
         acceptable->identifier->Accept( this );
+        identifier = static_cast<const CTerminalIdentifier *> ( child );
     }
-    addLabel(acceptable, "Param");
+
+    param = new CParam(type, identifier);
+    child = param;
 }
 
 void CASTBuilder::Visit( const CParensExpression* acceptable ) const {
+    const CParensExpression * parensExpression = nullptr;
+    const IExpression * expression = nullptr;
+
     if( acceptable->expression ) {
-        printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
+        expression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "ParensExpression");
+
+    parensExpression = new CParensExpression( expression );
+    child = parensExpression;
 }
 
 void CASTBuilder::Visit( const CPrintlnStatement* acceptable ) const {
+    const CPrintlnStatement * printlnStatement = nullptr;
+    const IExpression * expression = nullptr;
+
     if( acceptable->expression ) {
-        printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
+        expression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "PrintlnStatement");
+
+    printlnStatement = new CPrintlnStatement(expression);
+    child = printlnStatement;
 }
 
 void CASTBuilder::Visit( const CSquarebracketsExpression* acceptable ) const {
+    const CSquarebracketsExpression * squarebracketsExpression = nullptr;
+    const IExpression * expression = nullptr;
+    const IExpression * expressionInBrackets = nullptr;
+
     if( acceptable->expression ) {
-        printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
+        expression = static_cast<const IExpression *> ( child );
     }
     if( acceptable->squarebraketsExpression ) {
-        printEdge( acceptable, acceptable->squarebraketsExpression );
         acceptable->squarebraketsExpression->Accept( this );
+        expressionInBrackets = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "SquarebracketsExpression");
+
+    squarebracketsExpression = new CSquarebracketsExpression(expression, expressionInBrackets);
+    child = squarebracketsExpression;
 }
 
 void CASTBuilder::Visit( const CStatementS* acceptable ) const {
+    const IStatement * statement = nullptr;
+
     if( acceptable->statement ) {
-        printEdge( listHeadsStatements.back() , acceptable->statement );
         acceptable->statement->Accept( this );
+        statement = static_cast<const IStatement *> ( child );
+        listHeadsStatements.back()->children.push_back( statement );
     }
     if( acceptable->statementS ) {
         acceptable->statementS->Accept( this );
-    } else {
-        addLabel(listHeadsStatements.back(), "StatementS");
-        listHeadsStatements.pop_back();
     }
+
+    child = statement;
 }
 
 void CASTBuilder::Visit( const CTerminalIdentifier* acceptable ) const {
-    addLabel(acceptable, acceptable->identifier);
+    const CTerminalIdentifier * terminalIdentifier = new CTerminalIdentifier(*acceptable);
+    child = terminalIdentifier;
 }
 
 void CASTBuilder::Visit( const CTerminalIntliteral* acceptable ) const {
-    addLabel(acceptable, std::to_string(acceptable->intliteral).c_str());
+    const CTerminalIntliteral * terminalIntliteral = new CTerminalIntliteral(*acceptable);
+    child = terminalIntliteral;
 }
 
 void CASTBuilder::Visit( const CThisExpression* acceptable ) const {
-    addLabel(acceptable, "this");
+    const CThisExpression * thisExpression = new CThisExpression();
+    child = thisExpression;
 }
 
 void CASTBuilder::Visit( const CTrueExpression* acceptable ) const {
-    addLabel(acceptable, "true");
+    const CTrueExpression * trueExpression = new CTrueExpression();
+    child = trueExpression;
 }
 
 void CASTBuilder::Visit( const CVarAssignmentStatement* acceptable ) const {
+    const CVarAssignmentStatement * varAssignmentStatement = nullptr;
+    const CTerminalIdentifier * varName = nullptr;
+    const IExpression * expression = nullptr;
+
     if( acceptable->varName ) {
-        printEdge( acceptable, acceptable->varName );
         acceptable->varName->Accept( this );
+        varName = static_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->expression ) {
-        printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
+        expression = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "VarAssignmentStatement");
+
+    varAssignmentStatement = new CVarAssignmentStatement(varName, expression);
+    child = varAssignmentStatement;
 }
 
 void CASTBuilder::Visit( const CVarDeclaration* acceptable ) const {
+    const CVarDeclaration * varDeclaration = nullptr;
+    const IType * type = nullptr;
+    const CTerminalIdentifier * identifier = nullptr;
+
     if( acceptable->type ) {
-        printEdge( acceptable, acceptable->type );
         acceptable->type->Accept( this );
+        type = static_cast<const IType *> ( child );
     }
     if( acceptable->identifier ) {
-        printEdge( acceptable, acceptable->identifier );
         acceptable->identifier->Accept( this );
+        identifier = static_cast<const CTerminalIdentifier *> ( child );
     }
-    addLabel(acceptable, "VarDeclaration");
+
+    varDeclaration = new CVarDeclaration(type, identifier);
+    child = varDeclaration;
 }
 
 void CASTBuilder::Visit( const CVarDeclarationS* acceptable ) const {
+    const IVarDeclaration * varDeclaration = nullptr;
+
     if (acceptable->varDeclarationS) {
         acceptable->varDeclarationS->Accept(this);
     }
     if (acceptable->varDeclaration) {
-        printEdge(headVarDeclarationS, acceptable->varDeclaration);
         acceptable->varDeclaration->Accept(this);
+        varDeclaration = static_cast<const IVarDeclaration *> ( child );
+        headVarDeclarationS->children.push_back( varDeclaration );
     }
+
+    child = varDeclaration;
 }
 
 void CASTBuilder::Visit( const CWhileStatement* acceptable ) const {
+    const CWhileStatement * whileStatement = nullptr;
+    const IExpression * condition = nullptr;
+    const IStatement * statement = nullptr;
+
     if( acceptable->condition ) {
-        printEdge( acceptable, acceptable->condition );
         acceptable->condition->Accept( this );
+        condition = static_cast<const IExpression *> ( child );
     }
     if( acceptable->statement ) {
-        printEdge( acceptable, acceptable->statement );
         acceptable->statement->Accept( this );
+        statement = static_cast<const IStatement *> ( child );
     }
-    addLabel(acceptable, "WhileStatement");
+
+    whileStatement = new CWhileStatement(condition, statement);
+    child = whileStatement;
 }
 
 void CASTBuilder::Visit( const CBinaryOpExpression* acceptable ) const {
+    const CBinaryOpExpression * binaryOpExpression = nullptr;
+    const IExpression * left = nullptr;
+    const IExpression * right = nullptr;
+
     if( acceptable->left ) {
-        printEdge( acceptable, acceptable->left );
         acceptable->left->Accept( this );
+        left = static_cast<const IExpression *> ( child );
     }
-    char str[2] = { acceptable->opType, '\0'};
-    printEdge( acceptable, &acceptable->opType );
-    addLabel( &acceptable->opType, str );
     if( acceptable->right ) {
-        printEdge( acceptable, acceptable->right );
         acceptable->right->Accept( this );
+        right = static_cast<const IExpression *> ( child );
     }
-    addLabel(acceptable, "BinaryOpExpression");
+
+    binaryOpExpression = new CBinaryOpExpression(left, acceptable->opType, right);
+    child = binaryOpExpression;
+}
+
+void CASTBuilder::Visit( const CClassDeclarationList * acceptable ) const {
+
+}
+
+void CASTBuilder::Visit( const CExpressionParamList * acceptable ) const {
+
+}
+
+void CASTBuilder::Visit( const CMethodDeclarationList * acceptable ) const {
+
+}
+
+void CASTBuilder::Visit( const CParamList * acceptable ) const {
+
+}
+
+void CASTBuilder::Visit( const CStatementList * acceptable ) const {
+
+}
+
+void CASTBuilder::Visit( const CVarDeclarationList * acceptable ) const {
+
 }

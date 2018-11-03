@@ -44,6 +44,12 @@
 #include "MethodDeclarationS.hpp"
 #include "MethodDeclaration.hpp"
 #include "BinaryOpExpression.hpp"
+#include "VarDeclarationList.hpp"
+#include "MethodDeclarationList.hpp"
+#include "ClassDeclarationList.hpp"
+#include "ParamList.hpp"
+#include "StatementList.hpp"
+#include "ExpressionParamList.hpp"
 
 CASTVisualiser::CASTVisualiser(const char * filename) {
     file = fopen(filename, "w");
@@ -64,43 +70,19 @@ void CASTVisualiser::printEdge(const void * from, const void * to) const {
 }
 
 void CASTVisualiser::Visit( const CAdditionalExpressionParam* acceptable ) const {
-    if(acceptable->expression) {
-        printEdge(acceptable, acceptable->expression);
-        acceptable->expression->Accept(this);
-    }
-    addLabel(acceptable, "AdditionalExpressionParam");
+
 }
 
 void CASTVisualiser::Visit( const CAdditionalExpressionParamS* acceptable ) const {
-    if (acceptable->additionalExpressionParamS) {
-        printEdge(acceptable, acceptable->additionalExpressionParamS);
-        acceptable->additionalExpressionParamS->Accept(this);
-    }
-    if (acceptable->additionalExpressionParam) {
-        printEdge(acceptable, acceptable->additionalExpressionParam);
-        acceptable->additionalExpressionParam->Accept(this);
-    }
-    addLabel(acceptable, "AdditionalExpressionParamS");
+
 }
 
 void CASTVisualiser::Visit( const CAdditionalParam* acceptable ) const {
-    if (acceptable->param) {
-        printEdge(acceptable, acceptable->param);
-        acceptable->param->Accept(this);
-    }
-    addLabel(acceptable, "AdditionalParam");
+
 }
 
 void CASTVisualiser::Visit( const CAdditionalParamS* acceptable ) const {
-    if (acceptable->additionalParamS) {
-        printEdge(acceptable, acceptable->additionalParamS);
-        acceptable->additionalParamS->Accept(this);
-    }
-    if (acceptable->additionalParam) {
-        printEdge(acceptable, acceptable->additionalParam);
-        acceptable->additionalParam->Accept(this);
-    }
-    addLabel(acceptable, "AdditionalParamS");
+
 }
 
 void CASTVisualiser::Visit( const CArrayAssignmentStatement* acceptable ) const {
@@ -492,4 +474,52 @@ void CASTVisualiser::Visit( const CBinaryOpExpression* acceptable ) const {
         acceptable->right->Accept( this );
     }
     addLabel(acceptable, "BinaryOpExpression");
+}
+
+void CASTVisualiser::Visit( const CClassDeclarationList * acceptable ) const {
+    for (int i = 0; i < acceptable->children.size(); i++) {
+        printEdge(acceptable, acceptable->children[i]);
+        acceptable->children[i]->Accept( this );
+    }
+    addLabel(acceptable, "ClassDeclarationList");
+}
+
+void CASTVisualiser::Visit( const CVarDeclarationList * acceptable ) const {
+    for (int i = 0; i < acceptable->children.size(); i++) {
+        printEdge(acceptable, acceptable->children[i]);
+        acceptable->children[i]->Accept( this );
+    }
+    addLabel(acceptable, "VarDeclarationList");
+}
+
+void CASTVisualiser::Visit( const CMethodDeclarationList * acceptable ) const {
+    for (int i = 0; i < acceptable->children.size(); i++) {
+        printEdge(acceptable, acceptable->children[i]);
+        acceptable->children[i]->Accept( this );
+    }
+    addLabel(acceptable, "MethodDeclarationList");
+}
+
+void CASTVisualiser::Visit( const CParamList * acceptable ) const {
+    for (int i = 0; i < acceptable->children.size(); i++) {
+        printEdge(acceptable, acceptable->children[i]);
+        acceptable->children[i]->Accept( this );
+    }
+    addLabel(acceptable, "ParamList");
+}
+
+void CASTVisualiser::Visit( const CStatementList * acceptable ) const {
+    for (int i = 0; i < acceptable->children.size(); i++) {
+        printEdge(acceptable, acceptable->children[i]);
+        acceptable->children[i]->Accept( this );
+    }
+    addLabel(acceptable, "StatementList");
+}
+
+void CASTVisualiser::Visit( const CExpressionParamList * acceptable ) const {
+    for (int i = 0; i < acceptable->children.size(); i++) {
+        printEdge(acceptable, acceptable->children[i]);
+        acceptable->children[i]->Accept( this );
+    }
+    addLabel(acceptable, "ExpressionParamList");
 }
