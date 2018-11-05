@@ -14,7 +14,6 @@
 	TT_char_pos = TT_char_pos + yyleng;
 
 void lexerProcessToken( const char * msg );
-void lexerPrintDebugMessage( const char * msg );
 %}
 
 WS [ \t\v]*
