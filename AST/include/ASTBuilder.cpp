@@ -3,72 +3,17 @@
 #include <vector>
 
 #include "ASTBuilder.h"
+#include "ASTIncludes.h"
 
-#include "AdditionalExpressionParam.hpp"
-#include "AdditionalExpressionParamS.hpp"
-#include "AdditionalParam.hpp"
-#include "AdditionalParamS.hpp"
-#include "ArrayAssignmentStatement.hpp"
-#include "BooleanType.hpp"
-#include "CurlyBraceStatement.hpp"
-#include "CustomType.hpp"
-#include "DotExpression.hpp"
-#include "ExpressionParamS.hpp"
-#include "ExpressionParamList.hpp"
-#include "FalseExpression.hpp"
-#include "Goal.hpp"
-#include "IdentifierExpression.hpp"
-#include "IfElseStatement.hpp"
-#include "IntArrayType.hpp"
-#include "IntliteralExpression.hpp"
-#include "IntType.hpp"
-#include "LengthExpression.hpp"
-#include "NewArrayExpression.hpp"
-#include "NewIdentifierExpression.hpp"
-#include "NotExpression.hpp"
-#include "Params.hpp"
-#include "Param.hpp"
-#include "ParamList.hpp"
-#include "ParensExpression.hpp"
-#include "PrintlnStatement.hpp"
-#include "SquarebracketsExpression.hpp"
-#include "StatementS.hpp"
-#include "StatementList.hpp"
-#include "TerminalIdentifier.hpp"
-#include "TerminalIntliteral.hpp"
-#include "ThisExpression.hpp"
-#include "TrueExpression.hpp"
-#include "VarAssignmentStatement.hpp"
-#include "WhileStatement.hpp"
-#include "ClassDeclaration.hpp"
-#include "MainClass.hpp"
-#include "ClassDeclarationS.hpp"
-#include "ClassDeclarationList.hpp"
-#include "Extension.hpp"
-#include "VarDeclarationS.hpp"
-#include "VarDeclarationList.hpp"
-#include "VarDeclaration.hpp"
-#include "MethodDeclarationS.hpp"
-#include "MethodDeclaration.hpp"
-#include "MethodDeclarationList.hpp"
-#include "BinaryOpExpression.hpp"
+CASTBuilder::CASTBuilder() {
 
-CASTBuilder::CASTBuilder() {}
+}
 
 CASTBuilder::~CASTBuilder() {
 
 }
 
-void CASTBuilder::addLabel(const void * pMemory, const char * label) const {
-
-}
-
-void CASTBuilder::printEdge(const void * from, const void * to) const {
-
-}
-
-
-const CGoal* CASTBuilder::buildAST(const CGoal * goal) {
+const CGoal* CASTBuilder::BuildAST(const CGoal * goal) {
     goal->Accept( this );
     ast = static_cast<const CGoal *>(child);
     return ast;

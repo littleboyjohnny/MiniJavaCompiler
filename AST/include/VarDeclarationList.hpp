@@ -17,7 +17,7 @@ public:
         visitor->Visit( this );
     }
 
-    mutable std::vector< const IVarDeclaration * > children;
+    mutable std::vector<const IVarDeclaration *> children;
 };
 
 #endif //MINIJAVACOMPILER_VARDECLARATIONLIST_HPP

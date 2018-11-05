@@ -2,25 +2,18 @@
 #define MINIJAVACOMPILER_ASTBUILDER_H
 
 #include "../interfaces/IVisitor.h"
-#include "../interfaces/IClassDeclarationS.h"
-#include "../interfaces/IVarDeclarationS.h"
-#include "../interfaces/IMethodDeclarationS.h"
-#include "../interfaces/IParams.h"
 #include "ClassDeclarationList.hpp"
 #include "StatementList.hpp"
 #include "../interfaces/IExpressionParamS.h"
-#include <string>
-#include <cstdio>
-#include <vector>
 #include <list>
 
 class CASTBuilder : public IVisitor {
 public:
     CASTBuilder();
     ~CASTBuilder();
-    void printEdge( const void *,const void * ) const;
-    void addLabel( const void *, const char * ) const;
-    const CGoal * buildAST( const CGoal * );
+
+    const CGoal* BuildAST( const CGoal * );
+
     void Visit( const CAdditionalExpressionParam* acceptable ) const;
     void Visit( const CAdditionalExpressionParamS* acceptable ) const;
     void Visit( const CAdditionalParam* acceptable ) const;
@@ -78,8 +71,9 @@ private:
     mutable const CVarDeclarationList * headVarDeclarationS = nullptr;
     mutable const CMethodDeclarationList * headMethodDeclarationS = nullptr;
     mutable const CParamList * headParams = nullptr;
-    mutable std::list< const CStatementList * > listHeadsStatements;
-    mutable std::list< const CExpressionParamList * > listHeadsExpressionParams;
+
+    mutable std::list<const CStatementList *> listHeadsStatements;
+    mutable std::list<const CExpressionParamList *> listHeadsExpressionParams;
 };
 
 #endif //MINIJAVACOMPILER_ASTBUILDER_H

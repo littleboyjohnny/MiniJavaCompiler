@@ -16,7 +16,7 @@ public:
         visitor->Visit( this );
     }
 
-    mutable std::vector< const IMethodDeclaration * > children;
+    mutable std::vector<const IMethodDeclaration *> children;
 };
 
 #endif //MINIJAVACOMPILER_METHODDECLARATIONLIST_HPP

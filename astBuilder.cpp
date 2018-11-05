@@ -11,7 +11,7 @@ int main( int argc, char** argv )
     IAcceptable * goal = nullptr;
     yyparse( goal );
     CASTBuilder * builder = new CASTBuilder();
-    const CGoal * newGoal = builder->buildAST(static_cast< const CGoal * >(goal));
+    const CGoal * newGoal = builder->BuildAST(static_cast< const CGoal * >(goal));
     CASTVisualiser visualiser("build/ast.gv");
     newGoal->Accept(&visualiser);
     //((CGoal*)goal)->Accept( &builder );

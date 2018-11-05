@@ -1,16 +1,21 @@
 #ifndef MINIJAVACOMPILER_ASTVISUALISER_H
 #define MINIJAVACOMPILER_ASTVISUALISER_H
 
-#include "../interfaces/IVisitor.h"
-#include <string>
 #include <cstdio>
+
+#include "../interfaces/IVisitor.h"
+#include "ASTPredefines.h"
+
+class CTerminalIdentifier;
+class CTerminalIntliteral;
+
 
 class CASTVisualiser : public IVisitor {
 public:
     CASTVisualiser( const char * );
+
     ~CASTVisualiser();
-    void printEdge( const void *,const void * ) const;
-    void addLabel( const void *, const char * ) const;
+
     void Visit( const CAdditionalExpressionParam* acceptable ) const;
     void Visit( const CAdditionalExpressionParamS* acceptable ) const;
     void Visit( const CAdditionalParam* acceptable ) const;
@@ -63,6 +68,9 @@ public:
 
 private:
     FILE* file;
+
+    void printEdge( const void * from, const void * to ) const;
+    void addLabel( const void * pMemory, const char * label ) const;
 };
 
 #endif //MINIJAVACOMPILER_ASTVISUALISER_H

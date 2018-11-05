@@ -12,7 +12,7 @@ class CExpressionParamList : public IExpressionParamS {
 public:
     CExpressionParamList() {}
 
-    void Accept(const IVisitor *visitor) const {
+    void Accept( const IVisitor *visitor ) const {
         visitor->Visit(this);
     }
 

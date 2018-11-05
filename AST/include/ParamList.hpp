@@ -12,7 +12,7 @@ class CParamList : public IParams {
 public:
     CParamList() {}
 
-    void Accept(const IVisitor *visitor) const {
+    void Accept( const IVisitor *visitor ) const {
         visitor->Visit(this);
     }
 

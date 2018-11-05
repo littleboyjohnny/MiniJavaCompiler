@@ -42,4 +42,11 @@
 #include "MethodDeclaration.hpp"
 #include "BinaryOpExpression.hpp"
 
+#include "ClassDeclarationList.hpp"
+#include "VarDeclarationList.hpp"
+#include "ParamList.hpp"
+#include "MethodDeclarationList.hpp"
+#include "StatementList.hpp"
+#include "ExpressionParamList.hpp"
+
 #endif //MINIJAVACOMPILER_ASTINCLUDES_H
