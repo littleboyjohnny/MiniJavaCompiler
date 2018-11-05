@@ -2,8 +2,21 @@
 %option yylineno
 
 %{
-#include <stdio.h>
 #include "lexer.h"
+#include "../parser/parser.tab.h"
+
+#define YY_USER_ACTION \
+	TT_char_prev_pos = TT_char_pos; \
+	if( yylloc.first_line < yylineno ) \
+		TT_char_pos = 1; \
+	yylloc.first_line = yylloc.last_line = yylineno; \
+	yylloc.first_column = TT_char_pos; \
+	TT_char_pos = TT_char_pos + yyleng;
+
+#define LEXER_PROCESS_TOKEN( token ) lexerProcessToken( token, #token )
+
+void lexerProcessToken( int token, const char * msg );
+void lexerPrintDebugMessage( const char * msg );
 %}
 
 WS [ \t\v]*
@@ -84,9 +97,9 @@ MULTIPLY	"*"{WS}
 
 %%
 
-"\n"	{ ; }
+"\n"	{ lexerProcessToken( -1, "\\n" ); }
 
-{WS}	{ ; }
+{WS}	{ lexerProcessToken( -2, "WS" ); }
 
 {IF}	{ LEXER_PROCESS_TOKEN(IF); return IF; }
 
