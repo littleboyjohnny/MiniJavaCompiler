@@ -6,6 +6,9 @@
 long TT_char_pos = 1;
 long TT_char_prev_pos = 0;
 
+void lexerProcessToken( const char * msg );
+void lexerPrintDebugMessage( const char * msg );
+
 void lexerProcessToken( const char * msg )
 {
 #ifdef LEXER_DEBUG

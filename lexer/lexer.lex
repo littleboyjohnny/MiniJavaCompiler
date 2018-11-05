@@ -95,7 +95,7 @@ MULTIPLY	"*"{WS}
 
 %%
 
-"\n"	{ lexerProcessToken( "\\n" ); }
+"\n"	{ lexerProcessToken( "NEWLINE" ); }
 
 {WS}	{ lexerProcessToken( "WS" ); }
 
