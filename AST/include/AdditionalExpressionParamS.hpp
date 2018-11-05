@@ -3,7 +3,7 @@
 
 #include "../interfaces/IAdditionalExpressionParamS.h"
 #include "../interfaces/IAdditionalExpressionParam.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CAdditionalExpressionParamS : public IAdditionalExpressionParamS
 {

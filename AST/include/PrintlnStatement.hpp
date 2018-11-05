@@ -3,7 +3,7 @@
 
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IStatement.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CPrintlnStatement : public IStatement {
 public:

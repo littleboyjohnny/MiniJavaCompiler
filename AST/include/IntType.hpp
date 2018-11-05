@@ -2,7 +2,7 @@
 #define MINIJAVACOMPILER_INTTYPE_HPP
 
 #include "../interfaces/IType.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CIntType : public IType {
 public:

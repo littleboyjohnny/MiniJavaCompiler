@@ -2,7 +2,7 @@
 #define MINIJAVACOMPILER_METHODDECLARATIONLIST_HPP
 
 #include "../interfaces/IMethodDeclarationS.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IMethodDeclaration.h"
 
 #include <vector>

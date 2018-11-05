@@ -3,7 +3,7 @@
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
-#include "TerminalIdentifier.hpp"
+#include "../core/TerminalIdentifier.hpp"
 
 class CVarAssignmentStatement : public IStatement {
 public:

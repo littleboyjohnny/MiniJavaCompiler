@@ -2,14 +2,14 @@
 #define MINIJAVACOMPILER_METHODDECLARATION_HPP
 
 #include "../interfaces/IMethodDeclaration.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IType.h"
 #include "../interfaces/IParams.h"
 #include "../interfaces/IVarDeclarationS.h"
 #include "../interfaces/IStatementS.h"
 #include "../interfaces/IExpression.h"
 
-#include "../include/TerminalIdentifier.hpp"
+#include "../core/TerminalIdentifier.hpp"
 
 class CMethodDeclaration : public IMethodDeclaration {
 public:

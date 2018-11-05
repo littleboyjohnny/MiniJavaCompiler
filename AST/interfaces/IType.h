@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_ITYPE_H
 #define COMPILERAST_ITYPE_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IType : public IAcceptable {
 

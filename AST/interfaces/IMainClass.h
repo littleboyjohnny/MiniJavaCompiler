@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_IMainClass_H
 #define COMPILERAST_IMainClass_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IMainClass : public IAcceptable {
 

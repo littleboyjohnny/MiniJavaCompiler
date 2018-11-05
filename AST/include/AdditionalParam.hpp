@@ -3,7 +3,7 @@
 
 #include "../interfaces/IAdditionalParam.h"
 #include "../interfaces/IParam.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CAdditionalParam : public IAdditionalParam {
 public:

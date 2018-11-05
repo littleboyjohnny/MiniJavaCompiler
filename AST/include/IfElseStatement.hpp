@@ -4,7 +4,7 @@
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IStatementS.h"
 #include "../interfaces/IExpression.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 
 class CIfElseStatement : public IStatement {

@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_IPARAMS_H
 #define COMPILERAST_IPARAMS_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IParams : public IAcceptable {
 

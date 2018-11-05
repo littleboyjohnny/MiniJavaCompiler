@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_IVISITOR_H
 #define COMPILERAST_IVISITOR_H
 
-#include "../include/ASTPredefines.h"
+#include "../ASTPredefines.h"
 
 class CTerminalIdentifier;
 class CTerminalIntliteral;

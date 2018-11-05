@@ -1,18 +1,20 @@
-#ifndef MINIJAVACOMPILER_ASTBUILDER_H
-#define MINIJAVACOMPILER_ASTBUILDER_H
+#ifndef MINIJAVACOMPILER_ASTVISUALISER_H
+#define MINIJAVACOMPILER_ASTVISUALISER_H
 
-#include "../interfaces/IVisitor.h"
-#include "ClassDeclarationList.hpp"
-#include "StatementList.hpp"
-#include "../interfaces/IExpressionParamS.h"
-#include <list>
+#include <cstdio>
 
-class CASTBuilder : public IVisitor {
+#include "core/IVisitor.h"
+#include "ASTPredefines.h"
+
+class CTerminalIdentifier;
+class CTerminalIntliteral;
+
+
+class CASTVisualiser : public IVisitor {
 public:
-    CASTBuilder();
-    ~CASTBuilder();
+    CASTVisualiser( const char * );
 
-    const CGoal* BuildAST( const CGoal * );
+    ~CASTVisualiser();
 
     void Visit( const CAdditionalExpressionParam* acceptable ) const;
     void Visit( const CAdditionalExpressionParamS* acceptable ) const;
@@ -21,8 +23,8 @@ public:
     void Visit( const CArrayAssignmentStatement* acceptable ) const;
     void Visit( const CBooleanType* acceptable ) const;
     void Visit( const CClassDeclaration* acceptable ) const;
-    void Visit( const CClassDeclarationS* acceptable ) const;
     void Visit( const CClassDeclarationList* acceptable ) const;
+    void Visit( const CClassDeclarationS* acceptable ) const;
     void Visit( const CCurlyBraceStatement* acceptable ) const;
     void Visit( const CCustomType* acceptable ) const;
     void Visit( const CCallExpression* acceptable ) const;
@@ -65,15 +67,10 @@ public:
     void Visit( const CTerminalIntliteral* acceptable ) const;
 
 private:
-    mutable const CGoal * ast;
-    mutable const IAcceptable * child;
-    mutable const CClassDeclarationList * headClassDeclarationS = nullptr;
-    mutable const CVarDeclarationList * headVarDeclarationS = nullptr;
-    mutable const CMethodDeclarationList * headMethodDeclarationS = nullptr;
-    mutable const CParamList * headParams = nullptr;
+    FILE* file;
 
-    mutable std::list<const CStatementList *> listHeadsStatements;
-    mutable std::list<const CExpressionParamList *> listHeadsExpressionParams;
+    void printEdge( const void * from, const void * to ) const;
+    void addLabel( const void * pMemory, const char * label ) const;
 };
 
-#endif //MINIJAVACOMPILER_ASTBUILDER_H
+#endif //MINIJAVACOMPILER_ASTVISUALISER_H

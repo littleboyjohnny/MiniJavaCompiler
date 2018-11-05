@@ -23,4 +23,4 @@ add_custom_target(
 
 # fake executable
 # add all source files just for clion inspection support
-add_executable(fake parser/parser.cpp lexer/lexer.cpp AST/include/ AST/interfaces/ astBuilder.cpp AST/include/BinaryOpExpression.hpp AST/interfaces/ASTInterfaces.h AST/include/ASTIncludes.h AST/include/ASTPredefines.h)
+add_executable(fake parser/parser.cpp lexer/lexer.cpp AST/include/ AST/interfaces/ astBuilder.cpp AST/include/BinaryOpExpression.hpp AST/ASTInterfaces.h AST/ASTIncludes.h AST/ASTPredefines.h)

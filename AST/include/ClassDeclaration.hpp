@@ -2,12 +2,12 @@
 #define MINIJAVACOMPILER_CLASSDECLARATION_HPP
 
 #include "../interfaces/IClassDeclaration.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IExtension.h"
 #include "../interfaces/IVarDeclarationS.h"
 #include "../interfaces/IMethodDeclarationS.h"
 
-#include "../include/TerminalIdentifier.hpp"
+#include "../core/TerminalIdentifier.hpp"
 
 class CClassDeclaration : public IClassDeclaration {
 public:

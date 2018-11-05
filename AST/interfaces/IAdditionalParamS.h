@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_IADDITIONALPARAMS_H
 #define COMPILERAST_IADDITIONALPARAMS_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IAdditionalParamS : public IAcceptable {
 

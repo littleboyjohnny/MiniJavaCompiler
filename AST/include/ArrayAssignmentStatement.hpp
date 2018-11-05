@@ -3,8 +3,8 @@
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
-#include "../interfaces/IVisitor.h"
-#include "TerminalIdentifier.hpp"
+#include "../core/IVisitor.h"
+#include "../core/TerminalIdentifier.hpp"
 
 class CArrayAssignmentStatement : public IStatement {
 public:

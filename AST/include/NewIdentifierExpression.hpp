@@ -2,8 +2,8 @@
 #define MINIJAVACOMPILER_NEWIDENTIFIEREXPRESSION_HPP
 
 #include "../interfaces/IExpression.h"
-#include "../interfaces/IVisitor.h"
-#include "TerminalIdentifier.hpp"
+#include "../core/IVisitor.h"
+#include "../core/TerminalIdentifier.hpp"
 
 class CNewIdentifierExpression : public IExpression
 {

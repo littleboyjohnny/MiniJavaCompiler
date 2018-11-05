@@ -2,7 +2,7 @@
 #define MINIJAVACOMPILER_NOTEXPRESSION_HPP
 
 #include "../interfaces/IExpression.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CNotExpression : public IExpression
 {

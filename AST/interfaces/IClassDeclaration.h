@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_ICLASSDECLARATION_H
 #define COMPILERAST_ICLASSDECLARATION_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IClassDeclaration : public IAcceptable {
 

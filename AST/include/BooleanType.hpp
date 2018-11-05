@@ -2,7 +2,7 @@
 #define MINIJAVACOMPILER_BOOLEANTYPE_HPP
 
 #include "../interfaces/IType.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CBooleanType : public IType {
 public:

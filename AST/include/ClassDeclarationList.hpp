@@ -3,7 +3,7 @@
 
 #include "../interfaces/IClassDeclarationS.h"
 #include "../interfaces/IClassDeclaration.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 #include <vector>
 

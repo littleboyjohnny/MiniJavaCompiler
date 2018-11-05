@@ -3,9 +3,9 @@
 
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IExpressionParamS.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
-#include "../include/TerminalIdentifier.hpp"
+#include "../core/TerminalIdentifier.hpp"
 
 class CCallExpression : public IExpression
 {

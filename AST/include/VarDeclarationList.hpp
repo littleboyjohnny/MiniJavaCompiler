@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../interfaces/IVarDeclarationS.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IVarDeclaration.h"
 
 class CVarDeclarationList : public IVarDeclarationS {

@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_IMETHODDECLARATIONS_H
 #define COMPILERAST_IMETHODDECLARATIONS_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IMethodDeclarationS : public IAcceptable {
 

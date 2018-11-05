@@ -1,8 +1,8 @@
 #ifndef MINIJAVACOMPILER_TERMINALINTLITERAL_HPP
 #define MINIJAVACOMPILER_TERMINALINTLITERAL_HPP
 
-#include "../interfaces/IAcceptable.h"
-#include "../interfaces/IVisitor.h"
+#include "IAcceptable.h"
+#include "IVisitor.h"
 
 class CTerminalIntliteral : public IAcceptable {
 public:

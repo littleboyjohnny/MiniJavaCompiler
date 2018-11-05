@@ -2,7 +2,7 @@
 #define MINIJAVACOMPILER_VARDECLARATIONS_HPP
 
 #include "../interfaces/IVarDeclarationS.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IVarDeclaration.h"
 
 class CVarDeclarationS : public IVarDeclarationS {

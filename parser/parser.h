@@ -1,7 +1,7 @@
-#include "../AST/include/ASTIncludes.h"
-#include "../AST/interfaces/ASTInterfaces.h"
+#include "../AST/ASTIncludes.h"
+#include "../AST/ASTInterfaces.h"
 
-#include "../AST/include/TerminalIntliteral.hpp"
-#include "../AST/include/TerminalIdentifier.hpp"
+#include "../AST/core/TerminalIntliteral.hpp"
+#include "../AST/core/TerminalIdentifier.hpp"
 
 extern "C" int yyparse( IAcceptable * & node );

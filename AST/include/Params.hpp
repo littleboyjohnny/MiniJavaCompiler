@@ -2,7 +2,7 @@
 #define MINIJAVACOMPILER_PARAMS_HPP
 
 #include "../interfaces/IParams.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IParam.h"
 #include "../interfaces/IAdditionalParamS.h"
 

@@ -2,10 +2,10 @@
 #define MINIJAVACOMPILER_VARDECLARATION_HPP
 
 #include "../interfaces/IVarDeclaration.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IType.h"
 
-#include "../include/TerminalIdentifier.hpp"
+#include "../core/TerminalIdentifier.hpp"
 
 class CVarDeclaration : public IVarDeclaration {
 public:

@@ -2,10 +2,10 @@
 #define MINIJAVACOMPILER_MAINCLASS_HPP
 
 #include "../interfaces/IMainClass.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 #include "../interfaces/IStatementS.h"
 
-#include "../include/TerminalIdentifier.hpp"
+#include "../core/TerminalIdentifier.hpp"
 
 class CMainClass : public IMainClass {
 public:

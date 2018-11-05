@@ -2,9 +2,9 @@
 #define MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP
 
 #include "../interfaces/IExpression.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
-#include "../include/TerminalIntliteral.hpp"
+#include "../core/TerminalIntliteral.hpp"
 
 class CIntliteralExpression : public IExpression
 {

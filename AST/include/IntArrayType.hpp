@@ -2,7 +2,7 @@
 #define MINIJAVACOMPILER_INTARRAYTYPE_HPP
 
 #include "../interfaces/IType.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CIntArrayType : public IType {
 public:

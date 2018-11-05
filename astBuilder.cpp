@@ -1,6 +1,6 @@
 #include "parser/parser.h"
-#include "AST/include/ASTBuilder.h"
-#include "AST/include/ASTVisualiser.h"
+#include "AST/ASTBuilder.h"
+#include "AST/ASTVisualiser.h"
 #include <iostream>
 
 extern int yyparse(IAcceptable*& node);

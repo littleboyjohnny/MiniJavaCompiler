@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_IGOAL_H
 #define COMPILERAST_IGOAL_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IGoal : public IAcceptable {
 

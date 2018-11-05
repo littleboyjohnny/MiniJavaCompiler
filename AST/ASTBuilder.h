@@ -1,20 +1,18 @@
-#ifndef MINIJAVACOMPILER_ASTVISUALISER_H
-#define MINIJAVACOMPILER_ASTVISUALISER_H
+#ifndef MINIJAVACOMPILER_ASTBUILDER_H
+#define MINIJAVACOMPILER_ASTBUILDER_H
 
-#include <cstdio>
+#include "core/IVisitor.h"
+#include "include/ClassDeclarationList.hpp"
+#include "include/StatementList.hpp"
+#include "interfaces/IExpressionParamS.h"
+#include <list>
 
-#include "../interfaces/IVisitor.h"
-#include "ASTPredefines.h"
-
-class CTerminalIdentifier;
-class CTerminalIntliteral;
-
-
-class CASTVisualiser : public IVisitor {
+class CASTBuilder : public IVisitor {
 public:
-    CASTVisualiser( const char * );
+    CASTBuilder();
+    ~CASTBuilder();
 
-    ~CASTVisualiser();
+    const CGoal* BuildAST( const CGoal * );
 
     void Visit( const CAdditionalExpressionParam* acceptable ) const;
     void Visit( const CAdditionalExpressionParamS* acceptable ) const;
@@ -23,8 +21,8 @@ public:
     void Visit( const CArrayAssignmentStatement* acceptable ) const;
     void Visit( const CBooleanType* acceptable ) const;
     void Visit( const CClassDeclaration* acceptable ) const;
-    void Visit( const CClassDeclarationList* acceptable ) const;
     void Visit( const CClassDeclarationS* acceptable ) const;
+    void Visit( const CClassDeclarationList* acceptable ) const;
     void Visit( const CCurlyBraceStatement* acceptable ) const;
     void Visit( const CCustomType* acceptable ) const;
     void Visit( const CCallExpression* acceptable ) const;
@@ -67,10 +65,15 @@ public:
     void Visit( const CTerminalIntliteral* acceptable ) const;
 
 private:
-    FILE* file;
+    mutable const CGoal * ast;
+    mutable const IAcceptable * child;
+    mutable const CClassDeclarationList * headClassDeclarationS = nullptr;
+    mutable const CVarDeclarationList * headVarDeclarationS = nullptr;
+    mutable const CMethodDeclarationList * headMethodDeclarationS = nullptr;
+    mutable const CParamList * headParams = nullptr;
 
-    void printEdge( const void * from, const void * to ) const;
-    void addLabel( const void * pMemory, const char * label ) const;
+    mutable std::list<const CStatementList *> listHeadsStatements;
+    mutable std::list<const CExpressionParamList *> listHeadsExpressionParams;
 };
 
-#endif //MINIJAVACOMPILER_ASTVISUALISER_H
+#endif //MINIJAVACOMPILER_ASTBUILDER_H

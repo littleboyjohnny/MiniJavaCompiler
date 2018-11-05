@@ -1,8 +1,8 @@
 #ifndef MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
 #define MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
 
-#include "../interfaces/IAcceptable.h"
-#include "../interfaces/IVisitor.h"
+#include "IAcceptable.h"
+#include "IVisitor.h"
 #include <cstring>
 
 class CTerminalIdentifier : public IAcceptable {

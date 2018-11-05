@@ -4,7 +4,7 @@
 #include "../interfaces/IGoal.h"
 #include "../interfaces/IMainClass.h"
 #include "../interfaces/IClassDeclarationS.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CGoal : public IGoal {
 public:

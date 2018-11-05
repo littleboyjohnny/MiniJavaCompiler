@@ -3,8 +3,8 @@
 
 #include "../interfaces/IParam.h"
 #include "../interfaces/IType.h"
-#include "../interfaces/IVisitor.h"
-#include "TerminalIdentifier.hpp"
+#include "../core/IVisitor.h"
+#include "../core/TerminalIdentifier.hpp"
 
 class CParam : public IParam {
 public:

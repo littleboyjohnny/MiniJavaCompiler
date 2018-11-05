@@ -2,9 +2,9 @@
 #define MINIJAVACOMPILER_IDENTIFIEREXPRESSION_HPP
 
 #include "../interfaces/IExpression.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
-#include "../include/TerminalIdentifier.hpp"
+#include "../core/TerminalIdentifier.hpp"
 
 class CIdentifierExpression : public IExpression
 {

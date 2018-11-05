@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_IEXPRESSION_H
 #define COMPILERAST_IEXPRESSION_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IExpression : public IAcceptable {
 

@@ -1,7 +1,7 @@
 #ifndef COMPILERAST_ISTATEMENTS_H
 #define COMPILERAST_ISTATEMENTS_H
 
-#include "IAcceptable.h"
+#include "../core/IAcceptable.h"
 
 class IStatementS : public IAcceptable {
 

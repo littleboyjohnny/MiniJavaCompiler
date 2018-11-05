@@ -4,7 +4,7 @@
 #include "../interfaces/IExpressionParamS.h"
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IAdditionalExpressionParamS.h"
-#include "../interfaces/IVisitor.h"
+#include "../core/IVisitor.h"
 
 class CExpressionParamS : public IExpressionParamS
 {

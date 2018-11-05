@@ -1,5 +1,5 @@
-#include "../AST/include/TerminalIdentifier.hpp"
-#include "../AST/include/TerminalIntliteral.hpp"
+#include "../AST/core/TerminalIdentifier.hpp"
+#include "../AST/core/TerminalIntliteral.hpp"
 
 extern int yylineno;
 extern long TT_char_pos;
