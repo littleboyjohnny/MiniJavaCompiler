@@ -1,32 +1,16 @@
-#include "parser.h"
-
 #include <cstdio>
 #include <cstring>
 
-#ifdef PARSER_MAIN
-int main( int argc, char** argv )
-{
-	freopen( argv[1], "r", stdin );
-	void* node;
-	yyparse(node);
-	return 0;
-}
-#endif
+#include "parser.h"
 
-void yyerror (void*& node, char const *msg)
+void yyerror( IAcceptable * & node, char const * msg );
+void parserProcessRule( const char * left, const char * right );
+void parserPrintDebugMessage( const char * left, const char * right );
+
+
+void yyerror( IAcceptable * & node, char const * msg )
 {
 	fprintf( stderr,"ошибка: %s\n", msg );
-}
-
-void parserPrintDebugMessage( const char * left, const char * right )
-{
-	char fmt[100] = "";
-	if( strcmp(right, "") == 0 ) {
-		strcpy( fmt, "PARSER_DEBUG: %s\n" );
-	} else {
-		strcpy( fmt, "PARSER_DEBUG: %s = %s\n" );
-	}
-	printf( fmt, left, right );
 }
 
 void parserProcessRule( const char * left, const char * right )
@@ -34,4 +18,10 @@ void parserProcessRule( const char * left, const char * right )
 #ifdef PARSER_DEBUG
 	parserPrintDebugMessage( left, right );
 #endif
+}
+
+void parserPrintDebugMessage( const char * left, const char * right )
+{
+	const char * fmt = "PARSER_DEBUG: %s <= %s\n";
+	printf( fmt, left, right );
 }

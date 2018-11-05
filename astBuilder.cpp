@@ -3,12 +3,12 @@
 #include "AST/include/ASTVisualiser.h"
 #include <iostream>
 
-extern int yyparse(void*&);
+extern int yyparse(IAcceptable*& node);
 
 int main( int argc, char** argv )
 {
     freopen( argv[1], "r", stdin );
-    void * goal = nullptr;
+    IAcceptable * goal = nullptr;
     yyparse( goal );
     CASTBuilder * builder = new CASTBuilder();
     const CGoal * newGoal = builder->buildAST(static_cast< const CGoal * >(goal));
