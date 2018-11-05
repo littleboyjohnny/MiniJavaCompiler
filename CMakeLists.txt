@@ -4,10 +4,16 @@ project( MiniJavaCompiler )
 
 set( CMAKE_CXX_STANDARD 17 )
 
-# директория для результатов работы flex и bison
+# директория для результатов работы flex и bison и прочего
 set( PROJECT_BUILD_DIR ${CMAKE_HOME_DIRECTORY}/build )
 file( MAKE_DIRECTORY ${PROJECT_BUILD_DIR} )
 include_directories( ${PROJECT_BUILD_DIR} )
+
+# команда очистки предыдущей директории
+add_custom_target(
+        CleanBuild
+        COMMAND rm -rf ${PROJECT_BUILD_DIR}
+)
 
 # дополнительные директории, относительно которых ide ищет заголовочные фаилы
 include_directories( ${CMAKE_HOME_DIRECTORY}/lexer )
@@ -38,5 +44,5 @@ add_library( libparser ${PARSER_SRC} )
 
 # создаем исполняемый фаил - берет имя фаила как параметр командной строки и отрисовывает AST в фаил build/ast.jpg
 set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp )
-add_executable( astBuilder ${ASTBUILDER_SRC} )
-target_link_libraries( astBuilder liblexer libparser )
+add_executable( AstBuilder ${ASTBUILDER_SRC} )
+target_link_libraries( AstBuilder liblexer libparser )
