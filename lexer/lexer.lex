@@ -13,9 +13,7 @@
 	yylloc.first_column = TT_char_pos; \
 	TT_char_pos = TT_char_pos + yyleng;
 
-#define LEXER_PROCESS_TOKEN( token ) lexerProcessToken( token, #token )
-
-void lexerProcessToken( int token, const char * msg );
+void lexerProcessToken( const char * msg );
 void lexerPrintDebugMessage( const char * msg );
 %}
 
@@ -97,83 +95,83 @@ MULTIPLY	"*"{WS}
 
 %%
 
-"\n"	{ lexerProcessToken( -1, "\\n" ); }
+"\n"	{ lexerProcessToken( "\\n" ); }
 
-{WS}	{ lexerProcessToken( -2, "WS" ); }
+{WS}	{ lexerProcessToken( "WS" ); }
 
-{IF}	{ LEXER_PROCESS_TOKEN(IF); return IF; }
+{IF}	{ lexerProcessToken( "IF" ); return IF; }
 
-{ELSE}	{ LEXER_PROCESS_TOKEN(ELSE); return ELSE; }
+{ELSE}	{ lexerProcessToken( "ELSE" ); return ELSE; }
 
-{WHILE}	{ LEXER_PROCESS_TOKEN(WHILE); return WHILE; }
+{WHILE}	{ lexerProcessToken( "WHILE" ); return WHILE; }
 
-{INTLITERAL}	{ LEXER_PROCESS_TOKEN(INTLITERAL); yylval.terminalIntliteral = new CTerminalIntliteral(atoi(yytext)); return INTLITERAL; }
+{INTLITERAL}	{ lexerProcessToken( "INTLITERAL" ); yylval.terminalIntliteral = new CTerminalIntliteral(atoi(yytext)); return INTLITERAL; }
 
-{TRUE}	{ LEXER_PROCESS_TOKEN(_TRUE); return _TRUE; }
+{TRUE}	{ lexerProcessToken( "_TRUE" ); return _TRUE; }
 
-{FALSE}	{ LEXER_PROCESS_TOKEN(_FALSE); return _FALSE; }
+{FALSE}	{ lexerProcessToken( "_FALSE" ); return _FALSE; }
 
-{PUBLIC}	{ LEXER_PROCESS_TOKEN(PUBLIC); return PUBLIC; }
+{PUBLIC}	{ lexerProcessToken( "PUBLIC" ); return PUBLIC; }
 
-{STATIC}	{ LEXER_PROCESS_TOKEN(STATIC); return STATIC; }
+{STATIC}	{ lexerProcessToken( "STATIC" ); return STATIC; }
 
-{EXTENDS}	{ LEXER_PROCESS_TOKEN(EXTENDS); return EXTENDS; }
+{EXTENDS}	{ lexerProcessToken( "EXTENDS" ); return EXTENDS; }
 
-{VOID}	{ LEXER_PROCESS_TOKEN(VOID); return VOID; }
+{VOID}	{ lexerProcessToken( "VOID" ); return VOID; }
 
-{MAIN}	{ LEXER_PROCESS_TOKEN(MAIN); return MAIN; }
+{MAIN}	{ lexerProcessToken( "MAIN" ); return MAIN; }
 
-{RETURN}	{ LEXER_PROCESS_TOKEN(RETURN); return RETURN; }
+{RETURN}	{ lexerProcessToken( "RETURN" ); return RETURN; }
 
-{NEW}	{ LEXER_PROCESS_TOKEN(NEW); return NEW; }
+{NEW}	{ lexerProcessToken( "NEW" ); return NEW; }
 
-{THIS}	{ LEXER_PROCESS_TOKEN(THIS); return THIS; }
+{THIS}	{ lexerProcessToken( "THIS" ); return THIS; }
 
-{PRINTLN}	{ LEXER_PROCESS_TOKEN(PRINTLN); return PRINTLN; }
+{PRINTLN}	{ lexerProcessToken( "PRINTLN" ); return PRINTLN; }
 
-{DOTLENGTH}	{ LEXER_PROCESS_TOKEN(DOTLENGTH); return DOTLENGTH; }
+{DOTLENGTH}	{ lexerProcessToken( "DOTLENGTH" ); return DOTLENGTH; }
 
-{STRING}	{ LEXER_PROCESS_TOKEN(STRING); return STRING; }
+{STRING}	{ lexerProcessToken( "STRING" ); return STRING; }
 
-{INT}	{ LEXER_PROCESS_TOKEN(INT); return INT; }
+{INT}	{ lexerProcessToken( "INT" ); return INT; }
 
-{BOOLEAN}	{ LEXER_PROCESS_TOKEN(BOOLEAN); return BOOLEAN; }
+{BOOLEAN}	{ lexerProcessToken( "BOOLEAN" ); return BOOLEAN; }
 
-{CLASS} { LEXER_PROCESS_TOKEN(CLASS); return CLASS; }
+{CLASS} { lexerProcessToken( "CLASS" ); return CLASS; }
 
-{LCURLYBRACE}	{ LEXER_PROCESS_TOKEN(LCURLYBRACE); return LCURLYBRACE; }
+{LCURLYBRACE}	{ lexerProcessToken( "LCURLYBRACE" ); return LCURLYBRACE; }
 
-{RCURLYBRACE}	{ LEXER_PROCESS_TOKEN(RCURLYBRACE); return RCURLYBRACE; }
+{RCURLYBRACE}	{ lexerProcessToken( "RCURLYBRACE" ); return RCURLYBRACE; }
 
-{LPAREN}	{ LEXER_PROCESS_TOKEN(LPAREN); return LPAREN; }
+{LPAREN}	{ lexerProcessToken( "LPAREN" ); return LPAREN; }
 
-{RPAREN}	{ LEXER_PROCESS_TOKEN(RPAREN); return RPAREN; }
+{RPAREN}	{ lexerProcessToken( "RPAREN" ); return RPAREN; }
 
-{LSQUAREBRACKET}	{ LEXER_PROCESS_TOKEN(LSQUAREBRACKET); return LSQUAREBRACKET; }
+{LSQUAREBRACKET}	{ lexerProcessToken( "LSQUAREBRACKET" ); return LSQUAREBRACKET; }
 
-{RSQUAREBRACKET}	{ LEXER_PROCESS_TOKEN(RSQUAREBRACKET); return RSQUAREBRACKET; }
+{RSQUAREBRACKET}	{ lexerProcessToken( "RSQUAREBRACKET" ); return RSQUAREBRACKET; }
 
-{SEMICOLON}	{ LEXER_PROCESS_TOKEN(SEMICOLON); return SEMICOLON;}
+{SEMICOLON}	{ lexerProcessToken( "SEMICOLON" ); return SEMICOLON;}
 
-{COMMA}	{ LEXER_PROCESS_TOKEN(COMMA); return COMMA; }
+{COMMA}	{ lexerProcessToken( "COMMA" ); return COMMA; }
 
-{DOT}	{ LEXER_PROCESS_TOKEN(DOT); return DOT; }
+{DOT}	{ lexerProcessToken( "DOT" ); return DOT; }
 
-{EQUALS}	{ LEXER_PROCESS_TOKEN(EQUALS); return EQUALS; }
+{EQUALS}	{ lexerProcessToken( "EQUALS" ); return EQUALS; }
 
-{NOT}	{ LEXER_PROCESS_TOKEN(NOT); return NOT; }
+{NOT}	{ lexerProcessToken( "NOT" ); return NOT; }
 
-{LESS}	{ LEXER_PROCESS_TOKEN(LESS); return LESS; }
+{LESS}	{ lexerProcessToken( "LESS" ); return LESS; }
 
-{AND}	{ LEXER_PROCESS_TOKEN(AND); return AND; }
+{AND}	{ lexerProcessToken( "AND" ); return AND; }
 
-{PLUS}	{ LEXER_PROCESS_TOKEN(PLUS); return PLUS; }
+{PLUS}	{ lexerProcessToken( "PLUS" ); return PLUS; }
 
-{MINUS}	{ LEXER_PROCESS_TOKEN(MINUS); return MINUS; }
+{MINUS}	{ lexerProcessToken( "MINUS" ); return MINUS; }
 
-{MULTIPLY}	{ LEXER_PROCESS_TOKEN(MULTIPLY); return MULTIPLY; }
+{MULTIPLY}	{ lexerProcessToken( "MULTIPLY" ); return MULTIPLY; }
 
-{IDENTIFIER}	{ LEXER_PROCESS_TOKEN(IDENTIFIER); yylval.terminalIdentifier = new CTerminalIdentifier(yytext, yyleng); return IDENTIFIER; }
+{IDENTIFIER}	{ lexerProcessToken( "IDENTIFIER" ); yylval.terminalIdentifier = new CTerminalIdentifier(yytext, yyleng); return IDENTIFIER; }
 
 %%
 
