@@ -1,26 +1,42 @@
-cmake_minimum_required(VERSION 3.3)
-project(MiniJavaCompiler)
+cmake_minimum_required( VERSION 3.12 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+project( MiniJavaCompiler )
 
-add_custom_target(
-        parser
-        COMMAND make parser
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+set( CMAKE_CXX_STANDARD 17 )
+
+# директория для результатов работы flex и bison
+set( PROJECT_BUILD_DIR ${CMAKE_HOME_DIRECTORY}/build )
+file( MAKE_DIRECTORY ${PROJECT_BUILD_DIR} )
+include_directories( ${PROJECT_BUILD_DIR} )
+
+# дополнительные директории, относительно которых ide ищет заголовочные фаилы
+include_directories( ${CMAKE_HOME_DIRECTORY}/lexer )
+include_directories( ${CMAKE_HOME_DIRECTORY}/parser )
+include_directories( ${CMAKE_HOME_DIRECTORY}/AST )
+
+# генерируем лексический анализатор flex'ом
+add_custom_command(
+        OUTPUT ${PROJECT_BUILD_DIR}/lex.yy.cpp
+        COMMAND flex -o ${PROJECT_BUILD_DIR}/lex.yy.cpp ${CMAKE_HOME_DIRECTORY}/lexer/lexer.lex
+        DEPENDS lexer/lexer.lex
 )
 
-add_custom_target(
-        lexer
-        COMMAND make lexer
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+# генерируем синтаксический анализатор bison'ом
+add_custom_command(
+        OUTPUT ${PROJECT_BUILD_DIR}/parser.tab.hpp ${PROJECT_BUILD_DIR}/parser.tab.cpp
+        COMMAND bison -o ${PROJECT_BUILD_DIR}/parser.tab.cpp -d ${CMAKE_HOME_DIRECTORY}/parser/parser.y
+        DEPENDS parser/parser.y
 )
 
-add_custom_target(
-        ast
-        COMMAND make ast
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
+# создаем библиотеку с одной функцией - yylex и переменными положения токена
+set( LEXER_SRC lexer/lexer.cpp ${PROJECT_BUILD_DIR}/lex.yy.cpp ${PROJECT_BUILD_DIR}/parser.tab.cpp )
+add_library( liblexer ${LEXER_SRC} )
 
-# fake executable
-# add all source files just for clion inspection support
-add_executable(fake parser/parser.cpp lexer/lexer.cpp AST/include/ AST/interfaces/ astBuilder.cpp AST/include/BinaryOpExpression.hpp AST/ASTInterfaces.h AST/ASTIncludes.h AST/ASTPredefines.h)
+# создаем библиотеку с одной функцией - yyparse
+set( PARSER_SRC parser/parser.cpp ${PROJECT_BUILD_DIR}/parser.tab.cpp )
+add_library( libparser ${PARSER_SRC} )
+
+# создаем исполняемый фаил - берет имя фаила как параметр командной строки и отрисовывает AST в фаил build/ast.jpg
+set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp )
+add_executable( astBuilder ${ASTBUILDER_SRC} )
+target_link_libraries( astBuilder liblexer libparser )

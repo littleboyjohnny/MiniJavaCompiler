@@ -3,7 +3,7 @@
 
 %{
 #include "lexer.h"
-#include "../parser/parser.tab.h"
+#include "parser.tab.hpp"
 
 #define YY_USER_ACTION \
 	TT_char_prev_pos = TT_char_pos; \
