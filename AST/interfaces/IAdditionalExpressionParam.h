@@ -1,0 +1,10 @@
+#ifndef COMPILERAST_IADDITTIONALEXPRESSIONPARAM_H
+#define COMPILERAST_IADDITTIONALEXPRESSIONPARAM_H
+
+#include "../core/IAcceptable.h"
+
+class IAdditionalExpressionParam : public IAcceptable {
+
+};
+
+#endif //COMPILERAST_IADDITTIONALEXPRESSIONPARAM_H
