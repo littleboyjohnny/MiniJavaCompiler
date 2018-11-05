@@ -12,7 +12,7 @@ include_directories( ${PROJECT_BUILD_DIR} )
 # команда очистки предыдущей директории
 add_custom_target(
         CleanBuild
-        COMMAND rm -rf ${PROJECT_BUILD_DIR}
+        COMMAND rm -rf ${PROJECT_BUILD_DIR}/*
 )
 
 # дополнительные директории, относительно которых ide ищет заголовочные фаилы
