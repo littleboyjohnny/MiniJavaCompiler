@@ -5,4 +5,4 @@ extern int yylineno;
 extern long TT_char_pos;
 extern long TT_char_prev_pos;
 
-extern "C" int yylex();
+extern int yylex();
