@@ -12,9 +12,9 @@ TokenMap* tokenMap = new TokenMap();
 std::string pathToInputs = "../tests/inputs/";
 std::string pathToKeys = "../tests/LexerTestsFiles/correct/";
 
-TEST( LexerTests, sample1 ) {
-    std::string pathToSample = pathToInputs + "sample1.java";
-    std::string pathToKey = pathToKeys + "sample1";
+void testLexerBySample( std::string samplefname, std::string keyfname ) {
+    std::string pathToSample = pathToInputs + samplefname;
+    std::string pathToKey = pathToKeys + keyfname;
 
     yyin = fopen( pathToSample.c_str(), "r" );
 
@@ -32,10 +32,14 @@ TEST( LexerTests, sample1 ) {
             FAIL() << "Not enough tokens\n";
         }
     }
-    if (yylex()) {
+    if ( yylex() ) {
         FAIL() << "Too many tokens\n";
     }
 
-    fclose(yyin);
+    fclose( yyin );
     fin.close();
+}
+
+TEST( LexerTests, sample1 ) {
+    testLexerBySample( "sample1.java", "sample1" );
 }

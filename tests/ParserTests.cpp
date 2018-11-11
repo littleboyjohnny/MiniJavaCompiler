@@ -14,13 +14,13 @@ std::string pathToInputs = "../tests/LexerTestsFiles/correct/";
 std::string pathToKeys = "../tests/ParserTestsFiles/correct/";
 std::string pathToResults = "../tests/ParserTestsFiles/results/";
 
-TEST( ParserTests, sample1 )
+void testParserBySample( std::string samplefname, std::string keyfname, std::string resultfname )
 {
-    std::string pathToResult = pathToResults + "sample1";
-    std::string pathToSample = pathToInputs + "sample1";
-    std::string pathToKey = pathToKeys + "sample1";
+    std::string pathToResult = pathToResults + resultfname;
+    std::string pathToSample = pathToInputs + samplefname;
+    std::string pathToKey = pathToKeys + keyfname;
 
-    //int temp_stdout = dup(1);
+    int temp_stdout = dup(1);
     FILE* toResults = freopen( pathToResult.c_str(), "w", stdout );
     if (toResults == NULL)
         printf("File can not be reopened\n");
@@ -29,8 +29,9 @@ TEST( ParserTests, sample1 )
     IAcceptable * goal = nullptr;
     yyparse( goal );
 
-    fclose(stdout);
-    //stdout = fdopen(temp_stdout, "w");
+    fclose( toResults );
+    stdout = fdopen( temp_stdout, "w" );
+    //freopen("/dev/tty", "a", stdout);
 
     std::ifstream fresult( pathToResult.c_str(), std::ifstream::in );
     if ( !fresult.is_open() )
@@ -40,17 +41,22 @@ TEST( ParserTests, sample1 )
     if ( !fkeys.is_open() )
         printf( "File with keys can not be opened\n" );
     std::string keyLine;
-    while(std::getline(fresult, resultLine) && std::getline(fkeys, keyLine)) {
+    while( std::getline( fresult, resultLine ) && std::getline( fkeys, keyLine )) {
         ASSERT_EQ( resultLine, keyLine );
     }
-    if (std::getline(fresult, resultLine)) {
+    if (std::getline( fresult, resultLine )) {
         FAIL() << "Too many rules\n";
     }
-    if (std::getline(fkeys, keyLine)) {
+    if (std::getline( fkeys, keyLine )) {
         FAIL() << "Not enough rules\n";
     }
     fresult.close();
     fkeys.close();
+}
+
+TEST( ParserTests, sample1 )
+{
+    testParserBySample("sample1", "sample1", "sample1");
 }
 
 /*
