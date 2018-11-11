@@ -20,7 +20,13 @@ void testParserBySample( std::string samplefname, std::string keyfname, std::str
     std::string pathToSample = pathToInputs + samplefname;
     std::string pathToKey = pathToKeys + keyfname;
 
-    int temp_stdout = dup(1);
+    //int temp_stdout = dup(1);
+    int    fd;
+    fpos_t pos;
+    fflush(stdout);
+    fgetpos(stdout, &pos);
+    fd = dup(fileno(stdout));
+
     FILE* toResults = freopen( pathToResult.c_str(), "w", stdout );
     if (toResults == NULL)
         printf("File can not be reopened\n");
@@ -29,9 +35,14 @@ void testParserBySample( std::string samplefname, std::string keyfname, std::str
     IAcceptable * goal = nullptr;
     yyparse( goal );
 
-    fclose( toResults );
-    stdout = fdopen( temp_stdout, "w" );
+    //fclose( toResults );
+    //stdout = fdopen( temp_stdout, "w" );
     //freopen("/dev/tty", "a", stdout);
+    fflush(stdout);
+    dup2(fd, fileno(stdout));
+    close(fd);
+    clearerr(stdout);
+    fsetpos(stdout, &pos);
 
     std::ifstream fresult( pathToResult.c_str(), std::ifstream::in );
     if ( !fresult.is_open() )
