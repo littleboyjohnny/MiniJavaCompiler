@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include "TokenMap.cpp"
+#include "TokenMap.hpp"
 
 class Builder {
 public:
@@ -15,9 +15,22 @@ public:
         while(std::getline(fin, token)) {
             tokens.push_back(tokenMap->tokenToId[token]);
         }
+        fin.close();
+    }
+
+    ~Builder() {
+        forlex = nullptr;
+    }
+
+    int getNextTokenId() {
+        if (index < tokens.size()) {
+            return tokens[index++];
+        }
+        return 0;
     }
 
     static Builder* forlex;
+private:
     static TokenMap* tokenMap;
     int index;
     std::vector<int> tokens;
@@ -27,5 +40,5 @@ Builder* Builder::forlex = nullptr;
 TokenMap* Builder::tokenMap = new TokenMap();
 
 int yylex() {
-    return Builder::forlex->tokens[Builder::forlex->index++];
+    return Builder::forlex->getNextTokenId();
 }

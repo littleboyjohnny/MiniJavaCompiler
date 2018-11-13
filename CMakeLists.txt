@@ -4,8 +4,6 @@ project( MiniJavaCompiler )
 
 set( CMAKE_CXX_STANDARD 17 )
 
-#include_directories( $ENV{GTEST_PATH}/googletest/include $ENV{GTEST_PATH}/googletest )
-
 # директория для результатов работы flex и bison и прочего
 set( PROJECT_BUILD_DIR ${CMAKE_HOME_DIRECTORY}/build )
 file( MAKE_DIRECTORY ${PROJECT_BUILD_DIR} )
@@ -80,6 +78,7 @@ endif()
 add_executable(lexertests tests/LexerTests.cpp )
 target_link_libraries(lexertests gtest_main liblexer)
 
+add_definitions( -DPARSER_DEBUG )
 add_executable(parsertests tests/ParserTests.cpp)
 target_link_libraries(parsertests gtest_main libparser)
 #add_test(NAME example_test COMMAND example)

@@ -4,4 +4,6 @@
 #include "../AST/core/TerminalIntliteral.hpp"
 #include "../AST/core/TerminalIdentifier.hpp"
 
-extern int yyparse( IAcceptable * & node );
+#include <stdio.h>
+
+extern int yyparse( IAcceptable * & node, FILE * fout );

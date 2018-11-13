@@ -92,7 +92,11 @@ MINUS	"-"{WS}
 
 MULTIPLY	"*"{WS}
 
+COMMENT \/\/.*\n
+
 %%
+
+{COMMENT}   {;}
 
 "\n"	{ lexerProcessToken( "NEWLINE" ); }
 

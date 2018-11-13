@@ -2,13 +2,11 @@
 
 #include "gtest/gtest.h"
 #include "../parser/parser.h"
-#include "../parser/parser.cpp"
-#include "ParserTestYYLEX.cpp"
+#include "ParserTestYYLEX.hpp"
 
 #include <fstream>
 #include <string>
 #include <stdio.h>
-#include <unistd.h>
 
 std::string pathToInputs = "../tests/LexerTestsFiles/correct/";
 std::string pathToKeys = "../tests/ParserTestsFiles/correct/";
@@ -20,29 +18,15 @@ void testParserBySample( std::string samplefname, std::string keyfname, std::str
     std::string pathToSample = pathToInputs + samplefname;
     std::string pathToKey = pathToKeys + keyfname;
 
-    //int temp_stdout = dup(1);
-    int    fd;
-    fpos_t pos;
-    fflush(stdout);
-    fgetpos(stdout, &pos);
-    fd = dup(fileno(stdout));
-
-    FILE* toResults = freopen( pathToResult.c_str(), "w", stdout );
+    FILE* toResults = fopen( pathToResult.c_str(), "w");
     if (toResults == NULL)
-        printf("File can not be reopened\n");
+        printf("File can not be opened\n");
 
     Builder builder( pathToSample.c_str() );
     IAcceptable * goal = nullptr;
-    yyparse( goal );
+    yyparse( goal, toResults );
 
-    //fclose( toResults );
-    //stdout = fdopen( temp_stdout, "w" );
-    //freopen("/dev/tty", "a", stdout);
-    fflush(stdout);
-    dup2(fd, fileno(stdout));
-    close(fd);
-    clearerr(stdout);
-    fsetpos(stdout, &pos);
+    fclose(toResults);
 
     std::ifstream fresult( pathToResult.c_str(), std::ifstream::in );
     if ( !fresult.is_open() )
@@ -67,16 +51,37 @@ void testParserBySample( std::string samplefname, std::string keyfname, std::str
 
 TEST( ParserTests, sample1 )
 {
-    testParserBySample("sample1", "sample1", "sample1");
+    testParserBySample( "sample1", "sample1", "sample1" );
 }
 
-/*
-TEST(St, TestingTest1)
-{
-    printf("Test2");
-    Builder builder(2);
-    IAcceptable * goal = nullptr;
-    yyparse(goal);
-    ASSERT_EQ(1, 1);
+TEST( ParserTests, BinarySearch ) {
+    testParserBySample( "BinarySearch", "BinarySearch", "BinarySearch" );
 }
-*/
+
+TEST( ParserTests, BinaryTree ) {
+    testParserBySample( "BinaryTree", "BinaryTree", "BinaryTree" );
+}
+
+TEST( ParserTests, BubbleSort ) {
+    testParserBySample( "BubbleSort", "BubbleSort", "BubbleSort" );
+}
+
+TEST( ParserTests, Factorial ) {
+    testParserBySample( "Factorial", "Factorial", "Factorial" );
+}
+
+TEST( ParserTests, LinearSearch ) {
+    testParserBySample( "LinearSearch", "LinearSearch", "LinearSearch" );
+}
+
+TEST( ParserTests, LinkedList ) {
+    testParserBySample( "LinkedList", "LinkedList", "LinkedList" );
+}
+
+TEST( ParserTests, QuickSort ) {
+    testParserBySample( "QuickSort", "QuickSort", "QuickSort" );
+}
+
+TEST( ParserTests, TreeVisitor ) {
+    testParserBySample( "TreeVisitor", "TreeVisitor", "TreeVisitor" );
+}
