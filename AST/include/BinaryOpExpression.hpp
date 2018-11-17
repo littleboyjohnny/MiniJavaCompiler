@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
 
@@ -21,9 +23,9 @@ public:
         visitor->Visit( this );
     }
 
-    const IExpression* const left;
+    const std::unique_ptr<const IExpression> left;
     const OpType opType;
-    const IExpression* const right;
+    const std::unique_ptr<const IExpression> right;
 };
 
 

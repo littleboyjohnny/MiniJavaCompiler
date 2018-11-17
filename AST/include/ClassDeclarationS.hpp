@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IClassDeclarationS.h"
 #include "../interfaces/IClassDeclaration.h"
 #include "../core/IVisitor.h"
@@ -17,8 +19,8 @@ public:
         visitor->Visit( this );
     }
 
-    const IClassDeclarationS * const classDeclarationS;
-    const IClassDeclaration * const classDeclaration;
+    const std::unique_ptr<const IClassDeclarationS> classDeclarationS;
+    const std::unique_ptr<const IClassDeclaration> classDeclaration;
 };
 
 

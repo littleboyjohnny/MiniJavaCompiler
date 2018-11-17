@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IVarDeclarationS.h"
 #include "../core/IVisitor.h"
 #include "../interfaces/IVarDeclaration.h"
@@ -17,8 +19,8 @@ public:
         visitor->Visit( this );
     }
 
-    const IVarDeclarationS * const varDeclarationS;
-    const IVarDeclaration * const varDeclaration;
+    const std::unique_ptr<const IVarDeclarationS> varDeclarationS;
+    const std::unique_ptr<const IVarDeclaration> varDeclaration;
 };
 
 

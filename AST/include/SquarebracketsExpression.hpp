@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
 
@@ -17,8 +19,8 @@ public:
         visitor->Visit( this );
     }
 
-    const IExpression* const expression;
-    const IExpression* const squarebraketsExpression;
+    const std::unique_ptr<const IExpression> expression;
+    const std::unique_ptr<const IExpression> squarebraketsExpression;
 };
 
 

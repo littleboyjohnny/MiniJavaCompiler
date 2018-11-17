@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
 #include "../core/TerminalIdentifier.hpp"
@@ -17,8 +19,8 @@ public:
         visitor->Visit( this );
     }
 
-    const CTerminalIdentifier * const varName;
-    const IExpression * const expression;
+    const std::unique_ptr<const CTerminalIdentifier> varName;
+    const std::unique_ptr<const IExpression> expression;
 };
 
 

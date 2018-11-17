@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IExtension.h"
 #include "../core/IVisitor.h"
 
@@ -16,7 +18,7 @@ public:
         visitor->Visit( this );
     }
 
-    const CTerminalIdentifier * const className;
+    const std::unique_ptr<const CTerminalIdentifier> className;
 };
 
 

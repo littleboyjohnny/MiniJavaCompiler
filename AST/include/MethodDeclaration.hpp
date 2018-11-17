@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IMethodDeclaration.h"
 #include "../core/IVisitor.h"
 #include "../interfaces/IType.h"
@@ -31,12 +33,12 @@ public:
         visitor->Visit( this );
     }
 
-    const IType * const returnType;
-    const CTerminalIdentifier * const methodIdentifier;
-    const IParams * const params;
-    const IVarDeclarationS * const varDeclarationS;
-    const IStatementS * const statementS;
-    const IExpression * const returnExpression;
+    const std::unique_ptr<const IType> returnType;
+    const std::unique_ptr<const CTerminalIdentifier> methodIdentifier;
+    const std::unique_ptr<const IParams> params;
+    const std::unique_ptr<const IVarDeclarationS> varDeclarationS;
+    const std::unique_ptr<const IStatementS> statementS;
+    const std::unique_ptr<const IExpression> returnExpression;
 };
 
 

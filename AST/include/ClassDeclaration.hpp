@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IClassDeclaration.h"
 #include "../core/IVisitor.h"
 #include "../interfaces/IExtension.h"
@@ -25,10 +27,10 @@ public:
         visitor->Visit( this );
     }
 
-    const CTerminalIdentifier * const className;
-    const IExtension * const extension;
-    const IVarDeclarationS * const varDeclarationS;
-    const IMethodDeclarationS * const methodDeclarationS;
+    const std::unique_ptr<const CTerminalIdentifier> className;
+    const std::unique_ptr<const IExtension> extension;
+    const std::unique_ptr<const IVarDeclarationS> varDeclarationS;
+    const std::unique_ptr<const IMethodDeclarationS> methodDeclarationS;
 };
 
 

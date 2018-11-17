@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IParams.h"
 #include "../core/IVisitor.h"
 #include "../interfaces/IParam.h"
@@ -19,8 +21,8 @@ public:
         visitor->Visit( this );
     }
 
-    const IParam * const param;
-    const IAdditionalParamS * const additionalParamS;
+    const std::unique_ptr<const IParam > param;
+    const std::unique_ptr<const IAdditionalParamS > additionalParamS;
 };
 
 

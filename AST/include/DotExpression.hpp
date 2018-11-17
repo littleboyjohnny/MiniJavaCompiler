@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IExpressionParamS.h"
 #include "../core/IVisitor.h"
@@ -22,9 +24,9 @@ public:
         visitor->Visit( this );
     }
 
-    const IExpression * const expression;
-    const CTerminalIdentifier * const identifier;
-    const IExpressionParamS * const expressionParamS;
+    const std::unique_ptr<const IExpression> expression;
+    const std::unique_ptr<const CTerminalIdentifier> identifier;
+    const std::unique_ptr<const IExpressionParamS> expressionParamS;
 };
 
 
