@@ -10,11 +10,11 @@ class CStatementList : public IStatementS {
 public:
     CStatementList() {}
 
-    void Accept(const IVisitor *visitor) const {
-        visitor->Visit(this);
+    void Accept( IVisitor *visitor ) const {
+        visitor->Visit( this );
     }
 
-    mutable std::vector<const IStatement *> children;
+    mutable std::vector<const IStatement*> children;
 };
 
 

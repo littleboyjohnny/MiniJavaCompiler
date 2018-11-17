@@ -10,7 +10,7 @@ class CAdditionalExpressionParam: public IAdditionalExpressionParam
 public:
     CAdditionalExpressionParam( const IExpression* const _expression ) : expression( _expression ) {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }

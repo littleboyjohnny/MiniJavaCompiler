@@ -9,7 +9,7 @@ class CNewIdentifierExpression : public IExpression
 public:
     CNewIdentifierExpression( const CTerminalIdentifier* const _identifier ) : identifier( _identifier ) {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
