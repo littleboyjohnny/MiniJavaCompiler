@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_NEWIDENTIFIEREXPRESSION_HPP
-#define MINIJAVACOMPILER_NEWIDENTIFIEREXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -18,4 +17,4 @@ public:
     const CTerminalIdentifier* const identifier;
 };
 
-#endif //MINIJAVACOMPILER_NEWIDENTIFIEREXPRESSION_HPP
+

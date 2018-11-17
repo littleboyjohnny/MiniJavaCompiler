@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_WHILESTATEMENT_HPP
-#define MINIJAVACOMPILER_WHILESTATEMENT_HPP
+#pragma once
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
@@ -21,4 +20,4 @@ public:
     const IStatement * const statement;
 };
 
-#endif //MINIJAVACOMPILER_WHILESTATEMENT_HPP
+

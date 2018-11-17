@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_ASTVISUALISER_H
-#define MINIJAVACOMPILER_ASTVISUALISER_H
+#pragma once
 
 #include <cstdio>
 
@@ -73,4 +72,4 @@ private:
     void addLabel( const void * pMemory, const char * label ) const;
 };
 
-#endif //MINIJAVACOMPILER_ASTVISUALISER_H
+

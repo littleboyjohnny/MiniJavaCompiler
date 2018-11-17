@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_LENGTHEXPRESSION_HPP
-#define MINIJAVACOMPILER_LENGTHEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -16,4 +15,4 @@ public:
 
     const IExpression* const expression;
 };
-#endif //MINIJAVACOMPILER_LENGTHEXPRESSION_HPP
+

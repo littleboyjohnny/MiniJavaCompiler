@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
-#define MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
+#pragma once
 
 #include "IAcceptable.h"
 #include "IVisitor.h"
@@ -21,4 +20,4 @@ public:
     char* identifier;
 };
 
-#endif //MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
+

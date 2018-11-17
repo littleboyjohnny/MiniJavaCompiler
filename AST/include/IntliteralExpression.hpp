@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP
-#define MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -19,4 +18,4 @@ public:
     const CTerminalIntliteral* const intliteral;
 };
 
-#endif //MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP
+

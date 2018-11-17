@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_MAINCLASS_HPP
-#define MINIJAVACOMPILER_MAINCLASS_HPP
+#pragma once
 
 #include "../interfaces/IMainClass.h"
 #include "../core/IVisitor.h"
@@ -27,4 +26,4 @@ public:
     const IStatementS * const statementS;
 };
 
-#endif //MINIJAVACOMPILER_MAINCLASS_HPP
+

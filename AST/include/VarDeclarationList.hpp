@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_VARDECLARATIONLIST_HPP
-#define MINIJAVACOMPILER_VARDECLARATIONLIST_HPP
+#pragma once
 
 #include <vector>
 
@@ -20,4 +19,4 @@ public:
     mutable std::vector<const IVarDeclaration *> children;
 };
 
-#endif //MINIJAVACOMPILER_VARDECLARATIONLIST_HPP
+

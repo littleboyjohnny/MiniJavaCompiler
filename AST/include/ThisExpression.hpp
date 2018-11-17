@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_THISEXPRESSION_HPP
-#define MINIJAVACOMPILER_THISEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -16,4 +15,4 @@ public:
 
 };
 
-#endif //MINIJAVACOMPILER_THISEXPRESSION_HPP
+

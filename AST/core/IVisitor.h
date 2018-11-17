@@ -1,5 +1,4 @@
-#ifndef COMPILERAST_IVISITOR_H
-#define COMPILERAST_IVISITOR_H
+#pragma once
 
 #include "../ASTPredefines.h"
 
@@ -60,4 +59,3 @@ public:
 
 };
 
-#endif

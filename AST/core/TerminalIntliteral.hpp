@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_TERMINALINTLITERAL_HPP
-#define MINIJAVACOMPILER_TERMINALINTLITERAL_HPP
+#pragma once
 
 #include "IAcceptable.h"
 #include "IVisitor.h"
@@ -16,4 +15,4 @@ public:
     const int intliteral;
 };
 
-#endif //MINIJAVACOMPILER_TERMINALINTLITERAL_HPP
+

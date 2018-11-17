@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_VARDECLARATIONS_HPP
-#define MINIJAVACOMPILER_VARDECLARATIONS_HPP
+#pragma once
 
 #include "../interfaces/IVarDeclarationS.h"
 #include "../core/IVisitor.h"
@@ -22,4 +21,4 @@ public:
     const IVarDeclaration * const varDeclaration;
 };
 
-#endif //MINIJAVACOMPILER_VARDECLARATIONS_HPP
+

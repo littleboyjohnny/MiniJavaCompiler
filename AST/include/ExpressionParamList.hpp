@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_EXPRESSIONPARAMLIST_HPP
-#define MINIJAVACOMPILER_EXPRESSIONPARAMLIST_HPP
+#pragma once
 
 #include "../interfaces/IExpressionParamS.h"
 #include "../interfaces/IExpression.h"
@@ -18,4 +17,4 @@ public:
 
     mutable std::vector<const IExpression *> children;
 };
-#endif //MINIJAVACOMPILER_EXPRESSIONPARAMLIST_HPP
+

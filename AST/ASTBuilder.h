@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_ASTBUILDER_H
-#define MINIJAVACOMPILER_ASTBUILDER_H
+#pragma once
 
 #include "core/IVisitor.h"
 #include "include/ClassDeclarationList.hpp"
@@ -76,4 +75,4 @@ private:
     mutable std::list<const CExpressionParamList *> listHeadsExpressionParams;
 };
 
-#endif //MINIJAVACOMPILER_ASTBUILDER_H
+

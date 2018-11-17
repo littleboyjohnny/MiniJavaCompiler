@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_CUSTOMTYPE_HPP
-#define MINIJAVACOMPILER_CUSTOMTYPE_HPP
+#pragma once
 
 #include "../interfaces/IType.h"
 #include "../core/IVisitor.h"
@@ -19,4 +18,4 @@ public:
     const CTerminalIdentifier * const typeName;
 };
 
-#endif //MINIJAVACOMPILER_CUSTOMTYPE_HPP
+

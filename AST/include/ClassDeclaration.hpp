@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_CLASSDECLARATION_HPP
-#define MINIJAVACOMPILER_CLASSDECLARATION_HPP
+#pragma once
 
 #include "../interfaces/IClassDeclaration.h"
 #include "../core/IVisitor.h"
@@ -32,4 +31,4 @@ public:
     const IMethodDeclarationS * const methodDeclarationS;
 };
 
-#endif //MINIJAVACOMPILER_CLASSDECLARATION_HPP
+

@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_VARASSIGNMENTSTATEMENT_HPP
-#define MINIJAVACOMPILER_VARASSIGNMENTSTATEMENT_HPP
+#pragma once
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
@@ -22,4 +21,4 @@ public:
     const IExpression * const expression;
 };
 
-#endif //MINIJAVACOMPILER_VARASSIGNMENTSTATEMENT_HPP
+

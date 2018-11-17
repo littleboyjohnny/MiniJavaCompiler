@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_CLASSDECLARATIONLIST_HPP
-#define MINIJAVACOMPILER_CLASSDECLARATIONLIST_HPP
+#pragma once
 
 #include "../interfaces/IClassDeclarationS.h"
 #include "../interfaces/IClassDeclaration.h"
@@ -20,4 +19,4 @@ public:
     mutable std::vector<const IClassDeclaration *> children;
 };
 
-#endif //MINIJAVACOMPILER_CLASSDECLARATIONLIST_HPP
+

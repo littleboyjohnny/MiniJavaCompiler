@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_ADDITIONALPARAMS_HPP
-#define MINIJAVACOMPILER_ADDITIONALPARAMS_HPP
+#pragma once
 
 #include "../interfaces/IAdditionalParamS.h"
 #include "../interfaces/IAdditionalParam.h"
@@ -22,4 +21,4 @@ public:
     const IAdditionalParam * const additionalParam;
 };
 
-#endif //MINIJAVACOMPILER_ADDITIONALPARAMS_HPP
+

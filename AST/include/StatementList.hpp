@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_STATEMENTLIST_HPP
-#define MINIJAVACOMPILER_STATEMENTLIST_HPP
+#pragma once
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IStatementS.h"
@@ -18,4 +17,4 @@ public:
     mutable std::vector<const IStatement *> children;
 };
 
-#endif //MINIJAVACOMPILER_STATEMENTLIST_HPP
+

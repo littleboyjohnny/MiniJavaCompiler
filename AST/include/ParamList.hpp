@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_PARAMLIST_HPP
-#define MINIJAVACOMPILER_PARAMLIST_HPP
+#pragma once
 
 #include "../interfaces/IParams.h"
 #include "../core/IVisitor.h"
@@ -19,4 +18,4 @@ public:
     mutable std::vector<const IParam *> children;
 };
 
-#endif //MINIJAVACOMPILER_PARAMLIST_HPP
+

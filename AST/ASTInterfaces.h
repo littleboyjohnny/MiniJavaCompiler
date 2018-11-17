@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_ASTINTERFACES_H
-#define MINIJAVACOMPILER_ASTINTERFACES_H
+#pragma once
 
 #include "interfaces/IAdditionalExpressionParam.h"
 #include "interfaces/IAdditionalExpressionParamS.h"
@@ -22,4 +21,4 @@
 #include "interfaces/IVarDeclaration.h"
 #include "interfaces/IVarDeclarationS.h"
 
-#endif //MINIJAVACOMPILER_ASTINTERFACES_H
+

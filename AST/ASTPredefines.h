@@ -2,8 +2,7 @@
 // Created by ivb on 11/5/18.
 //
 
-#ifndef MINIJAVACOMPILER_ASTPREDEFINES_H
-#define MINIJAVACOMPILER_ASTPREDEFINES_H
+#pragma once
 
 class CAdditionalExpressionParam;
 class CAdditionalExpressionParamS;
@@ -52,4 +51,4 @@ class CMethodDeclaration;
 class CMethodDeclarationList;
 class CBinaryOpExpression;
 
-#endif //MINIJAVACOMPILER_ASTPREDEFINES_H
+

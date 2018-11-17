@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_ARRAYASSIGNMENTSTATEMENT_HPP
-#define MINIJAVACOMPILER_ARRAYASSIGNMENTSTATEMENT_HPP
+#pragma once
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IExpression.h"
@@ -26,4 +25,4 @@ public:
     const IExpression * const expression;
 };
 
-#endif //MINIJAVACOMPILER_ARRAYASSIGNMENTSTATEMENT_HPP
+

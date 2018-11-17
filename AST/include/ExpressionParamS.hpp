@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_EXPRESSIONPARAMS_HPP
-#define MINIJAVACOMPILER_EXPRESSIONPARAMS_HPP
+#pragma once
 
 #include "../interfaces/IExpressionParamS.h"
 #include "../interfaces/IExpression.h"
@@ -23,4 +22,4 @@ public:
     const IExpression* const expression;
     const IAdditionalExpressionParamS* const addittionalExpressionParamS;
 };
-#endif //MINIJAVACOMPILER_EXPRESSIONPARAMS_HPP
+

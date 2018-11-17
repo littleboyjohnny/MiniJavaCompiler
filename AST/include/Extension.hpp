@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_EXTENSION_HPP
-#define MINIJAVACOMPILER_EXTENSION_HPP
+#pragma once
 
 #include "../interfaces/IExtension.h"
 #include "../core/IVisitor.h"
@@ -20,4 +19,4 @@ public:
     const CTerminalIdentifier * const className;
 };
 
-#endif //MINIJAVACOMPILER_EXTENSION_HPP
+

@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_FALSEEXPRESSION_HPP
-#define MINIJAVACOMPILER_FALSEEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -16,4 +15,4 @@ public:
 
 };
 
-#endif //MINIJAVACOMPILER_FALSEEXPRESSION_HPP
+

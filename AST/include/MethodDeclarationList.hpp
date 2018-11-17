@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_METHODDECLARATIONLIST_HPP
-#define MINIJAVACOMPILER_METHODDECLARATIONLIST_HPP
+#pragma once
 
 #include "../interfaces/IMethodDeclarationS.h"
 #include "../core/IVisitor.h"
@@ -19,4 +18,4 @@ public:
     mutable std::vector<const IMethodDeclaration *> children;
 };
 
-#endif //MINIJAVACOMPILER_METHODDECLARATIONLIST_HPP
+

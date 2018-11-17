@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_SQUAREBRACKETSEXPRESSION_HPP
-#define MINIJAVACOMPILER_SQUAREBRACKETSEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -22,4 +21,4 @@ public:
     const IExpression* const squarebraketsExpression;
 };
 
-#endif //MINIJAVACOMPILER_SQUAREBRACKETSEXPRESSION_HPP
+

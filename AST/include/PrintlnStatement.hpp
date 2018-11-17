@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_PRINTLNSTATEMENT_HPP
-#define MINIJAVACOMPILER_PRINTLNSTATEMENT_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IStatement.h"
@@ -19,4 +18,4 @@ public:
     const IExpression * const expression;
 };
 
-#endif //MINIJAVACOMPILER_PRINTLNSTATEMENT_HPP
+

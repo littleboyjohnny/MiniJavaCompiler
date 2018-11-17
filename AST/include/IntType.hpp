@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_INTTYPE_HPP
-#define MINIJAVACOMPILER_INTTYPE_HPP
+#pragma once
 
 #include "../interfaces/IType.h"
 #include "../core/IVisitor.h"
@@ -15,4 +14,4 @@ public:
 
 };
 
-#endif //MINIJAVACOMPILER_INTTYPE_HPP
+
