@@ -3,5 +3,5 @@
 #include "Info.h"
 
 class CMethodInfo : IInfo {
-
+    
 };
