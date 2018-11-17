@@ -4,9 +4,12 @@
 
 class CSymbol {
 public:
-    const std::string& String() const;
+    const std::string& String() const
+    {
+        return str;
+    }
 
-    CSymbol( const std::string& str): String(str);
+    CSymbol( const std::string& _str): str(_str) {}
 
     CSymbol( const CSymbol& ) = delete;
     void operator=( const CSymbol& ) = delete;
@@ -23,4 +26,7 @@ public:
         allStrings.insert( { src, newVal } );
         return newVal;
     }
+
+private:
+    const std::string str;
 };

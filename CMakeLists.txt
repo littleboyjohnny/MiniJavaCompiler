@@ -89,4 +89,4 @@ set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp )
 add_executable( AstBuilder ${ASTBUILDER_SRC} )
 target_link_libraries( AstBuilder liblexer libparser )
 
-add_executable(SymbolTable SymbolTable/Table.cpp SymbolTable/Symbol.hpp)
+add_executable(SymbolTable SymbolTable/Table.cpp SymbolTable/Symbol.hpp SymbolTable/MethodInfo.hpp SymbolTable/Table.h SymbolTable/ClassInfo.hpp SymbolTable/main.cpp SymbolTable/Info.h)
