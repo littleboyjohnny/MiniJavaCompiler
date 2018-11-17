@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IMethodDeclarationS.h"
 #include "../core/IVisitor.h"
 #include "../interfaces/IMethodDeclaration.h"
@@ -17,8 +19,8 @@ public:
         visitor->Visit( this );
     }
 
-    const IMethodDeclarationS * const methodDeclarationS;
-    const IMethodDeclaration * const methodDeclaration;
+    const std::unique_ptr<const IMethodDeclarationS > methodDeclarationS;
+    const std::unique_ptr<const IMethodDeclaration > methodDeclaration;
 };
 
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IStatementS.h"
 #include "../core/IVisitor.h"
@@ -16,8 +18,8 @@ public:
         visitor->Visit( this );
     }
 
-    const IStatement * const statement;
-    const IStatementS * const statementS;
+    const std::unique_ptr<const IStatement > statement;
+    const std::unique_ptr<const IStatementS > statementS;
 };
 
 

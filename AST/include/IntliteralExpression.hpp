@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
 
@@ -15,7 +17,7 @@ public:
         visitor->Visit( this );
     }
 
-    const CTerminalIntliteral* const intliteral;
+    const std::unique_ptr<const CTerminalIntliteral> intliteral;
 };
 
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IParam.h"
 #include "../interfaces/IType.h"
 #include "../core/IVisitor.h"
@@ -17,8 +19,8 @@ public:
         visitor->Visit( this );
     }
 
-    const IType * const type;
-    const CTerminalIdentifier * const identifier;
+    const std::unique_ptr<const IType > type;
+    const std::unique_ptr<const CTerminalIdentifier > identifier;
 };
 
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IStatementS.h"
 #include "../interfaces/IExpression.h"
@@ -21,9 +23,9 @@ public:
         visitor->Visit( this );
     }
 
-    const IExpression * const condition;
-    const IStatement * const ifStatement;
-    const IStatement * const elseStatement;
+    const std::unique_ptr<const IExpression> condition;
+    const std::unique_ptr<const IStatement> ifStatement;
+    const std::unique_ptr<const IStatement> elseStatement;
 };
 
 

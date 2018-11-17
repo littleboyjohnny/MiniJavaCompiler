@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "../interfaces/IAdditionalExpressionParam.h"
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IAdditionalParam.h"
@@ -15,6 +17,6 @@ public:
         visitor->Visit( this );
     }
 
-    const IExpression* const expression;
+    const std::unique_ptr<const IExpression> expression;
 };
 

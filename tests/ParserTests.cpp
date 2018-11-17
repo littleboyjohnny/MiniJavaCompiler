@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include <stdio.h>
+#include <memory>
 
 std::string pathToInputs = "../tests/LexerTestsFiles/correct/";
 std::string pathToKeys = "../tests/ParserTestsFiles/correct/";
@@ -25,6 +26,7 @@ void testParserBySample( std::string samplefname, std::string keyfname, std::str
     Builder builder( pathToSample.c_str() );
     IAcceptable * goal = nullptr;
     yyparse( goal, toResults );
+    std::unique_ptr<IAcceptable> p( goal );
 
     fclose(toResults);
 
