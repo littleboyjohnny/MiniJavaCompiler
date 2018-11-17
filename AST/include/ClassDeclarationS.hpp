@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_CLASSDECLARATIONS_HPP
-#define MINIJAVACOMPILER_CLASSDECLARATIONS_HPP
+#pragma once
 
 #include "../interfaces/IClassDeclarationS.h"
 #include "../interfaces/IClassDeclaration.h"
@@ -13,7 +12,7 @@ public:
             classDeclaration( _classDeclaration )
     {}
 
-    void Accept( const IVisitor * visitor ) const
+    void Accept( IVisitor * visitor ) const
     {
         visitor->Visit( this );
     }
@@ -22,4 +21,4 @@ public:
     const IClassDeclaration * const classDeclaration;
 };
 
-#endif //MINIJAVACOMPILER_CLASSDECLARATIONS_HPP
+

@@ -1,5 +1,4 @@
-#ifndef COMPILERAST_IADDITIONALPARAM_H
-#define COMPILERAST_IADDITIONALPARAM_H
+#pragma once
 
 #include "../core/IAcceptable.h"
 
@@ -7,4 +6,4 @@ class IAdditionalParam : public IAcceptable {
 
 };
 
-#endif //COMPILERAST_IADDITIONALPARAM_H
+

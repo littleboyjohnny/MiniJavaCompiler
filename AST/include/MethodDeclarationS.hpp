@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_METHODDECLARATIONS_HPP
-#define MINIJAVACOMPILER_METHODDECLARATIONS_HPP
+#pragma once
 
 #include "../interfaces/IMethodDeclarationS.h"
 #include "../core/IVisitor.h"
@@ -13,7 +12,7 @@ public:
             methodDeclaration( _methodDeclaration )
     {}
 
-    void Accept( const IVisitor * visitor ) const
+    void Accept( IVisitor * visitor ) const
     {
         visitor->Visit( this );
     }
@@ -22,4 +21,4 @@ public:
     const IMethodDeclaration * const methodDeclaration;
 };
 
-#endif //MINIJAVACOMPILER_METHODDECLARATIONS_HPP
+

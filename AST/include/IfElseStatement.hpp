@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_IFELSESTATEMENT_HPP
-#define MINIJAVACOMPILER_IFELSESTATEMENT_HPP
+#pragma once
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IStatementS.h"
@@ -17,7 +16,7 @@ public:
         elseStatement( _elseStatement )
     {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -27,4 +26,4 @@ public:
     const IStatement * const elseStatement;
 };
 
-#endif //MINIJAVACOMPILER_IFELSESTATEMENT_HPP
+

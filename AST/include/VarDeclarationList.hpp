@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_VARDECLARATIONLIST_HPP
-#define MINIJAVACOMPILER_VARDECLARATIONLIST_HPP
+#pragma once
 
 #include <vector>
 
@@ -12,7 +11,7 @@ public:
     CVarDeclarationList()
     {}
 
-    void Accept( const IVisitor * visitor ) const
+    void Accept( IVisitor * visitor ) const
     {
         visitor->Visit( this );
     }
@@ -20,4 +19,4 @@ public:
     mutable std::vector<const IVarDeclaration *> children;
 };
 
-#endif //MINIJAVACOMPILER_VARDECLARATIONLIST_HPP
+

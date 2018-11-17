@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_ASTINCLUDES_H
-#define MINIJAVACOMPILER_ASTINCLUDES_H
+#pragma once
 
 #include "include/AdditionalExpressionParam.hpp"
 #include "include/AdditionalExpressionParamS.hpp"
@@ -49,4 +48,4 @@
 #include "include/StatementList.hpp"
 #include "include/ExpressionParamList.hpp"
 
-#endif //MINIJAVACOMPILER_ASTINCLUDES_H
+

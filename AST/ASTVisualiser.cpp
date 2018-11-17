@@ -14,31 +14,31 @@ CASTVisualiser::~CASTVisualiser() {
     fclose( file );
 }
 
-void CASTVisualiser::addLabel( const void * pMemory, const char * label ) const {
+void CASTVisualiser::addLabel( const void * pMemory, const char * label ) {
     fprintf( file, "\t%lld [label=\"%s\"];\n", (const long long)pMemory, label );
 }
 
-void CASTVisualiser::printEdge( const void * from, const void * to ) const {
+void CASTVisualiser::printEdge( const void * from, const void * to ) {
     fprintf( file, "\t%lld -> %lld;\n", (const long long)from, (const long long)to );
 }
 
-void CASTVisualiser::Visit( const CAdditionalExpressionParam* acceptable ) const {
+void CASTVisualiser::Visit( const CAdditionalExpressionParam* acceptable ) {
 
 }
 
-void CASTVisualiser::Visit( const CAdditionalExpressionParamS* acceptable ) const {
+void CASTVisualiser::Visit( const CAdditionalExpressionParamS* acceptable ) {
 
 }
 
-void CASTVisualiser::Visit( const CAdditionalParam* acceptable ) const {
+void CASTVisualiser::Visit( const CAdditionalParam* acceptable ) {
 
 }
 
-void CASTVisualiser::Visit( const CAdditionalParamS* acceptable ) const {
+void CASTVisualiser::Visit( const CAdditionalParamS* acceptable ) {
 
 }
 
-void CASTVisualiser::Visit( const CArrayAssignmentStatement* acceptable ) const {
+void CASTVisualiser::Visit( const CArrayAssignmentStatement* acceptable ) {
     if( acceptable->arrayName ) {
         printEdge( acceptable, acceptable->arrayName );
         acceptable->arrayName->Accept( this );
@@ -54,11 +54,11 @@ void CASTVisualiser::Visit( const CArrayAssignmentStatement* acceptable ) const 
     addLabel( acceptable, "ArrayAssignmentStatement" );
 }
 
-void CASTVisualiser::Visit( const CBooleanType* acceptable ) const {
+void CASTVisualiser::Visit( const CBooleanType* acceptable ) {
     addLabel( acceptable, "boolean" );
 }
 
-void CASTVisualiser::Visit( const CClassDeclaration* acceptable ) const {
+void CASTVisualiser::Visit( const CClassDeclaration* acceptable ) {
     if( acceptable->className ) {
         printEdge( acceptable, acceptable->className );
         acceptable->className->Accept( this );
@@ -78,7 +78,7 @@ void CASTVisualiser::Visit( const CClassDeclaration* acceptable ) const {
     addLabel( acceptable, "ClassDeclaration" );
 }
 
-void CASTVisualiser::Visit( const CClassDeclarationS* acceptable ) const {
+void CASTVisualiser::Visit( const CClassDeclarationS* acceptable ) {
     if( acceptable->classDeclarationS ) {
         printEdge(acceptable, acceptable->classDeclarationS );
         acceptable->classDeclarationS->Accept( this );
@@ -90,7 +90,7 @@ void CASTVisualiser::Visit( const CClassDeclarationS* acceptable ) const {
     addLabel( acceptable, "ClassDeclarationS" );
 }
 
-void CASTVisualiser::Visit( const CCurlyBraceStatement* acceptable ) const {
+void CASTVisualiser::Visit( const CCurlyBraceStatement* acceptable ) {
     if( acceptable->statementS ) {
         printEdge( acceptable, acceptable->statementS );
         acceptable->statementS->Accept( this );
@@ -98,7 +98,7 @@ void CASTVisualiser::Visit( const CCurlyBraceStatement* acceptable ) const {
     addLabel( acceptable, "CurlyBraceStatement" );
 }
 
-void CASTVisualiser::Visit( const CCustomType* acceptable ) const {
+void CASTVisualiser::Visit( const CCustomType* acceptable ) {
     if( acceptable->typeName ) {
         printEdge( acceptable, acceptable->typeName );
         acceptable->typeName->Accept( this );
@@ -106,7 +106,7 @@ void CASTVisualiser::Visit( const CCustomType* acceptable ) const {
     addLabel( acceptable, "CustomType" );
 }
 
-void CASTVisualiser::Visit( const CCallExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CCallExpression* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -122,7 +122,7 @@ void CASTVisualiser::Visit( const CCallExpression* acceptable ) const {
     addLabel( acceptable, "DotExpression" );
 }
 
-void CASTVisualiser::Visit( const CExpressionParamS* acceptable ) const {
+void CASTVisualiser::Visit( const CExpressionParamS* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -134,7 +134,7 @@ void CASTVisualiser::Visit( const CExpressionParamS* acceptable ) const {
     addLabel( acceptable, "ExpressionParamS" );
 }
 
-void CASTVisualiser::Visit( const CExtension* acceptable ) const {
+void CASTVisualiser::Visit( const CExtension* acceptable ) {
     if( acceptable->className ) {
         printEdge( acceptable, acceptable->className );
         acceptable->className->Accept( this );
@@ -142,11 +142,11 @@ void CASTVisualiser::Visit( const CExtension* acceptable ) const {
     addLabel( acceptable, "Extension" );
 }
 
-void CASTVisualiser::Visit( const CFalseExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CFalseExpression* acceptable ) {
     addLabel( acceptable, "false" );
 }
 
-void CASTVisualiser::Visit( const CGoal* acceptable ) const {
+void CASTVisualiser::Visit( const CGoal* acceptable ) {
     if( acceptable->mainClass ) {
         printEdge( acceptable, acceptable->mainClass );
         acceptable->mainClass->Accept( this );
@@ -158,7 +158,7 @@ void CASTVisualiser::Visit( const CGoal* acceptable ) const {
     addLabel( acceptable, "Goal" );
 }
 
-void CASTVisualiser::Visit( const CIdentifierExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CIdentifierExpression* acceptable ) {
     if( acceptable->identifier ) {
         printEdge( acceptable, acceptable->identifier );
         acceptable->identifier->Accept( this );
@@ -166,7 +166,7 @@ void CASTVisualiser::Visit( const CIdentifierExpression* acceptable ) const {
     addLabel( acceptable, "IdentifierExpression" );
 }
 
-void CASTVisualiser::Visit( const CIfElseStatement* acceptable ) const {
+void CASTVisualiser::Visit( const CIfElseStatement* acceptable ) {
     if( acceptable->condition ) {
         printEdge( acceptable, acceptable->condition );
         acceptable->condition->Accept( this );
@@ -182,11 +182,11 @@ void CASTVisualiser::Visit( const CIfElseStatement* acceptable ) const {
     addLabel( acceptable, "IfElseStatement" );
 }
 
-void CASTVisualiser::Visit( const CIntArrayType* acceptable ) const {
+void CASTVisualiser::Visit( const CIntArrayType* acceptable ) {
     addLabel( acceptable, "int[]" );
 }
 
-void CASTVisualiser::Visit( const CIntliteralExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CIntliteralExpression* acceptable ) {
     if( acceptable->intliteral ) {
         printEdge( acceptable, acceptable->intliteral );
         acceptable->intliteral->Accept( this );
@@ -194,11 +194,11 @@ void CASTVisualiser::Visit( const CIntliteralExpression* acceptable ) const {
     addLabel( acceptable, "IntliteralExpression" );
 }
 
-void CASTVisualiser::Visit( const CIntType* acceptable ) const {
+void CASTVisualiser::Visit( const CIntType* acceptable ) {
     addLabel( acceptable, "int" );
 }
 
-void CASTVisualiser::Visit( const CLengthExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CLengthExpression* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -206,7 +206,7 @@ void CASTVisualiser::Visit( const CLengthExpression* acceptable ) const {
     addLabel( acceptable, "LengthExpression" );
 }
 
-void CASTVisualiser::Visit( const CMainClass* acceptable ) const {
+void CASTVisualiser::Visit( const CMainClass* acceptable ) {
     if( acceptable->className ) {
         printEdge( acceptable, acceptable->className );
         acceptable->className->Accept( this );
@@ -222,7 +222,7 @@ void CASTVisualiser::Visit( const CMainClass* acceptable ) const {
     addLabel( acceptable, "MainClass" );
 }
 
-void CASTVisualiser::Visit( const CMethodDeclaration* acceptable ) const {
+void CASTVisualiser::Visit( const CMethodDeclaration* acceptable ) {
     if( acceptable->returnType ) {
         printEdge( acceptable, acceptable->returnType );
         acceptable->returnType->Accept( this );
@@ -250,7 +250,7 @@ void CASTVisualiser::Visit( const CMethodDeclaration* acceptable ) const {
     addLabel( acceptable, "MethodDeclaration" );
 }
 
-void CASTVisualiser::Visit( const CMethodDeclarationS* acceptable ) const {
+void CASTVisualiser::Visit( const CMethodDeclarationS* acceptable ) {
     if( acceptable->methodDeclarationS ) {
         printEdge( acceptable, acceptable->methodDeclarationS );
         acceptable->methodDeclarationS->Accept( this );
@@ -262,7 +262,7 @@ void CASTVisualiser::Visit( const CMethodDeclarationS* acceptable ) const {
     addLabel( acceptable, "MethodDeclarationS" );
 }
 
-void CASTVisualiser::Visit( const CNewArrayExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CNewArrayExpression* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -270,7 +270,7 @@ void CASTVisualiser::Visit( const CNewArrayExpression* acceptable ) const {
     addLabel( acceptable, "NewArrayExpression" );
 }
 
-void CASTVisualiser::Visit( const CNewIdentifierExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CNewIdentifierExpression* acceptable ) {
     if( acceptable->identifier ) {
         printEdge( acceptable, acceptable->identifier );
         acceptable->identifier->Accept( this );
@@ -278,7 +278,7 @@ void CASTVisualiser::Visit( const CNewIdentifierExpression* acceptable ) const {
     addLabel( acceptable, "NewIdentifierExpression" );
 }
 
-void CASTVisualiser::Visit( const CNotExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CNotExpression* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -286,7 +286,7 @@ void CASTVisualiser::Visit( const CNotExpression* acceptable ) const {
     addLabel( acceptable, "NotExpression" );
 }
 
-void CASTVisualiser::Visit( const CParams* acceptable ) const {
+void CASTVisualiser::Visit( const CParams* acceptable ) {
     if( acceptable->param ) {
         printEdge( acceptable, acceptable->param );
         acceptable->param->Accept( this );
@@ -298,7 +298,7 @@ void CASTVisualiser::Visit( const CParams* acceptable ) const {
     addLabel( acceptable, "Params" );
 }
 
-void CASTVisualiser::Visit( const CParam* acceptable ) const {
+void CASTVisualiser::Visit( const CParam* acceptable ) {
     if( acceptable->type ) {
         printEdge( acceptable, acceptable->type );
         acceptable->type->Accept( this );
@@ -310,7 +310,7 @@ void CASTVisualiser::Visit( const CParam* acceptable ) const {
     addLabel( acceptable, "Param" );
 }
 
-void CASTVisualiser::Visit( const CParensExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CParensExpression* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -318,7 +318,7 @@ void CASTVisualiser::Visit( const CParensExpression* acceptable ) const {
     addLabel( acceptable, "ParensExpression" );
 }
 
-void CASTVisualiser::Visit( const CPrintlnStatement* acceptable ) const {
+void CASTVisualiser::Visit( const CPrintlnStatement* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -326,7 +326,7 @@ void CASTVisualiser::Visit( const CPrintlnStatement* acceptable ) const {
     addLabel( acceptable, "PrintlnStatement" );
 }
 
-void CASTVisualiser::Visit( const CSquarebracketsExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CSquarebracketsExpression* acceptable ) {
     if( acceptable->expression ) {
         printEdge( acceptable, acceptable->expression );
         acceptable->expression->Accept( this );
@@ -338,7 +338,7 @@ void CASTVisualiser::Visit( const CSquarebracketsExpression* acceptable ) const 
     addLabel( acceptable, "SquarebracketsExpression" );
 }
 
-void CASTVisualiser::Visit( const CStatementS* acceptable ) const {
+void CASTVisualiser::Visit( const CStatementS* acceptable ) {
     if( acceptable->statement ) {
         printEdge( acceptable, acceptable->statement );
         acceptable->statement->Accept( this );
@@ -350,23 +350,23 @@ void CASTVisualiser::Visit( const CStatementS* acceptable ) const {
     addLabel( acceptable, "StatementS" );
 }
 
-void CASTVisualiser::Visit( const CTerminalIdentifier* acceptable ) const {
+void CASTVisualiser::Visit( const CTerminalIdentifier* acceptable ) {
     addLabel( acceptable, acceptable->identifier );
 }
 
-void CASTVisualiser::Visit( const CTerminalIntliteral* acceptable ) const {
+void CASTVisualiser::Visit( const CTerminalIntliteral* acceptable ) {
     addLabel( acceptable, std::to_string( acceptable->intliteral ).c_str() );
 }
 
-void CASTVisualiser::Visit( const CThisExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CThisExpression* acceptable ) {
     addLabel( acceptable, "this" );
 }
 
-void CASTVisualiser::Visit( const CTrueExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CTrueExpression* acceptable ) {
     addLabel( acceptable, "true" );
 }
 
-void CASTVisualiser::Visit( const CVarAssignmentStatement* acceptable ) const {
+void CASTVisualiser::Visit( const CVarAssignmentStatement* acceptable ) {
     if( acceptable->varName ) {
         printEdge( acceptable, acceptable->varName );
         acceptable->varName->Accept( this );
@@ -378,7 +378,7 @@ void CASTVisualiser::Visit( const CVarAssignmentStatement* acceptable ) const {
     addLabel( acceptable, "VarAssignmentStatement" );
 }
 
-void CASTVisualiser::Visit( const CVarDeclaration* acceptable ) const {
+void CASTVisualiser::Visit( const CVarDeclaration* acceptable ) {
     if( acceptable->type ) {
         printEdge( acceptable, acceptable->type );
         acceptable->type->Accept( this );
@@ -390,7 +390,7 @@ void CASTVisualiser::Visit( const CVarDeclaration* acceptable ) const {
     addLabel( acceptable, "VarDeclaration" );
 }
 
-void CASTVisualiser::Visit( const CVarDeclarationS* acceptable ) const {
+void CASTVisualiser::Visit( const CVarDeclarationS* acceptable ) {
     if( acceptable->varDeclarationS ) {
         printEdge( acceptable, acceptable->varDeclarationS );
         acceptable->varDeclarationS->Accept( this );
@@ -402,7 +402,7 @@ void CASTVisualiser::Visit( const CVarDeclarationS* acceptable ) const {
     addLabel( acceptable, "VarDeclarationS" );
 }
 
-void CASTVisualiser::Visit( const CWhileStatement* acceptable ) const {
+void CASTVisualiser::Visit( const CWhileStatement* acceptable ) {
     if( acceptable->condition ) {
         printEdge( acceptable, acceptable->condition );
         acceptable->condition->Accept( this );
@@ -414,7 +414,7 @@ void CASTVisualiser::Visit( const CWhileStatement* acceptable ) const {
     addLabel( acceptable, "WhileStatement" );
 }
 
-void CASTVisualiser::Visit( const CBinaryOpExpression* acceptable ) const {
+void CASTVisualiser::Visit( const CBinaryOpExpression* acceptable ) {
     if( acceptable->left ) {
         printEdge( acceptable, acceptable->left );
         acceptable->left->Accept( this );
@@ -429,7 +429,7 @@ void CASTVisualiser::Visit( const CBinaryOpExpression* acceptable ) const {
     addLabel( acceptable, "BinaryOpExpression" );
 }
 
-void CASTVisualiser::Visit( const CClassDeclarationList * acceptable ) const {
+void CASTVisualiser::Visit( const CClassDeclarationList * acceptable ) {
     for( int i = 0; i < acceptable->children.size(); i++ ) {
         printEdge( acceptable, acceptable->children[i] );
         acceptable->children[i]->Accept( this );
@@ -437,7 +437,7 @@ void CASTVisualiser::Visit( const CClassDeclarationList * acceptable ) const {
     addLabel( acceptable, "ClassDeclarationList" );
 }
 
-void CASTVisualiser::Visit( const CVarDeclarationList * acceptable ) const {
+void CASTVisualiser::Visit( const CVarDeclarationList * acceptable ) {
     for( int i = 0; i < acceptable->children.size(); i++ ) {
         printEdge( acceptable, acceptable->children[i] );
         acceptable->children[i]->Accept( this );
@@ -445,7 +445,7 @@ void CASTVisualiser::Visit( const CVarDeclarationList * acceptable ) const {
     addLabel( acceptable, "VarDeclarationList" );
 }
 
-void CASTVisualiser::Visit( const CMethodDeclarationList * acceptable ) const {
+void CASTVisualiser::Visit( const CMethodDeclarationList * acceptable ) {
     for( int i = 0; i < acceptable->children.size(); i++ ) {
         printEdge( acceptable, acceptable->children[i] );
         acceptable->children[i]->Accept( this );
@@ -453,7 +453,7 @@ void CASTVisualiser::Visit( const CMethodDeclarationList * acceptable ) const {
     addLabel( acceptable, "MethodDeclarationList" );
 }
 
-void CASTVisualiser::Visit( const CParamList * acceptable ) const {
+void CASTVisualiser::Visit( const CParamList * acceptable ) {
     for( int i = 0; i < acceptable->children.size(); i++ ) {
         printEdge( acceptable, acceptable->children[i] );
         acceptable->children[i]->Accept( this );
@@ -461,7 +461,7 @@ void CASTVisualiser::Visit( const CParamList * acceptable ) const {
     addLabel( acceptable, "ParamList" );
 }
 
-void CASTVisualiser::Visit( const CStatementList * acceptable ) const {
+void CASTVisualiser::Visit( const CStatementList * acceptable ) {
     for( int i = 0; i < acceptable->children.size(); i++ ) {
         printEdge( acceptable, acceptable->children[i] );
         acceptable->children[i]->Accept( this );
@@ -469,7 +469,7 @@ void CASTVisualiser::Visit( const CStatementList * acceptable ) const {
     addLabel( acceptable, "StatementList" );
 }
 
-void CASTVisualiser::Visit( const CExpressionParamList * acceptable ) const {
+void CASTVisualiser::Visit( const CExpressionParamList * acceptable ) {
     for( int i = 0; i < acceptable->children.size(); i++ ) {
         printEdge( acceptable, acceptable->children[i] );
         acceptable->children[i]->Accept( this );

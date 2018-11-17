@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_PARAM_HPP
-#define MINIJAVACOMPILER_PARAM_HPP
+#pragma once
 
 #include "../interfaces/IParam.h"
 #include "../interfaces/IType.h"
@@ -13,7 +12,7 @@ public:
             identifier( _identifier )
     {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -22,4 +21,4 @@ public:
     const CTerminalIdentifier * const identifier;
 };
 
-#endif //MINIJAVACOMPILER_PARAM_HPP
+

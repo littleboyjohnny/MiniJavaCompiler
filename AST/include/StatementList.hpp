@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_STATEMENTLIST_HPP
-#define MINIJAVACOMPILER_STATEMENTLIST_HPP
+#pragma once
 
 #include "../interfaces/IStatement.h"
 #include "../interfaces/IStatementS.h"
@@ -11,11 +10,11 @@ class CStatementList : public IStatementS {
 public:
     CStatementList() {}
 
-    void Accept(const IVisitor *visitor) const {
-        visitor->Visit(this);
+    void Accept( IVisitor *visitor ) const {
+        visitor->Visit( this );
     }
 
-    mutable std::vector<const IStatement *> children;
+    mutable std::vector<const IStatement*> children;
 };
 
-#endif //MINIJAVACOMPILER_STATEMENTLIST_HPP
+

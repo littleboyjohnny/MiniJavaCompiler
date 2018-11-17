@@ -19,7 +19,7 @@ const CGoal* CASTBuilder::BuildAST(const CGoal * goal) {
     return ast;
 }
 
-void CASTBuilder::Visit( const CAdditionalExpressionParam* acceptable ) const {
+void CASTBuilder::Visit( const CAdditionalExpressionParam* acceptable ) {
     const IExpression * expression = nullptr;
 
     if(acceptable->expression) {
@@ -31,7 +31,7 @@ void CASTBuilder::Visit( const CAdditionalExpressionParam* acceptable ) const {
     child = expression;
 }
 
-void CASTBuilder::Visit( const CAdditionalExpressionParamS* acceptable ) const {
+void CASTBuilder::Visit( const CAdditionalExpressionParamS* acceptable ) {
     if (acceptable->additionalExpressionParamS) {
         acceptable->additionalExpressionParamS->Accept(this);
     }
@@ -40,7 +40,7 @@ void CASTBuilder::Visit( const CAdditionalExpressionParamS* acceptable ) const {
     }
 }
 
-void CASTBuilder::Visit( const CAdditionalParam* acceptable ) const {
+void CASTBuilder::Visit( const CAdditionalParam* acceptable ) {
     const IParam * param = nullptr;
 
     if (acceptable->param) {
@@ -50,7 +50,7 @@ void CASTBuilder::Visit( const CAdditionalParam* acceptable ) const {
     }
 }
 
-void CASTBuilder::Visit( const CAdditionalParamS* acceptable ) const {
+void CASTBuilder::Visit( const CAdditionalParamS* acceptable ) {
     if (acceptable->additionalParamS) {
         acceptable->additionalParamS->Accept(this);
     }
@@ -59,7 +59,7 @@ void CASTBuilder::Visit( const CAdditionalParamS* acceptable ) const {
     }
 }
 
-void CASTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) const {
+void CASTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) {
     const CArrayAssignmentStatement * arrayAssignmentStatement = nullptr;
     const CTerminalIdentifier * arrayName = nullptr;
     const IExpression * indexExpression = nullptr;
@@ -82,12 +82,12 @@ void CASTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) const {
     child = arrayAssignmentStatement;
 }
 
-void CASTBuilder::Visit( const CBooleanType* acceptable ) const {
+void CASTBuilder::Visit( const CBooleanType* acceptable ) {
     const CBooleanType * booleanType = new CBooleanType();
     child = booleanType;
 }
 
-void CASTBuilder::Visit( const CClassDeclaration* acceptable ) const {
+void CASTBuilder::Visit( const CClassDeclaration* acceptable ) {
     const CClassDeclaration * classDeclaration = nullptr;
     const CTerminalIdentifier * className = nullptr;
     const IExtension * extension = nullptr;
@@ -116,7 +116,7 @@ void CASTBuilder::Visit( const CClassDeclaration* acceptable ) const {
     child = classDeclaration;
 }
 
-void CASTBuilder::Visit( const CClassDeclarationS* acceptable ) const {
+void CASTBuilder::Visit( const CClassDeclarationS* acceptable ) {
     const IClassDeclaration * classDeclaration = nullptr;
 
     if (acceptable->classDeclarationS) {
@@ -130,7 +130,7 @@ void CASTBuilder::Visit( const CClassDeclarationS* acceptable ) const {
     child = classDeclaration;
 }
 
-void CASTBuilder::Visit( const CCurlyBraceStatement* acceptable ) const {
+void CASTBuilder::Visit( const CCurlyBraceStatement* acceptable ) {
     const CCurlyBraceStatement * curlyBraceStatement = nullptr;
     const CStatementList * statementList = nullptr;
 
@@ -145,7 +145,7 @@ void CASTBuilder::Visit( const CCurlyBraceStatement* acceptable ) const {
     child = curlyBraceStatement;
 }
 
-void CASTBuilder::Visit( const CCustomType* acceptable ) const {
+void CASTBuilder::Visit( const CCustomType* acceptable ) {
     const CCustomType * customType = nullptr;
     const CTerminalIdentifier * typeName = nullptr;
 
@@ -158,7 +158,7 @@ void CASTBuilder::Visit( const CCustomType* acceptable ) const {
     child = customType;
 }
 
-void CASTBuilder::Visit( const CCallExpression* acceptable ) const {
+void CASTBuilder::Visit( const CCallExpression* acceptable ) {
     const CCallExpression * callExpression = nullptr;
     const IExpression * expression = nullptr;
     const CTerminalIdentifier * identifier = nullptr;
@@ -183,7 +183,7 @@ void CASTBuilder::Visit( const CCallExpression* acceptable ) const {
     child = callExpression;
 }
 
-void CASTBuilder::Visit( const CExpressionParamS* acceptable ) const {
+void CASTBuilder::Visit( const CExpressionParamS* acceptable ) {
     const IExpression * expression = nullptr;
 
     if (acceptable->expression) {
@@ -198,7 +198,7 @@ void CASTBuilder::Visit( const CExpressionParamS* acceptable ) const {
     child = expression;
 }
 
-void CASTBuilder::Visit( const CExtension* acceptable ) const {
+void CASTBuilder::Visit( const CExtension* acceptable ) {
     const CExtension * extension = nullptr;
     const CTerminalIdentifier * className = nullptr;
 
@@ -211,12 +211,12 @@ void CASTBuilder::Visit( const CExtension* acceptable ) const {
     child = extension;
 }
 
-void CASTBuilder::Visit( const CFalseExpression * acceptable ) const {
+void CASTBuilder::Visit( const CFalseExpression * acceptable ) {
     const CFalseExpression * falseExpression = new CFalseExpression();
     child = falseExpression;
 }
 
-void CASTBuilder::Visit( const CGoal * acceptable ) const {
+void CASTBuilder::Visit( const CGoal * acceptable ) {
     const CGoal * goal = nullptr;
     const IMainClass * mainClass = nullptr;
     const CClassDeclarationList * classDeclarationList = nullptr;
@@ -235,7 +235,7 @@ void CASTBuilder::Visit( const CGoal * acceptable ) const {
     child = goal;
 }
 
-void CASTBuilder::Visit( const CIdentifierExpression* acceptable ) const {
+void CASTBuilder::Visit( const CIdentifierExpression* acceptable ) {
     const CIdentifierExpression * identifierExpression = nullptr;
     const CTerminalIdentifier * identifier = nullptr;
 
@@ -248,7 +248,7 @@ void CASTBuilder::Visit( const CIdentifierExpression* acceptable ) const {
     child = identifierExpression;
 }
 
-void CASTBuilder::Visit( const CIfElseStatement* acceptable ) const {
+void CASTBuilder::Visit( const CIfElseStatement* acceptable ) {
     const CIfElseStatement * ifElseStatement = nullptr;
     const IExpression * condition = nullptr;
     const IStatement * ifStatement = nullptr;
@@ -271,12 +271,12 @@ void CASTBuilder::Visit( const CIfElseStatement* acceptable ) const {
     child = ifElseStatement;
 }
 
-void CASTBuilder::Visit( const CIntArrayType* acceptable ) const {
+void CASTBuilder::Visit( const CIntArrayType* acceptable ) {
     const CIntArrayType * intArrayType = new CIntArrayType();
     child = intArrayType;
 }
 
-void CASTBuilder::Visit( const CIntliteralExpression* acceptable ) const {
+void CASTBuilder::Visit( const CIntliteralExpression* acceptable ) {
     const CIntliteralExpression * intliteralExpression = nullptr;
     const CTerminalIntliteral * intliteral = nullptr;
 
@@ -288,12 +288,12 @@ void CASTBuilder::Visit( const CIntliteralExpression* acceptable ) const {
     child = intliteralExpression;
 }
 
-void CASTBuilder::Visit( const CIntType* acceptable ) const {
+void CASTBuilder::Visit( const CIntType* acceptable ) {
     const CIntType * intType = new CIntType();
     child = intType;
 }
 
-void CASTBuilder::Visit( const CLengthExpression* acceptable ) const {
+void CASTBuilder::Visit( const CLengthExpression* acceptable ) {
     const CLengthExpression * lengthExpression = nullptr;
     const IExpression * expression = nullptr;
 
@@ -306,7 +306,7 @@ void CASTBuilder::Visit( const CLengthExpression* acceptable ) const {
     child = lengthExpression;
 }
 
-void CASTBuilder::Visit( const CMainClass* acceptable ) const {
+void CASTBuilder::Visit( const CMainClass* acceptable ) {
     const CMainClass * mainClass = nullptr;
     const CTerminalIdentifier * className = nullptr;
     const CTerminalIdentifier * argName = nullptr;
@@ -330,7 +330,7 @@ void CASTBuilder::Visit( const CMainClass* acceptable ) const {
     child = mainClass;
 }
 
-void CASTBuilder::Visit( const CMethodDeclaration* acceptable ) const {
+void CASTBuilder::Visit( const CMethodDeclaration* acceptable ) {
     const CMethodDeclaration * methodDeclaration = nullptr;
     const IType * returnType = nullptr;
     const CTerminalIdentifier * methodIdentifier = nullptr;
@@ -373,7 +373,7 @@ void CASTBuilder::Visit( const CMethodDeclaration* acceptable ) const {
     child = methodDeclaration;
 }
 
-void CASTBuilder::Visit( const CMethodDeclarationS* acceptable ) const {
+void CASTBuilder::Visit( const CMethodDeclarationS* acceptable ) {
     const IMethodDeclaration * methodDeclaration = nullptr;
 
     if (acceptable->methodDeclarationS) {
@@ -388,7 +388,7 @@ void CASTBuilder::Visit( const CMethodDeclarationS* acceptable ) const {
     child = methodDeclaration;
 }
 
-void CASTBuilder::Visit( const CNewArrayExpression* acceptable ) const {
+void CASTBuilder::Visit( const CNewArrayExpression* acceptable ) {
     const CNewArrayExpression * newArrayExpression = nullptr;
     const IExpression * expression = nullptr;
 
@@ -401,7 +401,7 @@ void CASTBuilder::Visit( const CNewArrayExpression* acceptable ) const {
     child = newArrayExpression;
 }
 
-void CASTBuilder::Visit( const CNewIdentifierExpression* acceptable ) const {
+void CASTBuilder::Visit( const CNewIdentifierExpression* acceptable ) {
     const CNewIdentifierExpression * newIdentifierExpression = nullptr;
     const CTerminalIdentifier * identifier = nullptr;
 
@@ -414,7 +414,7 @@ void CASTBuilder::Visit( const CNewIdentifierExpression* acceptable ) const {
     child = newIdentifierExpression;
 }
 
-void CASTBuilder::Visit( const CNotExpression* acceptable ) const {
+void CASTBuilder::Visit( const CNotExpression* acceptable ) {
     const CNotExpression * notExpression = nullptr;
     const IExpression * expression = nullptr;
 
@@ -427,7 +427,7 @@ void CASTBuilder::Visit( const CNotExpression* acceptable ) const {
     child = notExpression;
 }
 
-void CASTBuilder::Visit( const CParams* acceptable ) const {
+void CASTBuilder::Visit( const CParams* acceptable ) {
     const IParam * param = nullptr;
 
     if( acceptable->param ) {
@@ -442,7 +442,7 @@ void CASTBuilder::Visit( const CParams* acceptable ) const {
     child = param;
 }
 
-void CASTBuilder::Visit( const CParam* acceptable ) const {
+void CASTBuilder::Visit( const CParam* acceptable ) {
     const CParam * param = nullptr;
     const IType * type = nullptr;
     const CTerminalIdentifier * identifier = nullptr;
@@ -460,7 +460,7 @@ void CASTBuilder::Visit( const CParam* acceptable ) const {
     child = param;
 }
 
-void CASTBuilder::Visit( const CParensExpression* acceptable ) const {
+void CASTBuilder::Visit( const CParensExpression* acceptable ) {
     const CParensExpression * parensExpression = nullptr;
     const IExpression * expression = nullptr;
 
@@ -473,7 +473,7 @@ void CASTBuilder::Visit( const CParensExpression* acceptable ) const {
     child = parensExpression;
 }
 
-void CASTBuilder::Visit( const CPrintlnStatement* acceptable ) const {
+void CASTBuilder::Visit( const CPrintlnStatement* acceptable ) {
     const CPrintlnStatement * printlnStatement = nullptr;
     const IExpression * expression = nullptr;
 
@@ -486,7 +486,7 @@ void CASTBuilder::Visit( const CPrintlnStatement* acceptable ) const {
     child = printlnStatement;
 }
 
-void CASTBuilder::Visit( const CSquarebracketsExpression* acceptable ) const {
+void CASTBuilder::Visit( const CSquarebracketsExpression* acceptable ) {
     const CSquarebracketsExpression * squarebracketsExpression = nullptr;
     const IExpression * expression = nullptr;
     const IExpression * expressionInBrackets = nullptr;
@@ -504,7 +504,7 @@ void CASTBuilder::Visit( const CSquarebracketsExpression* acceptable ) const {
     child = squarebracketsExpression;
 }
 
-void CASTBuilder::Visit( const CStatementS* acceptable ) const {
+void CASTBuilder::Visit( const CStatementS* acceptable ) {
     const IStatement * statement = nullptr;
 
     if( acceptable->statement ) {
@@ -519,27 +519,27 @@ void CASTBuilder::Visit( const CStatementS* acceptable ) const {
     child = statement;
 }
 
-void CASTBuilder::Visit( const CTerminalIdentifier* acceptable ) const {
+void CASTBuilder::Visit( const CTerminalIdentifier* acceptable ) {
     const CTerminalIdentifier * terminalIdentifier = new CTerminalIdentifier(*acceptable);
     child = terminalIdentifier;
 }
 
-void CASTBuilder::Visit( const CTerminalIntliteral* acceptable ) const {
+void CASTBuilder::Visit( const CTerminalIntliteral* acceptable ) {
     const CTerminalIntliteral * terminalIntliteral = new CTerminalIntliteral(*acceptable);
     child = terminalIntliteral;
 }
 
-void CASTBuilder::Visit( const CThisExpression* acceptable ) const {
+void CASTBuilder::Visit( const CThisExpression* acceptable ) {
     const CThisExpression * thisExpression = new CThisExpression();
     child = thisExpression;
 }
 
-void CASTBuilder::Visit( const CTrueExpression* acceptable ) const {
+void CASTBuilder::Visit( const CTrueExpression* acceptable ) {
     const CTrueExpression * trueExpression = new CTrueExpression();
     child = trueExpression;
 }
 
-void CASTBuilder::Visit( const CVarAssignmentStatement* acceptable ) const {
+void CASTBuilder::Visit( const CVarAssignmentStatement* acceptable ) {
     const CVarAssignmentStatement * varAssignmentStatement = nullptr;
     const CTerminalIdentifier * varName = nullptr;
     const IExpression * expression = nullptr;
@@ -557,7 +557,7 @@ void CASTBuilder::Visit( const CVarAssignmentStatement* acceptable ) const {
     child = varAssignmentStatement;
 }
 
-void CASTBuilder::Visit( const CVarDeclaration* acceptable ) const {
+void CASTBuilder::Visit( const CVarDeclaration* acceptable ) {
     const CVarDeclaration * varDeclaration = nullptr;
     const IType * type = nullptr;
     const CTerminalIdentifier * identifier = nullptr;
@@ -575,7 +575,7 @@ void CASTBuilder::Visit( const CVarDeclaration* acceptable ) const {
     child = varDeclaration;
 }
 
-void CASTBuilder::Visit( const CVarDeclarationS* acceptable ) const {
+void CASTBuilder::Visit( const CVarDeclarationS* acceptable ) {
     const IVarDeclaration * varDeclaration = nullptr;
 
     if (acceptable->varDeclarationS) {
@@ -590,7 +590,7 @@ void CASTBuilder::Visit( const CVarDeclarationS* acceptable ) const {
     child = varDeclaration;
 }
 
-void CASTBuilder::Visit( const CWhileStatement* acceptable ) const {
+void CASTBuilder::Visit( const CWhileStatement* acceptable ) {
     const CWhileStatement * whileStatement = nullptr;
     const IExpression * condition = nullptr;
     const IStatement * statement = nullptr;
@@ -608,7 +608,7 @@ void CASTBuilder::Visit( const CWhileStatement* acceptable ) const {
     child = whileStatement;
 }
 
-void CASTBuilder::Visit( const CBinaryOpExpression* acceptable ) const {
+void CASTBuilder::Visit( const CBinaryOpExpression* acceptable ) {
     const CBinaryOpExpression * binaryOpExpression = nullptr;
     const IExpression * left = nullptr;
     const IExpression * right = nullptr;
@@ -626,26 +626,26 @@ void CASTBuilder::Visit( const CBinaryOpExpression* acceptable ) const {
     child = binaryOpExpression;
 }
 
-void CASTBuilder::Visit( const CClassDeclarationList * acceptable ) const {
+void CASTBuilder::Visit( const CClassDeclarationList * acceptable ) {
 
 }
 
-void CASTBuilder::Visit( const CExpressionParamList * acceptable ) const {
+void CASTBuilder::Visit( const CExpressionParamList * acceptable ) {
 
 }
 
-void CASTBuilder::Visit( const CMethodDeclarationList * acceptable ) const {
+void CASTBuilder::Visit( const CMethodDeclarationList * acceptable ) {
 
 }
 
-void CASTBuilder::Visit( const CParamList * acceptable ) const {
+void CASTBuilder::Visit( const CParamList * acceptable ) {
 
 }
 
-void CASTBuilder::Visit( const CStatementList * acceptable ) const {
+void CASTBuilder::Visit( const CStatementList * acceptable ) {
 
 }
 
-void CASTBuilder::Visit( const CVarDeclarationList * acceptable ) const {
+void CASTBuilder::Visit( const CVarDeclarationList * acceptable ) {
 
 }

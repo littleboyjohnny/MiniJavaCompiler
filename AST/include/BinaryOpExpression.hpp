@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_BINARYOPEXPRESSION_HPP
-#define MINIJAVACOMPILER_BINARYOPEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -17,7 +16,7 @@ public:
         right( _right )
     {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -27,4 +26,4 @@ public:
     const IExpression* const right;
 };
 
-#endif //MINIJAVACOMPILER_BINARYOPEXPRESSION_HPP
+

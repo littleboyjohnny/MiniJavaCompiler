@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_IDENTIFIEREXPRESSION_HPP
-#define MINIJAVACOMPILER_IDENTIFIEREXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -11,7 +10,7 @@ class CIdentifierExpression : public IExpression
 public:
     CIdentifierExpression( const CTerminalIdentifier * const _identifier ) : identifier( _identifier ) {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -19,4 +18,4 @@ public:
     const CTerminalIdentifier * const identifier;
 };
 
-#endif //MINIJAVACOMPILER_IDENTIFIEREXPRESSION_HPP
+

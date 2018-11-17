@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_VARDECLARATION_HPP
-#define MINIJAVACOMPILER_VARDECLARATION_HPP
+#pragma once
 
 #include "../interfaces/IVarDeclaration.h"
 #include "../core/IVisitor.h"
@@ -15,7 +14,7 @@ public:
             identifier(_identifier)
     {}
 
-    void Accept( const IVisitor * visitor ) const
+    void Accept( IVisitor * visitor ) const
     {
         visitor->Visit( this );
     }
@@ -24,4 +23,4 @@ public:
     const CTerminalIdentifier * const identifier;
 };
 
-#endif //MINIJAVACOMPILER_VARDECLARATION_HPP
+

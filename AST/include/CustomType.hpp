@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_CUSTOMTYPE_HPP
-#define MINIJAVACOMPILER_CUSTOMTYPE_HPP
+#pragma once
 
 #include "../interfaces/IType.h"
 #include "../core/IVisitor.h"
@@ -11,7 +10,7 @@ public:
         typeName( _typeName )
     {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -19,4 +18,4 @@ public:
     const CTerminalIdentifier * const typeName;
 };
 
-#endif //MINIJAVACOMPILER_CUSTOMTYPE_HPP
+

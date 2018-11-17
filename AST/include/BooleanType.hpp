@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_BOOLEANTYPE_HPP
-#define MINIJAVACOMPILER_BOOLEANTYPE_HPP
+#pragma once
 
 #include "../interfaces/IType.h"
 #include "../core/IVisitor.h"
@@ -8,11 +7,11 @@ class CBooleanType : public IType {
 public:
     CBooleanType() {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
 
 };
 
-#endif //MINIJAVACOMPILER_BOOLEANTYPE_HPP
+

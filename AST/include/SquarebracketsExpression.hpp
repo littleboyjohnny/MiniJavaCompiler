@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_SQUAREBRACKETSEXPRESSION_HPP
-#define MINIJAVACOMPILER_SQUAREBRACKETSEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -13,7 +12,7 @@ public:
                               squarebraketsExpression( _squarebraketsExpression )
                               {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -22,4 +21,4 @@ public:
     const IExpression* const squarebraketsExpression;
 };
 
-#endif //MINIJAVACOMPILER_SQUAREBRACKETSEXPRESSION_HPP
+

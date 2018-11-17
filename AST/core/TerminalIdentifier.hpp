@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
-#define MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
+#pragma once
 
 #include "IAcceptable.h"
 #include "IVisitor.h"
@@ -13,7 +12,7 @@ public:
         identifier[size] = '\0';
     }
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -21,4 +20,4 @@ public:
     char* identifier;
 };
 
-#endif //MINIJAVACOMPILER_TERMINALIDENTIFIER_HPP
+

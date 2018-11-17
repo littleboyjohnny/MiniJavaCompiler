@@ -1,5 +1,4 @@
-#ifndef COMPILERAST_IADDITTIONALEXPRESSIONPARAM_H
-#define COMPILERAST_IADDITTIONALEXPRESSIONPARAM_H
+#pragma once
 
 #include "../core/IAcceptable.h"
 
@@ -7,4 +6,4 @@ class IAdditionalExpressionParam : public IAcceptable {
 
 };
 
-#endif //COMPILERAST_IADDITTIONALEXPRESSIONPARAM_H
+

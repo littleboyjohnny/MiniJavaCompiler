@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_PRINTLNSTATEMENT_HPP
-#define MINIJAVACOMPILER_PRINTLNSTATEMENT_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IStatement.h"
@@ -11,7 +10,7 @@ public:
         expression( _expression )
     {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -19,4 +18,4 @@ public:
     const IExpression * const expression;
 };
 
-#endif //MINIJAVACOMPILER_PRINTLNSTATEMENT_HPP
+

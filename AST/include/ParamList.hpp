@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_PARAMLIST_HPP
-#define MINIJAVACOMPILER_PARAMLIST_HPP
+#pragma once
 
 #include "../interfaces/IParams.h"
 #include "../core/IVisitor.h"
@@ -12,11 +11,11 @@ class CParamList : public IParams {
 public:
     CParamList() {}
 
-    void Accept( const IVisitor *visitor ) const {
+    void Accept( IVisitor *visitor ) const {
         visitor->Visit(this);
     }
 
     mutable std::vector<const IParam *> children;
 };
 
-#endif //MINIJAVACOMPILER_PARAMLIST_HPP
+

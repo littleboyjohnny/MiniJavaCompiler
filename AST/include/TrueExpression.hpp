@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_TRUEEXPRESSION_HPP
-#define MINIJAVACOMPILER_TRUEEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -9,11 +8,11 @@ class CTrueExpression : public IExpression
 public:
     CTrueExpression(){}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
 
 };
 
-#endif //MINIJAVACOMPILER_TRUEEXPRESSION_HPP
+

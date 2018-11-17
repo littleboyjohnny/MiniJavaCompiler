@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_GOAL_H
-#define MINIJAVACOMPILER_GOAL_H
+#pragma once
 
 #include "../interfaces/IGoal.h"
 #include "../interfaces/IMainClass.h"
@@ -13,7 +12,7 @@ public:
             classDeclarationS( classDeclarationS1 )
             {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -22,4 +21,4 @@ public:
     const IClassDeclarationS* const classDeclarationS;
 };
 
-#endif //MINIJAVACOMPILER_GOAL_H
+

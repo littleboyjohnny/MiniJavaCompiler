@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_EXTENSION_HPP
-#define MINIJAVACOMPILER_EXTENSION_HPP
+#pragma once
 
 #include "../interfaces/IExtension.h"
 #include "../core/IVisitor.h"
@@ -12,7 +11,7 @@ public:
             className( _className )
     {}
 
-    void Accept( const IVisitor * visitor ) const
+    void Accept( IVisitor * visitor ) const
     {
         visitor->Visit( this );
     }
@@ -20,4 +19,4 @@ public:
     const CTerminalIdentifier * const className;
 };
 
-#endif //MINIJAVACOMPILER_EXTENSION_HPP
+

@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_METHODDECLARATION_HPP
-#define MINIJAVACOMPILER_METHODDECLARATION_HPP
+#pragma once
 
 #include "../interfaces/IMethodDeclaration.h"
 #include "../core/IVisitor.h"
@@ -27,7 +26,7 @@ public:
         returnExpression( _returnExpression )
     {}
 
-    void Accept( const IVisitor * visitor ) const
+    void Accept( IVisitor * visitor ) const
     {
         visitor->Visit( this );
     }
@@ -40,4 +39,4 @@ public:
     const IExpression * const returnExpression;
 };
 
-#endif //MINIJAVACOMPILER_METHODDECLARATION_HPP
+

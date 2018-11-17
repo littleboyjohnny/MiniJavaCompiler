@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_IPARAM_H
-#define MINIJAVACOMPILER_IPARAM_H
+#pragma once
 
 #include "../core/IAcceptable.h"
 
@@ -7,4 +6,4 @@ class IParam : public IAcceptable {
 
 };
 
-#endif //MINIJAVACOMPILER_IPARAM_H
+

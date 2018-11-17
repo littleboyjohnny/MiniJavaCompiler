@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_DOTEXPRESSION_HPP
-#define MINIJAVACOMPILER_DOTEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../interfaces/IExpressionParamS.h"
@@ -18,7 +17,7 @@ public:
             expressionParamS( _expressionParamS )
     {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -28,4 +27,4 @@ public:
     const IExpressionParamS * const expressionParamS;
 };
 
-#endif //MINIJAVACOMPILER_DOTEXPRESSION_HPP
+

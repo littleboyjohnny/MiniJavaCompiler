@@ -1,5 +1,4 @@
-#ifndef MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP
-#define MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP
+#pragma once
 
 #include "../interfaces/IExpression.h"
 #include "../core/IVisitor.h"
@@ -11,7 +10,7 @@ class CIntliteralExpression : public IExpression
 public:
     CIntliteralExpression( const CTerminalIntliteral* const _intliteral ) : intliteral( _intliteral ) {}
 
-    void Accept( const IVisitor* visitor ) const
+    void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
@@ -19,4 +18,4 @@ public:
     const CTerminalIntliteral* const intliteral;
 };
 
-#endif //MINIJAVACOMPILER_INTLITERALEXPRESSION_HPP
+
