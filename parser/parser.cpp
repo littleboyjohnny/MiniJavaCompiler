@@ -3,25 +3,24 @@
 
 #include "parser.h"
 
-void yyerror( IAcceptable * & node, char const * msg );
-void parserProcessRule( const char * left, const char * right );
-void parserPrintDebugMessage( const char * left, const char * right );
+void yyerror( IAcceptable * & node, FILE * fout, char const * msg );
+void parserProcessRule( FILE * fout, const char * left, const char * right );
+void parserPrintDebugMessage( FILE * fout, const char * left, const char * right );
 
-
-void yyerror( IAcceptable * & node, char const * msg )
+void yyerror( IAcceptable * & node, FILE * fout, char const * msg )
 {
 	fprintf( stderr,"ошибка: %s\n", msg );
 }
 
-void parserProcessRule( const char * left, const char * right )
+void parserProcessRule( FILE * fout, const char * left, const char * right )
 {
 #ifdef PARSER_DEBUG
-	parserPrintDebugMessage( left, right );
+	parserPrintDebugMessage( fout, left, right );
 #endif
 }
 
-void parserPrintDebugMessage( const char * left, const char * right )
+void parserPrintDebugMessage( FILE * fout, const char * left, const char * right )
 {
 	const char * fmt = "PARSER_DEBUG: %s <= %s\n";
-	printf( fmt, left, right );
+	fprintf( fout, fmt, left, right );
 }

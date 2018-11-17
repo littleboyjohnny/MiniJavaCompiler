@@ -10,7 +10,7 @@ int main( int argc, char** argv )
     freopen( argv[1], "r", stdin );
 
     IAcceptable * goal = nullptr;
-    yyparse( goal );
+    yyparse( goal, stdout );
 
     CASTBuilder * builder = new CASTBuilder();
     const CGoal * newGoal = builder->BuildAST(static_cast< const CGoal * >(goal));
