@@ -78,16 +78,22 @@ CBlockScope::SymbolType CBlockScope::ResolveType( const CSymbol* symbol )
     assert( symbol != nullptr );
 
     auto methodIt = methods.find( symbol );
+    auto variableIt = variables.find( symbol );
+    auto classIt = classes.find( symbol );
+
+    // имя должно быть доступно не более чем в одном множестве
+    assert( ( methodIt != methods.end() )
+            + ( variableIt != variables.end() )
+            + ( classIt != classes.end() ) <= 1 );
+
     if( methodIt != methods.end() ) {
         return SymbolType::METHOD;
     }
 
-    auto variableIt = variables.find( symbol );
     if( variableIt != variables.end() ) {
         return SymbolType::VARIABLE;
     }
 
-    auto classIt = classes.find( symbol );
     if( classIt != classes.end() ) {
         return SymbolType::CLASS;
     }

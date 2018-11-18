@@ -4,9 +4,9 @@
 
 #include "NameScope.h"
 #include "Symbol.h"
-#include "MethodInfo.hpp"
-#include "ClassInfo.hpp"
-#include "VariableInfo.hpp"
+#include "MethodInfo.h"
+#include "ClassInfo.h"
+#include "VariableInfo.h"
 
 
 class CBlockScope : public INameScope {

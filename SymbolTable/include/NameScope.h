@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Symbol.h"
-#include "MethodInfo.hpp"
-#include "VariableInfo.hpp"
-#include "ClassInfo.hpp"
+#include "MethodInfo.h"
+#include "VariableInfo.h"
+#include "ClassInfo.h"
 
 class INameScope {
 public:

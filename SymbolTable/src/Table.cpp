@@ -67,6 +67,7 @@ INameScope::SymbolType CTable::ResolveType( const CSymbol *symbol )
 {
     assert( symbol != nullptr );
 
+    // имя может быть переопределено в дочернем блоке, поэтому ищем до первого совпадения
     SymbolType type = SymbolType::UNDECLARED;
     for( auto it = blocks.rbegin(); it != blocks.rend(); ++it ) {
         type = (*it)->ResolveType( symbol );
@@ -82,6 +83,7 @@ const CMethodInfo *CTable::TryResolveMethod( const CSymbol *symbol )
 {
     assert( symbol != nullptr );
 
+    // имя может быть переопределено в дочернем блоке, поэтому ищем до первого совпадения
     const CMethodInfo* methodInfo = nullptr;
     for( auto it = blocks.rbegin(); it != blocks.rend(); ++it ) {
         methodInfo = (*it)->TryResolveMethod( symbol );
@@ -97,6 +99,7 @@ const CVariableInfo *CTable::TryResolveVariable( const CSymbol *symbol )
 {
     assert( symbol != nullptr );
 
+    // имя может быть переопределено в дочернем блоке, поэтому ищем до первого совпадения
     const CVariableInfo* variableInfo = nullptr;
     for( auto it = blocks.rbegin(); it != blocks.rend(); ++it ) {
         variableInfo = (*it)->TryResolveVariable( symbol );
@@ -112,6 +115,7 @@ const CClassInfo *CTable::TryResolveClass( const CSymbol *symbol )
 {
     assert( symbol != nullptr );
 
+    // имя может быть переопределено в дочернем блоке, поэтому ищем до первого совпадения
     const CClassInfo* classInfo = nullptr;
     for( auto it = blocks.rbegin(); it != blocks.rend(); ++it ) {
         classInfo = (*it)->TryResolveClass( symbol );

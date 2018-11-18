@@ -1,18 +1,20 @@
 #pragma once
+
 #include <string>
 #include <unordered_map>
 
 class CSymbol {
 
 public:
-
     CSymbol( const std::string& _str );
     CSymbol( const CSymbol& ) = delete;
 
 
-    const std::string& String() const;
+    const std::string& GetString() const;
+
+    static CSymbol* GetIntern( const std::string& src );
+
     void operator=( const CSymbol& ) = delete;
-    static CSymbol* getIntern( const std::string& src );
 
 private:
     const std::string str;
