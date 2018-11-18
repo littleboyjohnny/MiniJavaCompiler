@@ -16,6 +16,7 @@ public:
 
     // создает новый блок области видимости
     void AddNewBlockScope();
+    void AddNewBlockScope( const CBlockScope* scope );
 
     // набор методов добавляет переданный символ без каких либо проверок
     void AddMethod( const CSymbol* symbol, const CMethodInfo* methodInfo );

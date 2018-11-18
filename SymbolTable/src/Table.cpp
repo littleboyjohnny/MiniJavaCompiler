@@ -9,6 +9,12 @@ void CTable::AddNewBlockScope()
 }
 
 
+void CTable::AddNewBlockScope( const CBlockScope* scope )
+{
+    blocks.push_back( std::make_unique<CBlockScope>( scope ) );
+}
+
+
 void CTable::AddMethod( const CSymbol *symbol, const CMethodInfo *methodInfo )
 {
     assert( symbol != nullptr );
