@@ -11,14 +11,14 @@ CClassInfo::CClassInfo( const CSymbol *_name )
     name = _name;
 }
 
-CBlockScope *CMethodInfo::GetScope()
+CBlockScope *CClassInfo::GetScope()
 {
     assert( scope != nullptr );
 
     return scope.get();
 }
 
-void CMethodInfo::SetScope( CBlockScope *_scope )
+void CClassInfo::SetScope( CBlockScope *_scope )
 {
     assert( _scope != nullptr );
 

@@ -7,10 +7,11 @@
 #include "BlockScope.h"
 
 #include <unordered_map>
+#include <memory>
 
 class CClassInfo : public IInfo {
 public:
-    CClassInfo( const CSymbol* _name );
+    explicit CClassInfo( const CSymbol* _name );
 
     CBlockScope* GetScope();
     void SetScope( CBlockScope* _scope );
@@ -18,5 +19,5 @@ public:
 private:
     const CSymbol* name;
 
-    CBlockScope* scope;
+    std::unique_ptr<CBlockScope> scope;
 };

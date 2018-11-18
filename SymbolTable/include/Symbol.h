@@ -6,7 +6,7 @@
 class CSymbol {
 
 public:
-    CSymbol( const std::string& _str );
+    explicit CSymbol( const std::string& _str );
     CSymbol( const CSymbol& ) = delete;
 
 
