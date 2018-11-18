@@ -7,6 +7,7 @@ void yyerror( IAcceptable * & node, FILE * fout, char const * msg );
 void parserProcessRule( FILE * fout, const char * left, const char * right );
 %}
 
+%define parse.error verbose
 %locations
 %verbose
 %parse-param { IAcceptable * & node }
@@ -71,6 +72,9 @@ void parserProcessRule( FILE * fout, const char * left, const char * right );
 %type <additionalExpressionParamS> AdditionalExpressionParamS
 %type <additionalExpressionParam> AdditionalExpressionParam
 
+%destructor { } <goal>
+%destructor { delete $$; } <*>
+
 %%
 
 Goal: MainClass ClassDeclarationS { parserProcessRule( fout, "Goal", "CGoal" ); node = new CGoal( $1, $2 ); $$ = (CGoal*)node; }
@@ -95,6 +99,7 @@ VarDeclarationS: %empty { $$ = nullptr; }
 	;
 
 VarDeclaration: Type IDENTIFIER SEMICOLON { parserProcessRule( fout, "VarDeclaration", "CVarDeclaration" ); $$ = new CVarDeclaration( $1, $2 ); }
+    | Type error SEMICOLON   { yyerrok; }
     ;
 
 MethodDeclarationS: %empty { $$ = nullptr; }
@@ -102,6 +107,7 @@ MethodDeclarationS: %empty { $$ = nullptr; }
 	;
 
 MethodDeclaration: PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS StatementS RETURN Expression SEMICOLON RCURLYBRACE { parserProcessRule( fout, "MethodDeclaration", "CMethodDeclaration" ); $$ = new CMethodDeclaration( $2, $3, $5, $8, $9, $11 ); }
+    | PUBLIC Type IDENTIFIER LPAREN Params RPAREN LCURLYBRACE VarDeclarationS error RCURLYBRACE { yyerrok; }
     ;
 
 Params: %empty { $$ = nullptr; }
@@ -113,6 +119,7 @@ AdditionalParamS: %empty { $$ = nullptr; }
 	;
 
 AdditionalParam: COMMA Param { parserProcessRule( fout, "AdditionalParam", "CAdditionalParam" ); $$ = new CAdditionalParam( $2 );}
+    | COMMA error
 	;
 
 Param: Type IDENTIFIER {parserProcessRule( fout, "Param", "CParam" ); $$ = new CParam( $1, $2 );}
@@ -134,6 +141,10 @@ Statement: LCURLYBRACE StatementS RCURLYBRACE { parserProcessRule( fout, "Statem
     | PRINTLN LPAREN Expression RPAREN SEMICOLON { parserProcessRule( fout, "Statement", "CPrintlnStatement" ); $$ = new CPrintlnStatement( $3 );}
     | IDENTIFIER EQUALS Expression SEMICOLON { parserProcessRule( fout, "Statement", "CVarAssignmentStatement" ); $$ = new CVarAssignmentStatement( $1, $3 );}
     | IDENTIFIER LSQUAREBRACKET Expression RSQUAREBRACKET EQUALS Expression SEMICOLON { parserProcessRule( fout, "Statement", "CArrayAssignmentStatement" ); $$ = new CArrayAssignmentStatement( $1, $3, $6 );}
+    | LCURLYBRACE error RCURLYBRACE { yyerrok; }
+    | IF LPAREN error RPAREN Statement ELSE Statement   { yyerrok; }
+    | WHILE LPAREN error RPAREN Statement   { yyerrok; }
+    | error SEMICOLON   { yyerrok; }
     ;
 
 Expression: Expression AND Expression { parserProcessRule( fout, "Expression", "CBinaryOpExpression::AND" ); $$ = new CBinaryOpExpression( $1, CBinaryOpExpression::AND, $3 ); }
@@ -164,6 +175,7 @@ AdditionalExpressionParamS: %empty { $$ = nullptr; }
 	;
 
 AdditionalExpressionParam: COMMA Expression { parserProcessRule( fout, "AdditionalExpressionParam", "CAdditionalExpressionParam" ); $$ = new CAdditionalExpressionParam( $2 ); }
+    | COMMA error   {yyerrok;}
 	;
 
 %%

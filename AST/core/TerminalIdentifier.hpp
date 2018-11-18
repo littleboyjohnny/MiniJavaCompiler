@@ -17,6 +17,10 @@ public:
         visitor->Visit( this );
     }
 
+    ~CTerminalIdentifier() {
+        delete identifier;
+    }
+
     char* identifier;
 };
 
