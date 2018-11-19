@@ -125,10 +125,10 @@ AdditionalParam: COMMA Param { parserProcessRule( fout, "AdditionalParam", "CAdd
 Param: Type IDENTIFIER {parserProcessRule( fout, "Param", "CParam" ); $$ = new CParam( $1, $2 );}
 	;
 
-Type: INT LSQUAREBRACKET RSQUAREBRACKET { parserProcessRule( fout, "Type", "CIntArrayType" ); $$ = new CIntArrayType();}
-    | BOOLEAN { parserProcessRule( fout, "Type", "CBooleanType" ); $$ = new CBooleanType();}
-    | INT { parserProcessRule( fout, "Type", "CIntType" ); $$ = new CIntType();}
-    | IDENTIFIER { parserProcessRule( fout, "Type", "CCustomType" ); $$ = new CCustomType( $1 );}
+Type: INT LSQUAREBRACKET RSQUAREBRACKET { parserProcessRule( fout, "Type", "CIntArrayType" ); $$ = new CType( "int[]" );}
+    | BOOLEAN { parserProcessRule( fout, "Type", "CBooleanType" ); $$ = new CType( "boolean" );}
+    | INT { parserProcessRule( fout, "Type", "CIntType" ); $$ = new CType( "int" );}
+    | IDENTIFIER { parserProcessRule( fout, "Type", "CCustomType" ); $$ = new CType( $1->identifier );}
     ;
 
 StatementS: %empty { $$ = nullptr; }

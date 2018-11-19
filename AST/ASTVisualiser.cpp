@@ -54,10 +54,6 @@ void CASTVisualiser::Visit( const CArrayAssignmentStatement* acceptable ) {
     addLabel( acceptable, "ArrayAssignmentStatement" );
 }
 
-void CASTVisualiser::Visit( const CBooleanType* acceptable ) {
-    addLabel( acceptable, "boolean" );
-}
-
 void CASTVisualiser::Visit( const CClassDeclaration* acceptable ) {
     if( acceptable->className ) {
         printEdge( acceptable, acceptable->className.get() );
@@ -98,12 +94,8 @@ void CASTVisualiser::Visit( const CCurlyBraceStatement* acceptable ) {
     addLabel( acceptable, "CurlyBraceStatement" );
 }
 
-void CASTVisualiser::Visit( const CCustomType* acceptable ) {
-    if( acceptable->typeName ) {
-        printEdge( acceptable, acceptable->typeName.get() );
-        acceptable->typeName->Accept( this );
-    }
-    addLabel( acceptable, "CustomType" );
+void CASTVisualiser::Visit ( const CType* acceptable ) {
+    addLabel( acceptable, acceptable->typeName.c_str() );
 }
 
 void CASTVisualiser::Visit( const CCallExpression* acceptable ) {
@@ -182,20 +174,12 @@ void CASTVisualiser::Visit( const CIfElseStatement* acceptable ) {
     addLabel( acceptable, "IfElseStatement" );
 }
 
-void CASTVisualiser::Visit( const CIntArrayType* acceptable ) {
-    addLabel( acceptable, "int[]" );
-}
-
 void CASTVisualiser::Visit( const CIntliteralExpression* acceptable ) {
     if( acceptable->intliteral ) {
         printEdge( acceptable, acceptable->intliteral.get() );
         acceptable->intliteral->Accept( this );
     }
     addLabel( acceptable, "IntliteralExpression" );
-}
-
-void CASTVisualiser::Visit( const CIntType* acceptable ) {
-    addLabel( acceptable, "int" );
 }
 
 void CASTVisualiser::Visit( const CLengthExpression* acceptable ) {

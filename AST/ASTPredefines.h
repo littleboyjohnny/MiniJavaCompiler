@@ -50,5 +50,6 @@ class CMethodDeclarationS;
 class CMethodDeclaration;
 class CMethodDeclarationList;
 class CBinaryOpExpression;
+class CType;
 
 
