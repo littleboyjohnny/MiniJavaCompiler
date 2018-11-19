@@ -88,3 +88,8 @@ target_link_libraries(parsertests gtest_main libparser)
 set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp )
 add_executable( AstBuilder ${ASTBUILDER_SRC} )
 target_link_libraries( AstBuilder liblexer libparser )
+
+#временный таргет для проверки парсера
+set( PARSEREXE_SRC parserexe.cpp )
+add_executable( ParserEXE ${PARSEREXE_SRC} )
+target_link_libraries( ParserEXE liblexer libparser )
