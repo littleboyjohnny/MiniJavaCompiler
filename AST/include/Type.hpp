@@ -5,6 +5,9 @@
 
 #include "../interfaces/IType.h"
 #include "../core/IVisitor.h"
+#include "../core/TerminalIdentifier.hpp"
+
+#include <cassert>
 
 class CType : public IType {
 public:
@@ -12,10 +15,15 @@ public:
             typeName( _typeName )
     {}
 
+    CType( const CTerminalIdentifier * const _identifier ) {
+        assert( _identifier != nullptr );
+        typeName = std::string( _identifier->identifier );
+    }
+
     void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
 
-    const std::string typeName;
+    std::string typeName;
 };

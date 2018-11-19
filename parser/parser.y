@@ -128,7 +128,7 @@ Param: Type IDENTIFIER {parserProcessRule( fout, "Param", "CParam" ); $$ = new C
 Type: INT LSQUAREBRACKET RSQUAREBRACKET { parserProcessRule( fout, "Type", "CIntArrayType" ); $$ = new CType( "int[]" );}
     | BOOLEAN { parserProcessRule( fout, "Type", "CBooleanType" ); $$ = new CType( "boolean" );}
     | INT { parserProcessRule( fout, "Type", "CIntType" ); $$ = new CType( "int" );}
-    | IDENTIFIER { parserProcessRule( fout, "Type", "CCustomType" ); $$ = new CType( $1->identifier );}
+    | IDENTIFIER { parserProcessRule( fout, "Type", "CCustomType" ); $$ = new CType( $1 );}
     ;
 
 StatementS: %empty { $$ = nullptr; }
