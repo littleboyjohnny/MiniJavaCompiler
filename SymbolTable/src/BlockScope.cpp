@@ -73,7 +73,7 @@ bool CBlockScope::TryAddClass( const CSymbol *symbol, const CClassInfo *classInf
 }
 
 
-CBlockScope::SymbolType CBlockScope::ResolveType( const CSymbol* symbol )
+CBlockScope::SymbolType CBlockScope::ResolveType( const CSymbol* symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -102,7 +102,7 @@ CBlockScope::SymbolType CBlockScope::ResolveType( const CSymbol* symbol )
 }
 
 
-const CMethodInfo *CBlockScope::TryResolveMethod( const CSymbol* symbol )
+const CMethodInfo *CBlockScope::TryResolveMethod( const CSymbol* symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -111,7 +111,7 @@ const CMethodInfo *CBlockScope::TryResolveMethod( const CSymbol* symbol )
 }
 
 
-const CVariableInfo *CBlockScope::TryResolveVariable( const CSymbol* symbol )
+const CVariableInfo *CBlockScope::TryResolveVariable( const CSymbol* symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -120,10 +120,40 @@ const CVariableInfo *CBlockScope::TryResolveVariable( const CSymbol* symbol )
 }
 
 
-const CClassInfo *CBlockScope::TryResolveClass( const CSymbol* symbol )
+const CClassInfo *CBlockScope::TryResolveClass( const CSymbol* symbol ) const
 {
     assert( symbol != nullptr );
 
     auto it = classes.find( symbol );
     return it != classes.end() ? it->second : nullptr;
+}
+
+
+std::vector<const CSymbol*> CBlockScope::GetMethodNames() const
+{
+    std::vector<const CSymbol*> names;
+    for( auto p : methods ) {
+        names.push_back( p.first );
+    }
+    return names;
+}
+
+
+std::vector<const CSymbol*> CBlockScope::GetVariableNames() const
+{
+    std::vector<const CSymbol*> names;
+    for( auto p : variables ) {
+        names.push_back( p.first );
+    }
+    return names;
+}
+
+
+std::vector<const CSymbol*> CBlockScope::GetClassNames() const
+{
+    std::vector<const CSymbol*> names;
+    for( auto p : classes ) {
+        names.push_back( p.first );
+    }
+    return names;
 }

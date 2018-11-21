@@ -3,9 +3,17 @@
 #include <cassert>
 
 
-void CTable::AddNewBlockScope( CBlockScope* scope )
+void CTable::PushBlockScope(CBlockScope *scope)
 {
     blocks.push_back( scope );
+}
+
+
+CBlockScope* CTable::PopBlockScope()
+{
+    auto ret = blocks.back();
+    blocks.pop_back();
+    return ret;
 }
 
 
@@ -63,7 +71,7 @@ bool CTable::TryAddClass( const CSymbol *symbol, const CClassInfo *classInfo )
 }
 
 
-INameScope::SymbolType CTable::ResolveType( const CSymbol *symbol )
+INameScope::SymbolType CTable::ResolveType( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -79,7 +87,7 @@ INameScope::SymbolType CTable::ResolveType( const CSymbol *symbol )
 }
 
 
-const CMethodInfo *CTable::TryResolveMethod( const CSymbol *symbol )
+const CMethodInfo *CTable::TryResolveMethod( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -95,7 +103,7 @@ const CMethodInfo *CTable::TryResolveMethod( const CSymbol *symbol )
 }
 
 
-const CVariableInfo *CTable::TryResolveVariable( const CSymbol *symbol )
+const CVariableInfo *CTable::TryResolveVariable( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -111,7 +119,7 @@ const CVariableInfo *CTable::TryResolveVariable( const CSymbol *symbol )
 }
 
 
-const CClassInfo *CTable::TryResolveClass( const CSymbol *symbol )
+const CClassInfo *CTable::TryResolveClass( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 

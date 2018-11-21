@@ -5,74 +5,61 @@
 #include "include/BlockScope.h"
 
 #include <vector>
+#include <memory>
 
 class CSymbolTableBuilder : public IVisitor {
 public:
 
-    CTable* Build( const CGoal* acceptable );
+    std::unique_ptr<CTable> Build( const CGoal* acceptable );
 
-    void Visit( const CGoal* acceptable );
+    void Visit( const CGoal* acceptable ) final;
+    void Visit( const CMainClass* acceptable ) final;
+    void Visit( const CClassDeclarationList* acceptable ) final;
+    void Visit( const CClassDeclaration* acceptable ) final;
+    void Visit( const CMethodDeclarationList* acceptable ) final;
+    void Visit( const CMethodDeclaration* acceptable ) final;
+    void Visit( const CVarDeclarationList* acceptable ) final;
+    void Visit( const CVarDeclaration* acceptable ) final;
 
-    void Visit( const CMainClass* acceptable );
-
-    void Visit( const CClassDeclarationList* acceptable );
-    void Visit( const CClassDeclaration* acceptable );
-
-    void Visit( const CMethodDeclarationList* acceptable );
-    void Visit( const CMethodDeclaration* acceptable );
-
-    void Visit( const CVarDeclarationList* acceptable );
-    void Visit( const CVarDeclaration* acceptable );
-
-    void Visit( const CBooleanType* acceptable );
-    void Visit( const CCustomType* acceptable );
-    void Visit( const CIntArrayType* acceptable );
-    void Visit( const CIntliteralExpression* acceptable );
-    void Visit( const CIntType* acceptable );
-
+    // эти методы не нужны для построения таблицы символов
+    void Visit( const CAdditionalExpressionParam* acceptable ) final {};
+    void Visit( const CAdditionalExpressionParamS* acceptable ) final {};
+    void Visit( const CAdditionalParam* acceptable ) final {};
+    void Visit( const CAdditionalParamS* acceptable ) final {};
+    void Visit( const CArrayAssignmentStatement* acceptable ) final {};
+    void Visit( const CClassDeclarationS* acceptable ) final {};
+    void Visit( const CCurlyBraceStatement* acceptable ) final {};
+    void Visit( const CCallExpression* acceptable ) final {};
+    void Visit( const CExpressionParamS* acceptable ) final {};
+    void Visit( const CExpressionParamList* acceptable ) final {};
+    void Visit( const CExtension* acceptable ) final {};
+    void Visit( const CIdentifierExpression* acceptable ) final {};
+    void Visit( const CIfElseStatement* acceptable ) final {};
+    void Visit( const CIntliteralExpression* acceptable ) final {};
+    void Visit( const CLengthExpression* acceptable ) final {};
+    void Visit( const CMethodDeclarationS* acceptable ) final {};
+    void Visit( const CNewArrayExpression* acceptable ) final {};
+    void Visit( const CNewIdentifierExpression* acceptable ) final {};
+    void Visit( const CNotExpression* acceptable ) final {};
+    void Visit( const CParams* acceptable ) final {};
+    void Visit( const CParam* acceptable ) final {};
+    void Visit( const CParamList* acceptable ) final {};
+    void Visit( const CParensExpression* acceptable ) final {};
+    void Visit( const CPrintlnStatement* acceptable ) final {};
+    void Visit( const CSquarebracketsExpression* acceptable ) final {};
+    void Visit( const CStatementS* acceptable ) final {};
+    void Visit( const CStatementList* acceptable ) final {};
+    void Visit( const CThisExpression* acceptable ) final {};
+    void Visit( const CTrueExpression* acceptable ) final {};
+    void Visit( const CFalseExpression* acceptable ) final {};
+    void Visit( const CVarAssignmentStatement* acceptable ) final {};
+    void Visit( const CVarDeclarationS* acceptable ) final {};
+    void Visit( const CWhileStatement* acceptable ) final {};
+    void Visit( const CBinaryOpExpression* acceptable ) final {};
+    void Visit( const CType* acceptable ) final {};
+    void Visit( const CTerminalIdentifier* acceptable ) final {};
+    void Visit( const CTerminalIntliteral* acceptable ) final {};
 
 private:
-    CTable* table;
-
     std::vector<CBlockScope*> scopes;
-    CSymbol* terminalSymbol;
-
-    void Visit( const CAdditionalExpressionParam* acceptable );
-    void Visit( const CAdditionalExpressionParamS* acceptable );
-    void Visit( const CAdditionalParam* acceptable );
-    void Visit( const CAdditionalParamS* acceptable );
-    void Visit( const CArrayAssignmentStatement* acceptable );
-    void Visit( const CClassDeclarationS* acceptable );
-    void Visit( const CCurlyBraceStatement* acceptable );
-
-    void Visit( const CCallExpression* acceptable );
-    void Visit( const CExpressionParamS* acceptable );
-    void Visit( const CExpressionParamList* acceptable );
-    void Visit( const CExtension* acceptable );
-
-    void Visit( const CIdentifierExpression* acceptable );
-    void Visit( const CIfElseStatement* acceptable );
-
-
-    void Visit( const CLengthExpression* acceptable );
-    void Visit( const CMethodDeclarationS* acceptable );
-    void Visit( const CNewArrayExpression* acceptable );
-    void Visit( const CNewIdentifierExpression* acceptable );
-    void Visit( const CNotExpression* acceptable );
-    void Visit( const CParams* acceptable );
-    void Visit( const CParam* acceptable );
-    void Visit( const CParamList* acceptable );
-    void Visit( const CParensExpression* acceptable );
-    void Visit( const CPrintlnStatement* acceptable );
-    void Visit( const CSquarebracketsExpression* acceptable );
-    void Visit( const CStatementS* acceptable );
-    void Visit( const CStatementList* acceptable );
-    void Visit( const CThisExpression* acceptable );
-    void Visit( const CTrueExpression* acceptable );
-    void Visit( const CVarAssignmentStatement* acceptable );
-    void Visit( const CVarDeclarationS* acceptable );
-    void Visit( const CWhileStatement* acceptable );
-    void Visit( const CBinaryOpExpression* acceptable );
-    void Visit( const CTerminalIdentifier* acceptable );
-    void Visit( const CTerminalIntliteral* acceptable );
 };

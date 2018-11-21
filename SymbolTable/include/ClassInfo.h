@@ -13,7 +13,9 @@ class CClassInfo : public IInfo {
 public:
     explicit CClassInfo( const CSymbol* _name );
 
+    const CSymbol* GetName() const;
     CBlockScope* GetScope();
+    const CBlockScope* GetScope() const;
 
 private:
     const CSymbol* name;

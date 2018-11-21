@@ -8,19 +8,18 @@
 #include <cassert>
 
 
-CTable *CSymbolTableBuilder::Build( const CGoal *acceptable )
+std::unique_ptr<CTable> CSymbolTableBuilder::Build( const CGoal *acceptable )
 {
     assert( acceptable != nullptr );
 
     scopes.push_back( new CBlockScope() );
     acceptable->Accept( this );
 
-    table = new CTable;
-    table->AddNewBlockScope( scopes.back() );
+    auto table = std::make_unique<CTable>();
+    table->PushBlockScope(scopes.back());
 
     return table;
 }
-
 
 void CSymbolTableBuilder::Visit( const CGoal *acceptable )
 {
@@ -39,20 +38,16 @@ void CSymbolTableBuilder::Visit( const CMainClass *acceptable )
     assert( acceptable != nullptr );
 
     CSymbol* className = CSymbol::GetIntern( acceptable->className->identifier );
+    auto classInfo = new CClassInfo( className );
+
     CSymbol* methodName = CSymbol::GetIntern( "main" );
     CSymbol* returnType = CSymbol::GetIntern( "void" );
     CSymbol* argName = CSymbol::GetIntern( acceptable->argName->identifier );
     CSymbol* argType = CSymbol::GetIntern( "String[]" );
-
     auto argInfo = new CVariableInfo( argName, argType );
     auto methodInfo = new CMethodInfo( methodName, returnType );
-
-    auto scope = new CBlockScope;
-    scope->AddVariable( argName, argInfo );
-    scope->AddMethod( methodName, methodInfo );
-
-    auto classInfo = new CClassInfo( className );
-    classInfo->SetScope( scope );
+    methodInfo->GetScope()->AddVariable( argName, argInfo );
+    classInfo->GetScope()->AddMethod( methodName, methodInfo );
 
     scopes.back()->AddClass( className, classInfo );
 }
@@ -74,10 +69,13 @@ void CSymbolTableBuilder::Visit( const CClassDeclaration *acceptable )
 
     auto classInfo = new CClassInfo( className );
 
-    scopes.push_back( new CBlockScope );
-    acceptable->methodDeclarationS->Accept( this );
-    acceptable->varDeclarationS->Accept( this );
-    classInfo->SetScope( scopes.back() );
+    scopes.push_back( classInfo->GetScope() );
+    if( acceptable->methodDeclarationS != nullptr ) {
+        acceptable->methodDeclarationS->Accept( this );
+    }
+    if( acceptable->varDeclarationS != nullptr ) {
+        acceptable->varDeclarationS->Accept( this );
+    }
     scopes.pop_back();
 
     scopes.back()->AddClass( className, classInfo );
@@ -98,17 +96,35 @@ void CSymbolTableBuilder::Visit( const CMethodDeclaration *acceptable )
 
     CSymbol* methodName = CSymbol::GetIntern( acceptable->methodIdentifier->identifier );
 
-    CSymbol* methodRetTypeName = terminalSymbol;
-
+    CSymbol* methodRetTypeName = CSymbol::GetIntern( acceptable->returnType->GetString() );
     auto methodInfo = new CMethodInfo( methodName, methodRetTypeName );
+
+    scopes.push_back( methodInfo->GetScope() );
+    if( acceptable->varDeclarationS != nullptr ) {
+        acceptable->varDeclarationS->Accept( this );
+    }
+    scopes.pop_back();
+
+    scopes.back()->AddMethod( methodName, methodInfo );
 }
 
 void CSymbolTableBuilder::Visit( const CVarDeclarationList *acceptable )
 {
+    assert( acceptable != nullptr );
 
+    for( auto varDeclaration : acceptable->children ) {
+        varDeclaration->Accept( this );
+    }
 }
 
 void CSymbolTableBuilder::Visit( const CVarDeclaration *acceptable )
 {
+    assert( acceptable != nullptr );
 
+    CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
+    CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
+
+    auto varInfo = new CVariableInfo( varName, typeName );
+
+    scopes.back()->AddVariable( varName, varInfo );
 }

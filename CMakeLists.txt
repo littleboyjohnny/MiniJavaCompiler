@@ -90,9 +90,12 @@ set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp AST/
 add_executable( AstBuilder ${ASTBUILDER_SRC} )
 target_link_libraries( AstBuilder liblexer libparser )
 
-add_executable(SymbolTable SymbolTable/src/Table.cpp SymbolTable/include/Symbol.h SymbolTable/include/MethodInfo.h SymbolTable/include/Table.h SymbolTable/include/ClassInfo.h SymbolTable/main.cpp SymbolTable/include/Info.h SymbolTable/src/BlockScope.cpp SymbolTable/include/BlockScope.h SymbolTable/src/Symbol.cpp SymbolTable/include/NameScope.h SymbolTable/src/VariableInfo.cpp SymbolTable/src/MethodInfo.cpp SymbolTable/src/ClassInfo.cpp SymbolTable/SymbolTableBuilder.cpp SymbolTable/SymbolTableBuilder.h)
+# временный таргет для проверки таблицы символов
+remove_definitions( -DPARSER_DEBUG )
+add_executable( SymbolTable SymbolTable/main.cpp SymbolTable/src/Table.cpp SymbolTable/src/BlockScope.cpp SymbolTable/src/Symbol.cpp SymbolTable/src/VariableInfo.cpp SymbolTable/src/MethodInfo.cpp SymbolTable/src/ClassInfo.cpp SymbolTable/SymbolTableBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp SymbolTable/CSymbolTableVisualizer.cpp SymbolTable/CSymbolTableVisualizer.h)
+target_link_libraries( SymbolTable liblexer libparser )
 
-#временный таргет для проверки парсера
+# временный таргет для проверки парсера
 set( PARSEREXE_SRC parserexe.cpp )
 add_executable( ParserEXE ${PARSEREXE_SRC} )
 target_link_libraries( ParserEXE liblexer libparser )

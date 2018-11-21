@@ -8,6 +8,7 @@
 #include "../core/TerminalIdentifier.hpp"
 
 #include <cassert>
+#include <string>
 
 class CType : public IType {
 public:
@@ -23,6 +24,11 @@ public:
     void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
+    }
+
+    std::string GetString() const
+    {
+        return typeName;
     }
 
     std::string typeName;

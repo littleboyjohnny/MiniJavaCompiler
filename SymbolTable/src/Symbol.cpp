@@ -23,6 +23,6 @@ CSymbol* CSymbol::GetIntern( const std::string& src )
         return cached->second.get();
     }
     CSymbol* newVal = new CSymbol( src );
-    allStrings.insert( { src, std::make_unique<CSymbol>( newVal ) } );
+    allStrings.insert( { src, std::unique_ptr<CSymbol>( newVal ) } );
     return newVal;
 }

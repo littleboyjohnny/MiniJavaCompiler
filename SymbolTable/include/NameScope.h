@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Symbol.h"
-#include "MethodInfo.h"
-#include "VariableInfo.h"
-#include "ClassInfo.h"
+
+class CMethodInfo;
+class CVariableInfo;
+class CClassInfo;
 
 class INameScope {
 public:
@@ -20,11 +21,11 @@ public:
     virtual bool TryAddClass( const CSymbol* symbol, const CClassInfo* classInfo ) = 0;
 
     // возвращает тип символа, в т.ч. для еще не добавленного - UNDECLARED
-    virtual SymbolType ResolveType( const CSymbol* symbol ) = 0;
+    virtual SymbolType ResolveType( const CSymbol* symbol ) const = 0;
 
     // набор методов, возвращающих информацию о данных, связанных с символом,
     // либо nullptr, если символ - UNDECLARED
-    virtual const CMethodInfo* TryResolveMethod( const CSymbol* symbol ) = 0;
-    virtual const CVariableInfo* TryResolveVariable( const CSymbol* symbol ) = 0;
-    virtual const CClassInfo* TryResolveClass( const CSymbol* symbol ) = 0;
+    virtual const CMethodInfo* TryResolveMethod( const CSymbol* symbol ) const = 0;
+    virtual const CVariableInfo* TryResolveVariable( const CSymbol* symbol ) const = 0;
+    virtual const CClassInfo* TryResolveClass( const CSymbol* symbol ) const = 0;
 };

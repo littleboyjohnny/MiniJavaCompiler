@@ -14,13 +14,16 @@ class CMethodInfo : public IInfo {
 public:
     CMethodInfo( const CSymbol* _name, const CSymbol* _retTypeName );
 
+    const CSymbol* GetName() const;
+    const CSymbol* GetRetTypeName() const;
     CBlockScope* GetScope();
+    const CBlockScope* GetScope() const;
 
     void RegisterAsParameter( const CSymbol* symbol );
     bool TryRegisterAsParameter( const CSymbol* symbol );
 
-    const CVariableInfo* TryResolveParameter( int paramIndex );
-    const CVariableInfo* TryResolveParameter( const CSymbol* paramSymbol );
+    const CVariableInfo* TryResolveParameter( int paramIndex ) const;
+    const CVariableInfo* TryResolveParameter( const CSymbol* paramSymbol ) const;
 
 private:
     const CSymbol* name;

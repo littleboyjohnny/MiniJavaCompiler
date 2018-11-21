@@ -16,6 +16,21 @@ CMethodInfo::CMethodInfo( const CSymbol* _name, const CSymbol* _retTypeName ) :
     scope = std::make_unique<CBlockScope>();
 }
 
+const CSymbol *CMethodInfo::GetName() const
+{
+    assert( name != nullptr );
+
+    return name;
+}
+
+const CSymbol *CMethodInfo::GetRetTypeName() const
+{
+    assert( retTypeName != nullptr );
+
+    return retTypeName;
+}
+
+
 CBlockScope* CMethodInfo::GetScope()
 {
     assert( scope != nullptr );
@@ -23,7 +38,15 @@ CBlockScope* CMethodInfo::GetScope()
     return scope.get();
 }
 
-const CVariableInfo* CMethodInfo::TryResolveParameter( int paramIndex )
+
+const CBlockScope *CMethodInfo::GetScope() const
+{
+    assert( scope != nullptr );
+
+    return scope.get();
+}
+
+const CVariableInfo* CMethodInfo::TryResolveParameter( int paramIndex ) const
 {
     assert( paramIndex >= 0 );
 
@@ -35,7 +58,7 @@ const CVariableInfo* CMethodInfo::TryResolveParameter( int paramIndex )
     }
 }
 
-const CVariableInfo* CMethodInfo::TryResolveParameter( const CSymbol* paramSymbol )
+const CVariableInfo* CMethodInfo::TryResolveParameter( const CSymbol* paramSymbol ) const
 {
     assert( paramSymbol != nullptr );
 
