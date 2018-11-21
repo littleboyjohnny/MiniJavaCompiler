@@ -14,7 +14,6 @@ public:
     CMethodInfo( const CSymbol* _name, const CSymbol* _retTypeName );
 
     CBlockScope* GetScope();
-    void SetScope( CBlockScope* _scope );
 
 private:
     const CSymbol* name;

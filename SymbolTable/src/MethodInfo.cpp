@@ -11,20 +11,14 @@ CMethodInfo::CMethodInfo( const CSymbol* _name, const CSymbol* _retTypeName ) :
 
     name = _name;
     retTypeName = _retTypeName;
+
+    scope = std::make_unique<CBlockScope>();
 }
 
-CBlockScope *CMethodInfo::GetScope()
+CBlockScope* CMethodInfo::GetScope()
 {
     assert( scope != nullptr );
 
     return scope.get();
 }
-
-void CMethodInfo::SetScope( CBlockScope *_scope )
-{
-    assert( _scope != nullptr );
-
-    scope.reset( _scope );
-}
-
 
