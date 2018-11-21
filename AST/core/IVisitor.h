@@ -12,12 +12,10 @@ public:
     virtual void Visit( const CAdditionalParam* acceptable ) = 0;
     virtual void Visit( const CAdditionalParamS* acceptable ) = 0;
     virtual void Visit( const CArrayAssignmentStatement* acceptable ) = 0;
-    virtual void Visit( const CBooleanType* acceptable ) = 0;
     virtual void Visit( const CClassDeclaration* acceptable ) = 0;
     virtual void Visit( const CClassDeclarationS* acceptable ) = 0;
     virtual void Visit( const CClassDeclarationList* acceptable ) = 0;
     virtual void Visit( const CCurlyBraceStatement* acceptable ) = 0;
-    virtual void Visit( const CCustomType* acceptable ) = 0;
     virtual void Visit( const CCallExpression* acceptable ) = 0;
     virtual void Visit( const CExpressionParamS* acceptable ) = 0;
     virtual void Visit( const CExpressionParamList* acceptable ) = 0;
@@ -26,9 +24,7 @@ public:
     virtual void Visit( const CGoal* acceptable ) = 0;
     virtual void Visit( const CIdentifierExpression* acceptable ) = 0;
     virtual void Visit( const CIfElseStatement* acceptable ) = 0;
-    virtual void Visit( const CIntArrayType* acceptable ) = 0;
     virtual void Visit( const CIntliteralExpression* acceptable ) = 0;
-    virtual void Visit( const CIntType* acceptable ) = 0;
     virtual void Visit( const CLengthExpression* acceptable ) = 0;
     virtual void Visit( const CMainClass* acceptable ) = 0;
     virtual void Visit( const CMethodDeclaration* acceptable ) = 0;
@@ -56,6 +52,8 @@ public:
 
     virtual void Visit( const CTerminalIdentifier* acceptable ) = 0;
     virtual void Visit( const CTerminalIntliteral* acceptable ) = 0;
+
+    virtual void Visit( const CType* acceptable ) = 0;
 
 };
 

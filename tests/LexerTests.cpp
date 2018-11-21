@@ -26,7 +26,13 @@ void testLexerBySample( std::string samplefname, std::string keyfname, std::stri
     std::string token;
     int tokenId = 0;
     while( tokenId = yylex() ) {
-        fout << tokenMap->idToToken[tokenId] << "\n";
+        fout << tokenMap->idToToken[tokenId];
+        if ( tokenMap->idToToken[tokenId] == "IDENTIFIER" ) {
+            fout << " " << yylval.terminalIdentifier->identifier;
+        } else if ( tokenMap->idToToken[tokenId] == "INTLITERAL" ) {
+            fout << " " << yylval.terminalIntliteral->intliteral;
+        }
+        fout  << "\n";
     }
     fout.close();
 

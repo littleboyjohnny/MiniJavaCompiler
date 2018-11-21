@@ -82,11 +82,6 @@ void CASTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) {
     child = arrayAssignmentStatement;
 }
 
-void CASTBuilder::Visit( const CBooleanType* acceptable ) {
-    const CBooleanType * booleanType = new CBooleanType();
-    child = booleanType;
-}
-
 void CASTBuilder::Visit( const CClassDeclaration* acceptable ) {
     const CClassDeclaration * classDeclaration = nullptr;
     const CTerminalIdentifier * className = nullptr;
@@ -143,19 +138,6 @@ void CASTBuilder::Visit( const CCurlyBraceStatement* acceptable ) {
 
     curlyBraceStatement = new CCurlyBraceStatement(statementList);
     child = curlyBraceStatement;
-}
-
-void CASTBuilder::Visit( const CCustomType* acceptable ) {
-    const CCustomType * customType = nullptr;
-    const CTerminalIdentifier * typeName = nullptr;
-
-    if (acceptable->typeName) {
-        acceptable->typeName->Accept(this);
-        typeName = static_cast<const CTerminalIdentifier *> ( child );
-    }
-
-    customType = new CCustomType(typeName);
-    child = customType;
 }
 
 void CASTBuilder::Visit( const CCallExpression* acceptable ) {
@@ -271,11 +253,6 @@ void CASTBuilder::Visit( const CIfElseStatement* acceptable ) {
     child = ifElseStatement;
 }
 
-void CASTBuilder::Visit( const CIntArrayType* acceptable ) {
-    const CIntArrayType * intArrayType = new CIntArrayType();
-    child = intArrayType;
-}
-
 void CASTBuilder::Visit( const CIntliteralExpression* acceptable ) {
     const CIntliteralExpression * intliteralExpression = nullptr;
     const CTerminalIntliteral * intliteral = nullptr;
@@ -288,9 +265,9 @@ void CASTBuilder::Visit( const CIntliteralExpression* acceptable ) {
     child = intliteralExpression;
 }
 
-void CASTBuilder::Visit( const CIntType* acceptable ) {
-    const CIntType * intType = new CIntType();
-    child = intType;
+void CASTBuilder::Visit( const CType* acceptable ) {
+    const CType * type = new CType(acceptable->typeName.c_str());
+    child = type;
 }
 
 void CASTBuilder::Visit( const CLengthExpression* acceptable ) {

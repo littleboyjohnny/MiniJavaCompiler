@@ -20,12 +20,10 @@ public:
     void Visit( const CAdditionalParam* acceptable );
     void Visit( const CAdditionalParamS* acceptable );
     void Visit( const CArrayAssignmentStatement* acceptable );
-    void Visit( const CBooleanType* acceptable );
     void Visit( const CClassDeclaration* acceptable );
     void Visit( const CClassDeclarationList* acceptable );
     void Visit( const CClassDeclarationS* acceptable );
     void Visit( const CCurlyBraceStatement* acceptable );
-    void Visit( const CCustomType* acceptable );
     void Visit( const CCallExpression* acceptable );
     void Visit( const CExpressionParamS* acceptable );
     void Visit( const CExpressionParamList* acceptable );
@@ -34,9 +32,7 @@ public:
     void Visit( const CGoal* acceptable );
     void Visit( const CIdentifierExpression* acceptable );
     void Visit( const CIfElseStatement* acceptable );
-    void Visit( const CIntArrayType* acceptable );
     void Visit( const CIntliteralExpression* acceptable );
-    void Visit( const CIntType* acceptable );
     void Visit( const CLengthExpression* acceptable );
     void Visit( const CMainClass* acceptable );
     void Visit( const CMethodDeclaration* acceptable );
@@ -64,6 +60,8 @@ public:
 
     void Visit( const CTerminalIdentifier* acceptable );
     void Visit( const CTerminalIntliteral* acceptable );
+
+    void Visit( const CType* acceptable );
 
 private:
     FILE* file;
