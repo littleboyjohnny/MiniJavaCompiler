@@ -3,15 +3,9 @@
 #include <cassert>
 
 
-void CTable::AddNewBlockScope()
+void CTable::AddNewBlockScope( CBlockScope* scope )
 {
-    blocks.push_back( std::make_unique<CBlockScope>( new CBlockScope() ) );
-}
-
-
-void CTable::AddNewBlockScope( const CBlockScope* scope )
-{
-    blocks.push_back( std::make_unique<CBlockScope>( scope ) );
+    blocks.push_back( scope );
 }
 
 

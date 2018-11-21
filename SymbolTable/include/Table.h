@@ -14,9 +14,8 @@
 class CTable : public INameScope {
 public:
 
-    // создает новый блок области видимости
-    void AddNewBlockScope();
-    void AddNewBlockScope( const CBlockScope* scope );
+    // добавляет блок в области видимости
+    void AddNewBlockScope( CBlockScope* scope );
 
     // набор методов добавляет переданный символ без каких либо проверок
     void AddMethod( const CSymbol* symbol, const CMethodInfo* methodInfo );
@@ -39,5 +38,5 @@ public:
 
 
 private:
-    std::vector<std::unique_ptr<CBlockScope>> blocks;
+    std::vector<CBlockScope*> blocks;
 };
