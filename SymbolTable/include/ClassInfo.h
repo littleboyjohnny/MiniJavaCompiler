@@ -14,7 +14,6 @@ public:
     explicit CClassInfo( const CSymbol* _name );
 
     CBlockScope* GetScope();
-    void SetScope( CBlockScope* _scope );
 
 private:
     const CSymbol* name;
