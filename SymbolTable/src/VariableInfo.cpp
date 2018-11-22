@@ -23,3 +23,9 @@ const CSymbol* CVariableInfo::GetTypeName() const
 {
     return typeName;
 }
+
+
+std::string CVariableInfo::GetStringRepresentation() const
+{
+    return typeName->GetString() + " " + name->GetString();
+}

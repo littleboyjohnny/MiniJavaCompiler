@@ -92,7 +92,7 @@ target_link_libraries( AstBuilder liblexer libparser )
 
 # временный таргет для проверки таблицы символов
 remove_definitions( -DPARSER_DEBUG )
-add_executable( SymbolTable SymbolTable/main.cpp SymbolTable/src/SymbolTable.cpp SymbolTable/src/BlockScope.cpp SymbolTable/src/Symbol.cpp SymbolTable/src/VariableInfo.cpp SymbolTable/src/MethodInfo.cpp SymbolTable/src/ClassInfo.cpp SymbolTable/SymbolTableBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp SymbolTable/CSymbolTableVisualizer.cpp SymbolTable/CSymbolTableVisualizer.h)
+add_executable( SymbolTable SymbolTable/main.cpp SymbolTable/src/SymbolTable.cpp SymbolTable/src/BlockScope.cpp SymbolTable/src/Symbol.cpp SymbolTable/src/VariableInfo.cpp SymbolTable/src/MethodInfo.cpp SymbolTable/src/ClassInfo.cpp SymbolTable/SymbolTableBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp SymbolTable/CSymbolTableVisualizer.cpp SymbolTable/CSymbolTableVisualizer.h SymbolTable/TypeChecker.cpp SymbolTable/TypeChecker.h)
 target_link_libraries( SymbolTable liblexer libparser )
 
 # временный таргет для проверки парсера

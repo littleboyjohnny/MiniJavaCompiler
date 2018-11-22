@@ -6,6 +6,15 @@
 #include "include/Symbol.h"
 
 #include <cassert>
+#include <iostream>
+
+
+
+CSymbolTableBuilder::CSymbolTableBuilder() :
+    tmpMethodInfo( nullptr )
+{
+    //
+}
 
 
 std::unique_ptr<CSymbolTable> CSymbolTableBuilder::Build( const CGoal *acceptable )
@@ -78,7 +87,12 @@ void CSymbolTableBuilder::Visit( const CClassDeclaration *acceptable )
     }
     scopes.pop_back();
 
-    scopes.back()->AddClass( className, classInfo );
+    CBlockScope::SymbolType type = scopes.back()->ResolveType( className );
+    if( type == CBlockScope::SymbolType::UNDECLARED ) {
+        scopes.back()->AddClass( className, classInfo );
+    } else {
+        onNameRedefinitionError( className, scopes.back() );
+    }
 }
 
 void CSymbolTableBuilder::Visit( const CMethodDeclarationList *acceptable )
@@ -103,9 +117,19 @@ void CSymbolTableBuilder::Visit( const CMethodDeclaration *acceptable )
     if( acceptable->varDeclarationS != nullptr ) {
         acceptable->varDeclarationS->Accept( this );
     }
+    if( acceptable->params != nullptr ) {
+        tmpMethodInfo = methodInfo;
+        acceptable->params->Accept( this );
+        tmpMethodInfo = nullptr;
+    }
     scopes.pop_back();
 
-    scopes.back()->AddMethod( methodName, methodInfo );
+    CBlockScope::SymbolType type = scopes.back()->ResolveType( methodName );
+    if( type == CBlockScope::SymbolType::UNDECLARED ) {
+        scopes.back()->AddMethod( methodName, methodInfo );
+    } else {
+        onNameRedefinitionError( methodName, scopes.back() );
+    }
 }
 
 void CSymbolTableBuilder::Visit( const CVarDeclarationList *acceptable )
@@ -126,5 +150,62 @@ void CSymbolTableBuilder::Visit( const CVarDeclaration *acceptable )
 
     auto varInfo = new CVariableInfo( varName, typeName );
 
-    scopes.back()->AddVariable( varName, varInfo );
+    CBlockScope::SymbolType type = scopes.back()->ResolveType( varName );
+    if( type == CBlockScope::SymbolType::UNDECLARED ) {
+        scopes.back()->AddVariable( varName, varInfo );
+    } else {
+        onNameRedefinitionError( varName, scopes.back() );
+    }
+}
+
+void CSymbolTableBuilder::Visit( const CParamList* acceptable )
+{
+    assert( acceptable != nullptr );
+
+    for( auto param : acceptable->children ) {
+        param->Accept( this );
+    }
+}
+
+void CSymbolTableBuilder::Visit( const CParam* acceptable )
+{
+    assert( acceptable != nullptr );
+
+    CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
+    CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
+
+    auto varInfo = new CVariableInfo( varName, typeName );
+
+    CBlockScope::SymbolType type = scopes.back()->ResolveType( varName );
+    if( type == CBlockScope::SymbolType::UNDECLARED ) {
+        scopes.back()->AddVariable( varName, varInfo );
+        tmpMethodInfo->RegisterAsParameter( varName );
+    } else {
+        onNameRedefinitionError( varName, scopes.back() );
+    }
+}
+
+void CSymbolTableBuilder::onNameRedefinitionError( const CSymbol *name, const CBlockScope *scope )
+{
+    assert( name != nullptr );
+    assert( scope != nullptr );
+
+    CBlockScope::SymbolType type = scope->ResolveType( name );
+    std::string prevDefinition;
+    switch( type ) {
+        case CBlockScope::SymbolType::VARIABLE:
+            prevDefinition = scope->TryResolveVariable( name )->GetStringRepresentation();
+            break;
+        case CBlockScope::SymbolType::METHOD:
+            prevDefinition = scope->TryResolveMethod( name )->GetStringRepresentation();
+            break;
+        case CBlockScope::SymbolType::CLASS:
+            prevDefinition = scope->TryResolveClass( name )->GetStringRepresentation();
+            break;
+        default:
+            break;
+    }
+    std::cerr << "Redefinition of name '" << name->GetString() << "'. "
+              << "Previously defined as '" << prevDefinition << "'."
+              << std::endl;
 }

@@ -11,6 +11,7 @@ public:
 
     const CSymbol* GetName() const;
     const CSymbol* GetTypeName() const;
+    std::string GetStringRepresentation() const;
 
 private:
     const CSymbol* name;

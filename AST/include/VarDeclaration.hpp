@@ -10,8 +10,7 @@
 
 class CVarDeclaration : public IVarDeclaration {
 public:
-    CVarDeclaration( const IType * const _type,
-            const CTerminalIdentifier * const _identifier ) :
+    CVarDeclaration( const IType * const _type, const CTerminalIdentifier * const _identifier ) :
             type(_type),
             identifier(_identifier)
     {}

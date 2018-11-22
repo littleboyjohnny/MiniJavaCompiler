@@ -9,6 +9,7 @@
 
 class CSymbolTableBuilder : public IVisitor {
 public:
+    CSymbolTableBuilder();
 
     std::unique_ptr<CSymbolTable> Build( const CGoal* acceptable );
 
@@ -20,6 +21,8 @@ public:
     void Visit( const CMethodDeclaration* acceptable ) final;
     void Visit( const CVarDeclarationList* acceptable ) final;
     void Visit( const CVarDeclaration* acceptable ) final;
+    void Visit( const CParamList* acceptable ) final;
+    void Visit( const CParam* acceptable ) final;
 
     // эти методы не нужны для построения таблицы символов
     void Visit( const CAdditionalExpressionParam* acceptable ) final {};
@@ -42,8 +45,6 @@ public:
     void Visit( const CNewIdentifierExpression* acceptable ) final {};
     void Visit( const CNotExpression* acceptable ) final {};
     void Visit( const CParams* acceptable ) final {};
-    void Visit( const CParam* acceptable ) final {};
-    void Visit( const CParamList* acceptable ) final {};
     void Visit( const CParensExpression* acceptable ) final {};
     void Visit( const CPrintlnStatement* acceptable ) final {};
     void Visit( const CSquarebracketsExpression* acceptable ) final {};
@@ -62,4 +63,7 @@ public:
 
 private:
     std::vector<CBlockScope*> scopes;
+    CMethodInfo* tmpMethodInfo;
+
+    void onNameRedefinitionError( const CSymbol* name, const CBlockScope* scope );
 };

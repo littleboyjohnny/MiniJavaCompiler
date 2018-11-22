@@ -21,6 +21,12 @@ const CSymbol* CClassInfo::GetName() const
     return name;
 }
 
+std::string CClassInfo::GetStringRepresentation() const
+{
+    return "class " + name->GetString();
+}
+
+
 CBlockScope *CClassInfo::GetScope()
 {
     assert( scope != nullptr );

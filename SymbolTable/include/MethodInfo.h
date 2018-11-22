@@ -16,6 +16,7 @@ public:
 
     const CSymbol* GetName() const;
     const CSymbol* GetRetTypeName() const;
+    std::string GetStringRepresentation() const;
     CBlockScope* GetScope();
     const CBlockScope* GetScope() const;
 

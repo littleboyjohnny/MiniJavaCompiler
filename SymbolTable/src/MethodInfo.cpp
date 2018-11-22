@@ -31,6 +31,20 @@ const CSymbol *CMethodInfo::GetRetTypeName() const
 }
 
 
+std::string CMethodInfo::GetStringRepresentation() const
+{
+    std::string repr = retTypeName->GetString() + " " + name->GetString() + "(";
+    for( auto name : parameters ) {
+        repr += scope->TryResolveVariable( name )->GetStringRepresentation() + ", ";
+    }
+    if( !parameters.empty() ) {
+        repr = repr.substr( 0, repr.size() - 2 );
+    }
+    repr += ")";
+    return repr;
+}
+
+
 CBlockScope* CMethodInfo::GetScope()
 {
     assert( scope != nullptr );

@@ -50,8 +50,7 @@ void CSymbolTableVisualizer::visualizeMethods( const CBlockScope *block, int dep
         for( const CSymbol* name : names ) {
             const CMethodInfo* methodInfo = block->TryResolveMethod( name );
             printSpaces( depth );
-            out << methodInfo->GetRetTypeName()->GetString() << " "
-                << methodInfo->GetName()->GetString() << std::endl;
+            out << methodInfo->GetStringRepresentation() << std::endl;
             visualizeVariables( methodInfo->GetScope(), depth + 1 );
         }
         out << std::endl;
@@ -67,8 +66,7 @@ void CSymbolTableVisualizer::visualizeVariables( const CBlockScope *block, int d
         for( const CSymbol* name : names ) {
             const CVariableInfo* variableInfo = block->TryResolveVariable( name );
             printSpaces( depth );
-            out << variableInfo->GetTypeName()->GetString() << " "
-                << variableInfo->GetName()->GetString() << std::endl;
+            out << variableInfo->GetStringRepresentation() << std::endl;
         }
         out << std::endl;
     }
@@ -83,7 +81,7 @@ void CSymbolTableVisualizer::visualizeClasses( const CBlockScope *block, int dep
         for( const CSymbol* name : names ) {
             const CClassInfo* classInfo = block->TryResolveClass( name );
             printSpaces( depth );
-            out << classInfo->GetName()->GetString() << std::endl;
+            out << classInfo->GetStringRepresentation() << std::endl;
             visualizeVariables( classInfo->GetScope(), depth + 1 );
             visualizeMethods( classInfo->GetScope(), depth + 1 );
         }
