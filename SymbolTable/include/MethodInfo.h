@@ -19,6 +19,8 @@ public:
     CBlockScope* GetScope();
     const CBlockScope* GetScope() const;
 
+    const std::vector<const CSymbol*>& GetParameterNames() const;
+
     void RegisterAsParameter( const CSymbol* symbol );
     bool TryRegisterAsParameter( const CSymbol* symbol );
 

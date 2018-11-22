@@ -89,3 +89,8 @@ bool CMethodInfo::TryRegisterAsParameter( const CSymbol* symbol )
         return false;
     }
 }
+
+const std::vector<const CSymbol*> &CMethodInfo::GetParameterNames() const
+{
+    return parameters;
+}
