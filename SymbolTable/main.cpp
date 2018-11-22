@@ -18,7 +18,7 @@ int main( int argc, char** argv )
     const CGoal * newGoal = builder->BuildAST( static_cast<const CGoal*>( goal ) );
 
     CSymbolTableBuilder tableBuilder;
-    std::unique_ptr<CTable> table = tableBuilder.Build( newGoal );
+    std::unique_ptr<CSymbolTable> table = tableBuilder.Build( newGoal );
 
     CSymbolTableVisualizer visualizer;
     visualizer.Visuzlize( table.get() );

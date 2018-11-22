@@ -1,15 +1,15 @@
-#include <include/Table.h>
+#include <include/SymbolTable.h>
 
 #include <cassert>
 
 
-void CTable::PushBlockScope(CBlockScope *scope)
+void CSymbolTable::PushBlockScope(CBlockScope *scope)
 {
     blocks.push_back( scope );
 }
 
 
-CBlockScope* CTable::PopBlockScope()
+CBlockScope* CSymbolTable::PopBlockScope()
 {
     auto ret = blocks.back();
     blocks.pop_back();
@@ -17,7 +17,7 @@ CBlockScope* CTable::PopBlockScope()
 }
 
 
-void CTable::AddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
+void CSymbolTable::AddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
 {
     assert( symbol != nullptr );
     assert( methodInfo != nullptr );
@@ -26,7 +26,7 @@ void CTable::AddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
 }
 
 
-void CTable::AddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
+void CSymbolTable::AddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
 {
     assert( symbol != nullptr );
     assert( variableInfo != nullptr );
@@ -35,7 +35,7 @@ void CTable::AddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
 }
 
 
-void CTable::AddClass( const CSymbol *symbol, CClassInfo *classInfo )
+void CSymbolTable::AddClass( const CSymbol *symbol, CClassInfo *classInfo )
 {
     assert( symbol != nullptr );
     assert( classInfo != nullptr );
@@ -44,7 +44,7 @@ void CTable::AddClass( const CSymbol *symbol, CClassInfo *classInfo )
 }
 
 
-bool CTable::TryAddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
+bool CSymbolTable::TryAddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
 {
     assert( symbol != nullptr );
     assert( methodInfo != nullptr );
@@ -53,7 +53,7 @@ bool CTable::TryAddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
 }
 
 
-bool CTable::TryAddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
+bool CSymbolTable::TryAddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
 {
     assert( symbol != nullptr );
     assert( variableInfo != nullptr );
@@ -62,7 +62,7 @@ bool CTable::TryAddVariable( const CSymbol *symbol, CVariableInfo *variableInfo 
 }
 
 
-bool CTable::TryAddClass( const CSymbol *symbol, CClassInfo *classInfo )
+bool CSymbolTable::TryAddClass( const CSymbol *symbol, CClassInfo *classInfo )
 {
     assert( symbol != nullptr );
     assert( classInfo != nullptr );
@@ -71,7 +71,7 @@ bool CTable::TryAddClass( const CSymbol *symbol, CClassInfo *classInfo )
 }
 
 
-INameScope::SymbolType CTable::ResolveType( const CSymbol *symbol ) const
+INameScope::SymbolType CSymbolTable::ResolveType( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -87,7 +87,7 @@ INameScope::SymbolType CTable::ResolveType( const CSymbol *symbol ) const
 }
 
 
-const CMethodInfo *CTable::TryResolveMethod( const CSymbol *symbol ) const
+const CMethodInfo *CSymbolTable::TryResolveMethod( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -103,7 +103,7 @@ const CMethodInfo *CTable::TryResolveMethod( const CSymbol *symbol ) const
 }
 
 
-const CVariableInfo *CTable::TryResolveVariable( const CSymbol *symbol ) const
+const CVariableInfo *CSymbolTable::TryResolveVariable( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -119,7 +119,7 @@ const CVariableInfo *CTable::TryResolveVariable( const CSymbol *symbol ) const
 }
 
 
-const CClassInfo *CTable::TryResolveClass( const CSymbol *symbol ) const
+const CClassInfo *CSymbolTable::TryResolveClass( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 

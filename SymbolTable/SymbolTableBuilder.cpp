@@ -8,14 +8,14 @@
 #include <cassert>
 
 
-std::unique_ptr<CTable> CSymbolTableBuilder::Build( const CGoal *acceptable )
+std::unique_ptr<CSymbolTable> CSymbolTableBuilder::Build( const CGoal *acceptable )
 {
     assert( acceptable != nullptr );
 
     scopes.push_back( new CBlockScope() );
     acceptable->Accept( this );
 
-    auto table = std::make_unique<CTable>();
+    auto table = std::make_unique<CSymbolTable>();
     table->PushBlockScope(scopes.back());
 
     return table;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/IVisitor.h"
-#include "include/Table.h"
+#include "include/SymbolTable.h"
 #include "include/BlockScope.h"
 
 #include <vector>
@@ -10,7 +10,7 @@
 class CSymbolTableBuilder : public IVisitor {
 public:
 
-    std::unique_ptr<CTable> Build( const CGoal* acceptable );
+    std::unique_ptr<CSymbolTable> Build( const CGoal* acceptable );
 
     void Visit( const CGoal* acceptable ) final;
     void Visit( const CMainClass* acceptable ) final;

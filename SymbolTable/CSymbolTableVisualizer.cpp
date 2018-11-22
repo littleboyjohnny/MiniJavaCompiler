@@ -1,6 +1,6 @@
 #include "CSymbolTableVisualizer.h"
 
-#include "include/Table.h"
+#include "include/SymbolTable.h"
 
 #include <iostream>
 #include <fstream>
@@ -19,7 +19,7 @@ CSymbolTableVisualizer::CSymbolTableVisualizer( std::ostream &_out ) :
     //
 }
 
-void CSymbolTableVisualizer::Visuzlize( CTable* table )
+void CSymbolTableVisualizer::Visuzlize( CSymbolTable* table )
 {
     assert( table != nullptr );
 

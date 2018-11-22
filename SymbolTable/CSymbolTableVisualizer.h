@@ -1,13 +1,13 @@
 #pragma once
 
-#include <include/Table.h>
+#include <include/SymbolTable.h>
 
 class CSymbolTableVisualizer {
 public:
     CSymbolTableVisualizer();
     explicit CSymbolTableVisualizer( std::ostream& _out );
 
-    void Visuzlize( CTable* table );
+    void Visuzlize( CSymbolTable* table );
 
 private:
     std::ostream& out;

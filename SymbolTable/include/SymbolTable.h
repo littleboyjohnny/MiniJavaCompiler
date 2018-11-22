@@ -11,7 +11,7 @@
 #include "ClassInfo.h"
 
 
-class CTable : public INameScope {
+class CSymbolTable : public INameScope {
 public:
 
     // добавляет блок в области видимости
