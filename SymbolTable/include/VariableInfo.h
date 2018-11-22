@@ -10,16 +10,8 @@ class CVariableInfo : IInfo {
 public:
     CVariableInfo( const CSymbol* _name, const CSymbol* _typeName );
 
-
-    inline const std::string& GetName() const
-    {
-        return name->GetString();
-    }
-
-    inline const std::string& GetTypeName() const
-    {
-        return typeName->GetString();
-    }
+    const std::string& GetName() const;
+    const std::string& GetTypeName() const;
 
 private:
     const CSymbol* name;
