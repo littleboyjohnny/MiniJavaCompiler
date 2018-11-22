@@ -67,7 +67,8 @@ void CSymbolTableVisualizer::visualizeVariables( const CBlockScope *block, int d
         for( const CSymbol* name : names ) {
             const CVariableInfo* variableInfo = block->TryResolveVariable( name );
             printSpaces( depth );
-            out << variableInfo->GetTypeName() << " " << variableInfo->GetName() << std::endl;
+            out << variableInfo->GetTypeName()->GetString() << " "
+                << variableInfo->GetName()->GetString() << std::endl;
         }
         out << std::endl;
     }

@@ -13,13 +13,13 @@ CVariableInfo::CVariableInfo( const CSymbol* _name, const CSymbol* _typeName )
 }
 
 
-const std::string& CVariableInfo::GetName() const
+const CSymbol* CVariableInfo::GetName() const
 {
-    return name->GetString();
+    return name;
 }
 
 
-const std::string& CVariableInfo::GetTypeName() const
+const CSymbol* CVariableInfo::GetTypeName() const
 {
-    return typeName->GetString();
+    return typeName;
 }
