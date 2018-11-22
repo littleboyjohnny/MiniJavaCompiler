@@ -51,7 +51,7 @@ void CSymbolTableVisualizer::visualizeMethods( const CBlockScope *block, int dep
             const CMethodInfo* methodInfo = block->TryResolveMethod( name );
             printSpaces( depth );
             out << methodInfo->GetRetTypeName()->GetString() << " "
-                << methodInfo->GetName()->GetString() << "()" << std::endl;
+                << methodInfo->GetName()->GetString() << std::endl;
             visualizeVariables( methodInfo->GetScope(), depth + 1 );
         }
         out << std::endl;
