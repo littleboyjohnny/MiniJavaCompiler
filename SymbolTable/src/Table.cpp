@@ -17,7 +17,7 @@ CBlockScope* CTable::PopBlockScope()
 }
 
 
-void CTable::AddMethod( const CSymbol *symbol, const CMethodInfo *methodInfo )
+void CTable::AddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
 {
     assert( symbol != nullptr );
     assert( methodInfo != nullptr );
@@ -26,7 +26,7 @@ void CTable::AddMethod( const CSymbol *symbol, const CMethodInfo *methodInfo )
 }
 
 
-void CTable::AddVariable( const CSymbol *symbol, const CVariableInfo *variableInfo )
+void CTable::AddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
 {
     assert( symbol != nullptr );
     assert( variableInfo != nullptr );
@@ -35,7 +35,7 @@ void CTable::AddVariable( const CSymbol *symbol, const CVariableInfo *variableIn
 }
 
 
-void CTable::AddClass( const CSymbol *symbol, const CClassInfo *classInfo )
+void CTable::AddClass( const CSymbol *symbol, CClassInfo *classInfo )
 {
     assert( symbol != nullptr );
     assert( classInfo != nullptr );
@@ -44,7 +44,7 @@ void CTable::AddClass( const CSymbol *symbol, const CClassInfo *classInfo )
 }
 
 
-bool CTable::TryAddMethod( const CSymbol *symbol, const CMethodInfo *methodInfo )
+bool CTable::TryAddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
 {
     assert( symbol != nullptr );
     assert( methodInfo != nullptr );
@@ -53,7 +53,7 @@ bool CTable::TryAddMethod( const CSymbol *symbol, const CMethodInfo *methodInfo 
 }
 
 
-bool CTable::TryAddVariable( const CSymbol *symbol, const CVariableInfo *variableInfo )
+bool CTable::TryAddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
 {
     assert( symbol != nullptr );
     assert( variableInfo != nullptr );
@@ -62,7 +62,7 @@ bool CTable::TryAddVariable( const CSymbol *symbol, const CVariableInfo *variabl
 }
 
 
-bool CTable::TryAddClass( const CSymbol *symbol, const CClassInfo *classInfo )
+bool CTable::TryAddClass( const CSymbol *symbol, CClassInfo *classInfo )
 {
     assert( symbol != nullptr );
     assert( classInfo != nullptr );

@@ -4,7 +4,7 @@
 #include <cassert>
 
 
-void CBlockScope::AddMethod( const CSymbol* symbol, const CMethodInfo *methodInfo )
+void CBlockScope::AddMethod( const CSymbol* symbol, CMethodInfo *methodInfo )
 {
     assert( symbol != nullptr );
     assert( methodInfo != nullptr );
@@ -13,7 +13,7 @@ void CBlockScope::AddMethod( const CSymbol* symbol, const CMethodInfo *methodInf
 }
 
 
-void CBlockScope::AddVariable( const CSymbol* symbol, const CVariableInfo *variableInfo )
+void CBlockScope::AddVariable( const CSymbol* symbol, CVariableInfo *variableInfo )
 {
     assert( symbol != nullptr );
     assert( variableInfo != nullptr );
@@ -22,7 +22,7 @@ void CBlockScope::AddVariable( const CSymbol* symbol, const CVariableInfo *varia
 }
 
 
-void CBlockScope::AddClass( const CSymbol* symbol, const CClassInfo *classInfo )
+void CBlockScope::AddClass( const CSymbol* symbol, CClassInfo *classInfo )
 {
     assert( symbol != nullptr );
     assert( classInfo != nullptr );
@@ -31,7 +31,7 @@ void CBlockScope::AddClass( const CSymbol* symbol, const CClassInfo *classInfo )
 }
 
 
-bool CBlockScope::TryAddMethod( const CSymbol *symbol, const CMethodInfo *methodInfo )
+bool CBlockScope::TryAddMethod( const CSymbol *symbol, CMethodInfo *methodInfo )
 {
     assert( symbol != nullptr );
     assert( methodInfo != nullptr );
@@ -45,7 +45,7 @@ bool CBlockScope::TryAddMethod( const CSymbol *symbol, const CMethodInfo *method
 }
 
 
-bool CBlockScope::TryAddVariable( const CSymbol *symbol, const CVariableInfo *variableInfo )
+bool CBlockScope::TryAddVariable( const CSymbol *symbol, CVariableInfo *variableInfo )
 {
     assert( symbol != nullptr );
     assert( variableInfo != nullptr );
@@ -59,7 +59,7 @@ bool CBlockScope::TryAddVariable( const CSymbol *symbol, const CVariableInfo *va
 }
 
 
-bool CBlockScope::TryAddClass( const CSymbol *symbol, const CClassInfo *classInfo )
+bool CBlockScope::TryAddClass( const CSymbol *symbol, CClassInfo *classInfo )
 {
     assert( symbol != nullptr );
     assert( classInfo != nullptr );

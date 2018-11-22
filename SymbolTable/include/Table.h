@@ -21,14 +21,14 @@ public:
     CBlockScope* PopBlockScope();
 
     // набор методов добавляет переданный символ без каких либо проверок
-    void AddMethod( const CSymbol* symbol, const CMethodInfo* methodInfo );
-    void AddVariable( const CSymbol* symbol, const CVariableInfo* variableInfo );
-    void AddClass( const CSymbol* symbol, const CClassInfo* classInfo );
+    void AddMethod( const CSymbol* symbol, CMethodInfo* methodInfo );
+    void AddVariable( const CSymbol* symbol, CVariableInfo* variableInfo );
+    void AddClass( const CSymbol* symbol, CClassInfo* classInfo );
 
     // набор методов, проверяющих, что добавляемый символ не создает конфликта имен
-    bool TryAddMethod( const CSymbol* symbol, const CMethodInfo* methodInfo );
-    bool TryAddVariable( const CSymbol* symbol, const CVariableInfo* variableInfo );
-    bool TryAddClass( const CSymbol* symbol, const CClassInfo* classInfo );
+    bool TryAddMethod( const CSymbol* symbol, CMethodInfo* methodInfo );
+    bool TryAddVariable( const CSymbol* symbol, CVariableInfo* variableInfo );
+    bool TryAddClass( const CSymbol* symbol, CClassInfo* classInfo );
 
     // возвращает тип символа, в т.ч. для еще не добавленного - UNDECLARED
     SymbolType ResolveType( const CSymbol* symbol ) const;

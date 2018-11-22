@@ -11,14 +11,14 @@ class CBlockScope : public INameScope {
 public:
 
     // набор методов добавляет переданный символ без каких либо проверок
-    void AddMethod( const CSymbol* symbol, const CMethodInfo* methodInfo );
-    void AddVariable( const CSymbol* symbol, const CVariableInfo* variableInfo );
-    void AddClass( const CSymbol* symbol, const CClassInfo* classInfo );
+    void AddMethod( const CSymbol* symbol, CMethodInfo* methodInfo );
+    void AddVariable( const CSymbol* symbol, CVariableInfo* variableInfo );
+    void AddClass( const CSymbol* symbol, CClassInfo* classInfo );
 
     // набор методов, проверяющих, что добавляемый символ не создает конфликта имен
-    bool TryAddMethod( const CSymbol* symbol, const CMethodInfo* methodInfo );
-    bool TryAddVariable( const CSymbol* symbol, const CVariableInfo* variableInfo );
-    bool TryAddClass( const CSymbol* symbol, const CClassInfo* classInfo );
+    bool TryAddMethod( const CSymbol* symbol, CMethodInfo* methodInfo );
+    bool TryAddVariable( const CSymbol* symbol, CVariableInfo* variableInfo );
+    bool TryAddClass( const CSymbol* symbol, CClassInfo* classInfo );
 
     // возвращает тип символа, в т.ч. для еще не добавленного - UNDECLARED
     SymbolType ResolveType( const CSymbol* symbol ) const;
@@ -36,7 +36,7 @@ public:
 
 
 private:
-    std::unordered_map<const CSymbol*, const CMethodInfo*> methods;
-    std::unordered_map<const CSymbol*, const CVariableInfo*> variables;
-    std::unordered_map<const CSymbol*, const CClassInfo*> classes;
+    std::unordered_map<const CSymbol*, CMethodInfo*> methods;
+    std::unordered_map<const CSymbol*, CVariableInfo*> variables;
+    std::unordered_map<const CSymbol*, CClassInfo*> classes;
 };
