@@ -25,7 +25,7 @@ public:
 
     // набор методов, возвращающих информацию о данных, связанных с символом,
     // либо nullptr, если символ - UNDECLARED
-    virtual const CMethodInfo* TryResolveMethod( const CSymbol* symbol ) const = 0;
-    virtual const CVariableInfo* TryResolveVariable( const CSymbol* symbol ) const = 0;
-    virtual const CClassInfo* TryResolveClass( const CSymbol* symbol ) const = 0;
+    virtual CMethodInfo* TryResolveMethod( const CSymbol* symbol ) const = 0;
+    virtual CVariableInfo* TryResolveVariable( const CSymbol* symbol ) const = 0;
+    virtual CClassInfo* TryResolveClass( const CSymbol* symbol ) const = 0;
 };

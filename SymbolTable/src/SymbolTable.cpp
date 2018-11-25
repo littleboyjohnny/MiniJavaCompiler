@@ -87,12 +87,12 @@ INameScope::SymbolType CSymbolTable::ResolveType( const CSymbol *symbol ) const
 }
 
 
-const CMethodInfo *CSymbolTable::TryResolveMethod( const CSymbol *symbol ) const
+CMethodInfo *CSymbolTable::TryResolveMethod( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
     // имя может быть переопределено в дочернем блоке, поэтому ищем до первого совпадения
-    const CMethodInfo* methodInfo = nullptr;
+    CMethodInfo* methodInfo = nullptr;
     for( auto it = blocks.rbegin(); it != blocks.rend(); ++it ) {
         methodInfo = (*it)->TryResolveMethod( symbol );
         if( methodInfo != nullptr ) {
@@ -103,12 +103,12 @@ const CMethodInfo *CSymbolTable::TryResolveMethod( const CSymbol *symbol ) const
 }
 
 
-const CVariableInfo *CSymbolTable::TryResolveVariable( const CSymbol *symbol ) const
+CVariableInfo *CSymbolTable::TryResolveVariable( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
     // имя может быть переопределено в дочернем блоке, поэтому ищем до первого совпадения
-    const CVariableInfo* variableInfo = nullptr;
+    CVariableInfo* variableInfo = nullptr;
     for( auto it = blocks.rbegin(); it != blocks.rend(); ++it ) {
         variableInfo = (*it)->TryResolveVariable( symbol );
         if( variableInfo != nullptr ) {
@@ -119,12 +119,12 @@ const CVariableInfo *CSymbolTable::TryResolveVariable( const CSymbol *symbol ) c
 }
 
 
-const CClassInfo *CSymbolTable::TryResolveClass( const CSymbol *symbol ) const
+CClassInfo *CSymbolTable::TryResolveClass( const CSymbol *symbol ) const
 {
     assert( symbol != nullptr );
 
     // имя может быть переопределено в дочернем блоке, поэтому ищем до первого совпадения
-    const CClassInfo* classInfo = nullptr;
+    CClassInfo* classInfo = nullptr;
     for( auto it = blocks.rbegin(); it != blocks.rend(); ++it ) {
         classInfo = (*it)->TryResolveClass( symbol );
         if( classInfo != nullptr ) {

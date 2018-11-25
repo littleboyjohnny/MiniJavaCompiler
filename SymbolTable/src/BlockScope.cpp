@@ -102,7 +102,7 @@ CBlockScope::SymbolType CBlockScope::ResolveType( const CSymbol* symbol ) const
 }
 
 
-const CMethodInfo *CBlockScope::TryResolveMethod( const CSymbol* symbol ) const
+CMethodInfo *CBlockScope::TryResolveMethod( const CSymbol* symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -111,7 +111,7 @@ const CMethodInfo *CBlockScope::TryResolveMethod( const CSymbol* symbol ) const
 }
 
 
-const CVariableInfo *CBlockScope::TryResolveVariable( const CSymbol* symbol ) const
+CVariableInfo *CBlockScope::TryResolveVariable( const CSymbol* symbol ) const
 {
     assert( symbol != nullptr );
 
@@ -120,7 +120,7 @@ const CVariableInfo *CBlockScope::TryResolveVariable( const CSymbol* symbol ) co
 }
 
 
-const CClassInfo *CBlockScope::TryResolveClass( const CSymbol* symbol ) const
+CClassInfo *CBlockScope::TryResolveClass( const CSymbol* symbol ) const
 {
     assert( symbol != nullptr );
 

@@ -25,9 +25,9 @@ public:
 
     // набор методов, возвращающих информацию о данных, связанных с символом,
     // либо nullptr, если символ - UNDECLARED
-    const CMethodInfo* TryResolveMethod( const CSymbol* symbol ) const;
-    const CVariableInfo* TryResolveVariable( const CSymbol* symbol ) const;
-    const CClassInfo* TryResolveClass( const CSymbol* symbol ) const;
+    CMethodInfo* TryResolveMethod( const CSymbol* symbol ) const;
+    CVariableInfo* TryResolveVariable( const CSymbol* symbol ) const;
+    CClassInfo* TryResolveClass( const CSymbol* symbol ) const;
 
     // набор методов, возвращающий все имена из области видимости
     std::vector<const CSymbol*> GetMethodNames() const;
