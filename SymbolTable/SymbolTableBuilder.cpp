@@ -46,13 +46,13 @@ void CSymbolTableBuilder::Visit( const CMainClass *acceptable )
 {
     assert( acceptable != nullptr );
 
-    CSymbol* className = CSymbol::GetIntern( acceptable->className->identifier );
+    const CSymbol* className = CSymbol::GetIntern( acceptable->className->identifier );
     auto classInfo = new CClassInfo( className );
 
-    CSymbol* methodName = CSymbol::GetIntern( "main" );
-    CSymbol* returnType = CSymbol::GetIntern( "void" );
-    CSymbol* argName = CSymbol::GetIntern( acceptable->argName->identifier );
-    CSymbol* argType = CSymbol::GetIntern( "String[]" );
+    const CSymbol* methodName = CSymbol::GetIntern( "main" );
+    const CSymbol* returnType = CSymbol::GetIntern( "void" );
+    const CSymbol* argName = CSymbol::GetIntern( acceptable->argName->identifier );
+    const CSymbol* argType = CSymbol::GetIntern( "String[]" );
     auto argInfo = new CVariableInfo( argName, argType );
     auto methodInfo = new CMethodInfo( methodName, returnType );
     methodInfo->GetScope()->AddVariable( argName, argInfo );
@@ -74,7 +74,7 @@ void CSymbolTableBuilder::Visit( const CClassDeclaration *acceptable )
 {
     assert( acceptable != nullptr );
 
-    CSymbol* className = CSymbol::GetIntern( acceptable->className->identifier );
+    const CSymbol* className = CSymbol::GetIntern( acceptable->className->identifier );
 
     auto classInfo = new CClassInfo( className );
 
@@ -108,9 +108,9 @@ void CSymbolTableBuilder::Visit( const CMethodDeclaration *acceptable )
 {
     assert( acceptable != nullptr );
 
-    CSymbol* methodName = CSymbol::GetIntern( acceptable->methodIdentifier->identifier );
+    const CSymbol* methodName = CSymbol::GetIntern( acceptable->methodIdentifier->identifier );
 
-    CSymbol* methodRetTypeName = CSymbol::GetIntern( acceptable->returnType->GetString() );
+    const CSymbol* methodRetTypeName = CSymbol::GetIntern( acceptable->returnType->GetString() );
     auto methodInfo = new CMethodInfo( methodName, methodRetTypeName );
 
     scopes.push_back( methodInfo->GetScope() );
@@ -145,8 +145,8 @@ void CSymbolTableBuilder::Visit( const CVarDeclaration *acceptable )
 {
     assert( acceptable != nullptr );
 
-    CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
-    CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
+    const CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
+    const CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
 
     auto varInfo = new CVariableInfo( varName, typeName );
 
@@ -171,8 +171,8 @@ void CSymbolTableBuilder::Visit( const CParam* acceptable )
 {
     assert( acceptable != nullptr );
 
-    CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
-    CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
+    const CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
+    const CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
 
     auto varInfo = new CVariableInfo( varName, typeName );
 

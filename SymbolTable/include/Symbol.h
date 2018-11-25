@@ -12,7 +12,7 @@ public:
 
     const std::string& GetString() const;
 
-    static CSymbol* GetIntern( const std::string& src );
+    static const CSymbol* GetIntern( const std::string& src );
 
     void operator=( const CSymbol& ) = delete;
 

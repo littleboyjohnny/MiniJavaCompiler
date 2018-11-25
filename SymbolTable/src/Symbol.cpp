@@ -15,9 +15,9 @@ const std::string& CSymbol::GetString() const
 }
 
 
-CSymbol* CSymbol::GetIntern( const std::string& src )
+const CSymbol* CSymbol::GetIntern( const std::string& src )
 {
-    static std::unordered_map<std::string, std::unique_ptr<CSymbol>> allStrings;
+    static std::unordered_map<std::string, std::unique_ptr<const CSymbol>> allStrings;
     auto cached = allStrings.find( src );
     if( cached != allStrings.end() ) {
         return cached->second.get();
