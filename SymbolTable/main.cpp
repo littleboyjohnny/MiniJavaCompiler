@@ -5,6 +5,7 @@
 #include <ASTVisualiser.h>
 #include <SymbolTableBuilder.h>
 #include "CSymbolTableVisualizer.h"
+#include "TypeChecker.h"
 
 
 int main( int argc, char** argv )
@@ -22,6 +23,9 @@ int main( int argc, char** argv )
 
     CSymbolTableVisualizer visualizer;
     visualizer.Visuzlize( table.get() );
+
+    CTypeChecker typeChecker;
+    typeChecker.Run( newGoal, table.get() );
 
     return 0;
 }

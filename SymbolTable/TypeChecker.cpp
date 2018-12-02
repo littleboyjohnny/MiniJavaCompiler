@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CTypeChecker.h"
+#include "TypeChecker.h"
 #include "ASTIncludes.h"
 
 const CSymbol* const CTypeChecker::booleanSymbol = CSymbol::GetIntern( "boolean" );
@@ -278,6 +278,17 @@ void CTypeChecker::Visit( const CBinaryOpExpression *acceptable )
             break;
 
         case CBinaryOpExpression::OpType::LESS:
+            type = booleanSymbol;
+            if( leftType != nullptr && leftType != intSymbol ) {
+                std::cerr << "Expression must be of numeric type" << std::endl;
+                type = nullptr;
+            }
+            if( rightType != nullptr && rightType != intSymbol ) {
+                std::cerr << "Expression must be of numeric type" << std::endl;
+                type = nullptr;
+            }
+            break;
+
         case CBinaryOpExpression::OpType::MINUS:
         case CBinaryOpExpression::OpType::MULTIPLY:
         case CBinaryOpExpression::OpType::PLUS:
@@ -348,24 +359,23 @@ void CTypeChecker::Visit( const CCallExpression *acceptable )
     assert( acceptable != nullptr );
     assert( acceptable->expression != nullptr );
     assert( acceptable->identifier != nullptr );
-    assert( acceptable->expressionParamS != nullptr );
 
-    acceptable->expression->Accept( this );
-    const CSymbol* expressionTypeSymbol = expressionTypes.back();
-    expressionTypes.pop_back();
-
-    acceptable->expressionParamS->Accept( this );
-
-    if( expressionTypeSymbol != nullptr ) {
-        const CSymbolTable::SymbolType expressionType = table->ResolveType( expressionTypeSymbol );
-
-    }
-
-
-    //if(  )
-
-    const CSymbol* identifierSymbol = CSymbol::GetIntern( acceptable->identifier->identifier );
-    const CSymbolTable::SymbolType identifierType = table->ResolveType( identifierSymbol );
+//    acceptable->expression->Accept( this );
+//    const CSymbol* expressionTypeSymbol = expressionTypes.back();
+//    expressionTypes.pop_back();
+//
+//    acceptable->expressionParamS->Accept( this );
+//
+//    if( expressionTypeSymbol != nullptr ) {
+//        const CSymbolTable::SymbolType expressionType = table->ResolveType( expressionTypeSymbol );
+//
+//    }
+//
+//
+//    if(  )
+//
+//    const CSymbol* identifierSymbol = CSymbol::GetIntern( acceptable->identifier->identifier );
+//    const CSymbolTable::SymbolType identifierType = table->ResolveType( identifierSymbol );
 
 
 }
