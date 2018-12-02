@@ -112,12 +112,11 @@ void CTypeChecker::Visit( const CMethodDeclaration *acceptable )
     }
 
     acceptable->returnExpression->Accept( this );
-    if( expressionTypes.back() != nullptr ) {
-        if( methodInfo->GetRetTypeName() != expressionTypes.back() ) {
+    if( lastExpressionType != nullptr ) {
+        if( methodInfo->GetRetTypeName() != lastExpressionType ) {
             std::cerr << "Invalid return type" << std::endl;
         }
     }
-    expressionTypes.pop_back();
 
     table->PopBlockScope();
 }
@@ -139,12 +138,11 @@ void CTypeChecker::Visit( const CIfElseStatement *acceptable )
     assert( acceptable->elseStatement != nullptr );
 
     acceptable->condition->Accept( this );
-    if( expressionTypes.back() != nullptr ) {
-        if( expressionTypes.back() != booleanSymbol ) {
+    if( lastExpressionType != nullptr ) {
+        if( lastExpressionType != booleanSymbol ) {
             std::cerr << "Invalid type of if-statement condition" << std::endl;
         }
     }
-    expressionTypes.pop_back();
     acceptable->ifStatement->Accept( this );
     acceptable->elseStatement->Accept( this );
 }
@@ -156,12 +154,11 @@ void CTypeChecker::Visit( const CWhileStatement *acceptable )
     assert( acceptable->statement != nullptr );
 
     acceptable->condition->Accept( this );
-    if( expressionTypes.back() != nullptr ) {
-        if( expressionTypes.back() != booleanSymbol ) {
+    if( lastExpressionType != nullptr ) {
+        if( lastExpressionType != booleanSymbol ) {
             std::cerr << "Invalid type of while-statement condition" << std::endl;
         }
     }
-    expressionTypes.pop_back();
     acceptable->statement->Accept( this );
 }
 
@@ -171,15 +168,14 @@ void CTypeChecker::Visit( const CPrintlnStatement *acceptable )
     assert( acceptable->expression != nullptr );
 
     acceptable->expression->Accept( this );
-    if( expressionTypes.back() != nullptr ) {
-        if( expressionTypes.back() != intSymbol
-            && expressionTypes.back() != booleanSymbol
-            && expressionTypes.back() != intArraySymbol )
+    if( lastExpressionType != nullptr ) {
+        if( lastExpressionType != intSymbol
+            && lastExpressionType != booleanSymbol
+            && lastExpressionType != intArraySymbol )
         {
             std::cerr << "Println supports only builtin types: int, boolean, int[]." << std::endl;
         }
     }
-    expressionTypes.pop_back();
 }
 
 void CTypeChecker::Visit( const CVarAssignmentStatement *acceptable )
@@ -195,8 +191,8 @@ void CTypeChecker::Visit( const CVarAssignmentStatement *acceptable )
     if( nameType == CSymbolTable::SymbolType::VARIABLE ) {
         const CVariableInfo* varInfo = table->TryResolveVariable( name );
         assert( varInfo != nullptr );
-        if( expressionTypes.back() != nullptr ) {
-            if( expressionTypes.back() != varInfo->GetTypeName() ) {
+        if( lastExpressionType != nullptr ) {
+            if( lastExpressionType != varInfo->GetTypeName() ) {
                 std::cerr << "Mismatched types in assignment statement." << std::endl;
             }
         }
@@ -205,7 +201,6 @@ void CTypeChecker::Visit( const CVarAssignmentStatement *acceptable )
     } else {
         std::cerr << "Name is not assignable" << std::endl;
     }
-    expressionTypes.pop_back();
 }
 
 void CTypeChecker::Visit( const CArrayAssignmentStatement *acceptable )
@@ -216,12 +211,10 @@ void CTypeChecker::Visit( const CArrayAssignmentStatement *acceptable )
     assert( acceptable->expression != nullptr );
 
     acceptable->indexExpression->Accept( this );
-    const CSymbol* indexExpressionType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* indexExpressionType = lastExpressionType;
 
     acceptable->expression->Accept( this );
-    const CSymbol* expressionType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* expressionType = lastExpressionType;
 
     const CSymbol* name = CSymbol::GetIntern( acceptable->arrayName->identifier );
     CSymbolTable::SymbolType nameType = table->ResolveType( name );
@@ -256,12 +249,10 @@ void CTypeChecker::Visit( const CBinaryOpExpression *acceptable )
     assert( acceptable->right != nullptr );
 
     acceptable->left->Accept( this );
-    const CSymbol* leftType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* leftType = lastExpressionType;
 
     acceptable->right->Accept( this );
-    const CSymbol* rightType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* rightType = lastExpressionType;
 
     const CSymbol* type = nullptr;
     switch( acceptable->opType ) {
@@ -303,7 +294,7 @@ void CTypeChecker::Visit( const CBinaryOpExpression *acceptable )
             }
             break;
     }
-    expressionTypes.push_back( type );
+    lastExpressionType = type;
 }
 
 void CTypeChecker::Visit( const CSquarebracketsExpression *acceptable )
@@ -313,12 +304,10 @@ void CTypeChecker::Visit( const CSquarebracketsExpression *acceptable )
     assert( acceptable->squarebraketsExpression != nullptr );
 
     acceptable->expression->Accept( this );
-    const CSymbol* exprType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* exprType = lastExpressionType;
 
     acceptable->squarebraketsExpression->Accept( this );
-    const CSymbol* braketsExprType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* braketsExprType = lastExpressionType;
 
     const CSymbol* type = intSymbol;
     if( exprType != nullptr ) {
@@ -332,7 +321,7 @@ void CTypeChecker::Visit( const CSquarebracketsExpression *acceptable )
             }
         }
     }
-    expressionTypes.push_back( type );
+    lastExpressionType = type;
 }
 
 void CTypeChecker::Visit( const CLengthExpression *acceptable )
@@ -341,8 +330,7 @@ void CTypeChecker::Visit( const CLengthExpression *acceptable )
     assert( acceptable->expression != nullptr );
 
     acceptable->expression->Accept( this );
-    const CSymbol* expressionType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* expressionType = lastExpressionType;
 
     const CSymbol* type = intSymbol;
     if( expressionType != nullptr ) {
@@ -351,7 +339,7 @@ void CTypeChecker::Visit( const CLengthExpression *acceptable )
             type = nullptr;
         }
     }
-    expressionTypes.push_back( type );
+    lastExpressionType = type;
 }
 
 void CTypeChecker::Visit( const CCallExpression *acceptable )
@@ -367,7 +355,7 @@ void CTypeChecker::Visit( const CCallExpression *acceptable )
 //    acceptable->expressionParamS->Accept( this );
 //
 //    if( expressionTypeSymbol != nullptr ) {
-//        const CSymbolTable::SymbolType expressionType = table->ResolveType( expressionTypeSymbol );
+//        const CSymbolTable::SymbolType lastExpressionType = table->ResolveType( expressionTypeSymbol );
 //
 //    }
 //
@@ -395,21 +383,21 @@ void CTypeChecker::Visit( const CIntliteralExpression *acceptable )
     assert( acceptable != nullptr );
     assert( acceptable->intliteral != nullptr );
 
-    expressionTypes.push_back( intSymbol );
+    lastExpressionType = intSymbol;
 }
 
 void CTypeChecker::Visit( const CTrueExpression *acceptable )
 {
     assert( acceptable != nullptr );
 
-    expressionTypes.push_back( booleanSymbol );
+    lastExpressionType = booleanSymbol;
 }
 
 void CTypeChecker::Visit( const CFalseExpression *acceptable )
 {
     assert( acceptable != nullptr );
 
-    expressionTypes.push_back( booleanSymbol );
+    lastExpressionType = booleanSymbol;
 }
 
 void CTypeChecker::Visit( const CIdentifierExpression *acceptable )
@@ -430,14 +418,14 @@ void CTypeChecker::Visit( const CIdentifierExpression *acceptable )
     } else if( type == CSymbolTable::SymbolType::METHOD ) {
         std::cerr << "Method name is not allowed." << std::endl;
     }
-    expressionTypes.push_back( exprType );
+    lastExpressionType = exprType;
 }
 
 void CTypeChecker::Visit( const CThisExpression *acceptable )
 {
     assert( acceptable != nullptr );
 
-    expressionTypes.push_back( currentClass->GetName() );
+    lastExpressionType = currentClass->GetName();
 }
 
 void CTypeChecker::Visit( const CNewArrayExpression *acceptable )
@@ -446,8 +434,7 @@ void CTypeChecker::Visit( const CNewArrayExpression *acceptable )
     assert( acceptable->expression != nullptr );
 
     acceptable->expression->Accept( this );
-    const CSymbol* expressionType = expressionTypes.back();
-    expressionTypes.pop_back();
+    const CSymbol* expressionType = lastExpressionType;
 
     const CSymbol* type = intArraySymbol;
     if( expressionType != nullptr ) {
@@ -456,7 +443,7 @@ void CTypeChecker::Visit( const CNewArrayExpression *acceptable )
             type = nullptr;
         }
     }
-    expressionTypes.push_back( type );
+    lastExpressionType = type;
 }
 
 void CTypeChecker::Visit( const CNewIdentifierExpression *acceptable )
@@ -475,7 +462,7 @@ void CTypeChecker::Visit( const CNewIdentifierExpression *acceptable )
         std::cerr << "Only classes support operator 'new'." << std::endl;
         exprType = nullptr;
     }
-    expressionTypes.push_back( exprType );
+    lastExpressionType = exprType;
 }
 
 void CTypeChecker::Visit( const CNotExpression *acceptable )
