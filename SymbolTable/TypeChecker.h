@@ -73,6 +73,8 @@ private:
     // сохраняем текущий класс, нужно для this
     const CClassInfo* currentClass;
 
-    // вызываемый метод, нужно при анализе списка фактических параметров
-    const CMethodInfo* calledMethod;
+    // в этот вектор записывает Visit( CExpressionParamList )
+    // сам вектор - локальный объект в Visit( CCallExpression )
+    // cкорее всего это нужно заменить на что-то получше
+    std::vector<const CSymbol*>* callParamTypes;
 };

@@ -348,32 +348,65 @@ void CTypeChecker::Visit( const CCallExpression *acceptable )
     assert( acceptable->expression != nullptr );
     assert( acceptable->identifier != nullptr );
 
-//    acceptable->expression->Accept( this );
-//    const CSymbol* expressionTypeSymbol = expressionTypes.back();
-//
-//    acceptable->expressionParamS->Accept( this );
-//
-//    if( expressionTypeSymbol != nullptr ) {
-//        const CSymbolTable::SymbolType lastExpressionType = table->ResolveType( expressionTypeSymbol );
-//
-//    }
-//
-//
-//    if(  )
-//
-//    const CSymbol* identifierSymbol = CSymbol::GetIntern( acceptable->identifier->identifier );
-//    const CSymbolTable::SymbolType identifierType = table->ResolveType( identifierSymbol );
+    acceptable->expression->Accept( this );
+    const CSymbol* expressionTypeSymbol = lastExpressionType;
 
+    const CSymbol* methodName = CSymbol::GetIntern( acceptable->identifier->identifier );
 
+    // выводим типы фактических параметров
+    std::vector<const CSymbol*> factParamTypes;
+    callParamTypes = &factParamTypes;
+    if( acceptable->expressionParamS != nullptr ) {
+        acceptable->expressionParamS->Accept( this );
+    }
+
+    const CSymbol* type = nullptr;
+    if( expressionTypeSymbol != nullptr ) {
+        if( expressionTypeSymbol == booleanSymbol
+            || expressionTypeSymbol == intSymbol
+            || expressionTypeSymbol == intArraySymbol )
+        {
+            std::cerr << "Builtin types does not support member access." << std::endl;
+            type = nullptr;
+        } else {
+            const CClassInfo* classInfo = table->TryResolveClass( expressionTypeSymbol );
+            assert( classInfo != nullptr ); // так как тип успешно вывелся, то он должен быть доступен
+
+            // а вот метод может существовать, а может нет
+            const CMethodInfo* methodInfo = classInfo->GetScope()->TryResolveMethod( methodName );
+            if( methodInfo != nullptr ) {
+                // метод существует, нужно проверить совпадение типов фактических и формальных параметров
+                const std::vector<const CSymbol*>& formalParamNames = methodInfo->GetParameterNames();
+                if( formalParamNames.size() == factParamTypes.size() ) {
+                    for( int i = 0; i < formalParamNames.size(); ++i ) {
+                        const CVariableInfo* formalParam = methodInfo->TryResolveParameter( i );
+                        assert( formalParam != nullptr );
+                        if( factParamTypes[i] != formalParam->GetTypeName() ) {
+                            std::cerr << "Parameter type mismatching." << std::endl;
+                            type = nullptr;
+                        }
+                    }
+                } else {
+                    std::cerr << "Parameter number mismatching." << std::endl;
+                    type = nullptr;
+                }
+            } else {
+                type = nullptr;
+            }
+        }
+    }
+    lastExpressionType = type;
 }
 
 
 void CTypeChecker::Visit( const CExpressionParamList *acceptable )
 {
     assert( acceptable != nullptr );
+    assert( callParamTypes != nullptr );
 
     for( auto param : acceptable->children ) {
         param->Accept( this );
+        callParamTypes->push_back( lastExpressionType );
     }
 }
 
