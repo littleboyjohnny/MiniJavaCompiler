@@ -72,4 +72,7 @@ private:
 
     // сохраняем текущий класс, нужно для this
     const CClassInfo* currentClass;
+
+    // вызываемый метод, нужно при анализе списка фактических параметров
+    const CMethodInfo* calledMethod;
 };

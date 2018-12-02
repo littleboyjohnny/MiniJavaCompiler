@@ -350,7 +350,6 @@ void CTypeChecker::Visit( const CCallExpression *acceptable )
 
 //    acceptable->expression->Accept( this );
 //    const CSymbol* expressionTypeSymbol = expressionTypes.back();
-//    expressionTypes.pop_back();
 //
 //    acceptable->expressionParamS->Accept( this );
 //
