@@ -65,7 +65,12 @@ private:
     static const CSymbol* const intSymbol;
     static const CSymbol* const intArraySymbol;
 
-    // вызов IExpression::Accept проставляет тип свой тип в эту переменную
+    // вызов IExpression::Accept добавляет тип свой тип в вектор
     // если при выводе типа произошла ошибка, то - nullptr
-    const CSymbol* lastValidExpressionType;
+    // сторона, использующая этот тип и инициализировавшая его выведение
+    // обязана извлечь этот элемент/элементы
+    std::vector<const CSymbol*> expressionTypes;
+
+    // сохраняем текущий класс, нужно для this
+    const CClassInfo* currentClass;
 };
