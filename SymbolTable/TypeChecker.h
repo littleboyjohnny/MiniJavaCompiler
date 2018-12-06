@@ -3,6 +3,8 @@
 #include "core/IVisitor.h"
 #include "include/SymbolTable.h"
 
+#include <unordered_set>
+
 class CSymbol;
 
 class CTypeChecker : public IVisitor {
@@ -77,4 +79,8 @@ private:
     // сам вектор - локальный объект в Visit( CCallExpression )
     // cкорее всего это нужно заменить на что-то получше
     std::vector<const CSymbol*>* callParamTypes;
+
+    // проверка на циклическое наследование
+    bool hasExtensionLoop( const CSymbol* className );
+    bool _hasExtensionLoop( const CSymbol* className, std::unordered_set<const CSymbol*>& vis );
 };

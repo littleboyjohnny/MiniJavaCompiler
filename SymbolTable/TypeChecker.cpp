@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unordered_set>
 #include "TypeChecker.h"
 #include "ASTIncludes.h"
 
@@ -73,14 +74,17 @@ void CTypeChecker::Visit( const CClassDeclaration *acceptable )
     assert( acceptable->className != nullptr );
 
     const CSymbol* className = CSymbol::GetIntern( acceptable->className->identifier );
-    CClassInfo* classInfo = table->InClass( className );
-    currentClass = classInfo;
 
-    if( acceptable->methodDeclarationS != nullptr ) {
-        acceptable->methodDeclarationS->Accept( this );
+    if( !hasExtensionLoop( className ) ) {
+        CClassInfo* classInfo = table->InClass( className );
+        currentClass = classInfo;
+        if( acceptable->methodDeclarationS != nullptr ) {
+            acceptable->methodDeclarationS->Accept( this );
+        }
+        table->OutClass( className );
+    } else {
+        std::cerr << "Extension loop detected." << std::endl;
     }
-
-    table->OutClass( className );
 }
 
 void CTypeChecker::Visit( const CMethodDeclarationList *acceptable )
@@ -507,4 +511,31 @@ void CTypeChecker::Visit( const CParensExpression *acceptable ) {
 
     acceptable->expression->Accept( this );
     // тип выражения остается без изменений
+}
+
+bool CTypeChecker::hasExtensionLoop( const CSymbol* className )
+{
+    assert( className != nullptr );
+
+    std::unordered_set<const CSymbol*> vis;
+    return _hasExtensionLoop( className, vis );
+}
+
+bool CTypeChecker::_hasExtensionLoop( const CSymbol* className, std::unordered_set<const CSymbol*>& vis )
+{
+    assert( className != nullptr );
+
+    if( vis.find( className ) != vis.end() ) {
+        return true;
+    } else {
+        vis.insert( className );
+        CClassInfo* classInfo = table->TryResolveClass( className );
+        assert( classInfo != nullptr );
+        const CSymbol* parent = classInfo->GetParent();
+        if( parent == nullptr ) {
+            return false;
+        } else {
+            return _hasExtensionLoop( parent, vis );
+        }
+    }
 }
