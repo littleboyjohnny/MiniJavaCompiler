@@ -18,8 +18,11 @@ public:
     CBlockScope* GetScope();
     const CBlockScope* GetScope() const;
 
+    void SetParent( const CSymbol* _parent );
+
 private:
     const CSymbol* name;
+    const CSymbol* parent;
 
     std::unique_ptr<CBlockScope> scope;
 };

@@ -23,6 +23,7 @@ public:
     void Visit( const CVarDeclaration* acceptable ) final;
     void Visit( const CParamList* acceptable ) final;
     void Visit( const CParam* acceptable ) final;
+    void Visit( const CExtension* acceptable ) final;
 
     // эти методы не нужны для построения таблицы символов
     void Visit( const CAdditionalExpressionParam* acceptable ) final {};
@@ -35,7 +36,6 @@ public:
     void Visit( const CCallExpression* acceptable ) final {};
     void Visit( const CExpressionParamS* acceptable ) final {};
     void Visit( const CExpressionParamList* acceptable ) final {};
-    void Visit( const CExtension* acceptable ) final {};
     void Visit( const CIdentifierExpression* acceptable ) final {};
     void Visit( const CIfElseStatement* acceptable ) final {};
     void Visit( const CIntliteralExpression* acceptable ) final {};
@@ -63,7 +63,8 @@ public:
 
 private:
     std::vector<CBlockScope*> scopes;
-    CMethodInfo* tmpMethodInfo;
+    CMethodInfo* currentMethodInfo;
+    CClassInfo* currentClassInfo;
 
     void onNameRedefinitionError( const CSymbol* name, const CBlockScope* scope );
 };

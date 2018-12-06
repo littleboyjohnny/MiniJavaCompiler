@@ -11,7 +11,7 @@
 
 
 CSymbolTableBuilder::CSymbolTableBuilder() :
-    tmpMethodInfo( nullptr )
+    currentMethodInfo( nullptr )
 {
     //
 }
@@ -87,6 +87,12 @@ void CSymbolTableBuilder::Visit( const CClassDeclaration *acceptable )
     }
     scopes.pop_back();
 
+    if( acceptable->extension != nullptr ) {
+        currentClassInfo = classInfo;
+        acceptable->extension->Accept( this );
+        currentClassInfo = nullptr;
+    }
+
     CBlockScope::SymbolType type = scopes.back()->ResolveType( className );
     if( type == CBlockScope::SymbolType::UNDECLARED ) {
         scopes.back()->AddClass( className, classInfo );
@@ -118,9 +124,9 @@ void CSymbolTableBuilder::Visit( const CMethodDeclaration *acceptable )
         acceptable->varDeclarationS->Accept( this );
     }
     if( acceptable->params != nullptr ) {
-        tmpMethodInfo = methodInfo;
+        currentMethodInfo = methodInfo;
         acceptable->params->Accept( this );
-        tmpMethodInfo = nullptr;
+        currentMethodInfo = nullptr;
     }
     scopes.pop_back();
 
@@ -179,7 +185,7 @@ void CSymbolTableBuilder::Visit( const CParam* acceptable )
     CBlockScope::SymbolType type = scopes.back()->ResolveType( varName );
     if( type == CBlockScope::SymbolType::UNDECLARED ) {
         scopes.back()->AddVariable( varName, varInfo );
-        tmpMethodInfo->RegisterAsParameter( varName );
+        currentMethodInfo->RegisterAsParameter( varName );
     } else {
         onNameRedefinitionError( varName, scopes.back() );
     }
@@ -208,4 +214,14 @@ void CSymbolTableBuilder::onNameRedefinitionError( const CSymbol *name, const CB
     std::cerr << "Redefinition of name '" << name->GetString() << "'. "
               << "Previously defined as '" << prevDefinition << "'."
               << std::endl;
+}
+
+void CSymbolTableBuilder::Visit( const CExtension* acceptable )
+{
+    assert( acceptable != nullptr );
+    assert( acceptable->className != nullptr );
+
+    const CSymbol* parentName = CSymbol::GetIntern( acceptable->className->identifier );
+
+    currentClassInfo->SetParent( parentName );
 }

@@ -4,8 +4,9 @@
 #include <cassert>
 
 
-CClassInfo::CClassInfo( const CSymbol *_name ) :
-    scope( nullptr )
+CClassInfo::CClassInfo( const CSymbol* _name ) :
+    scope( nullptr ),
+    parent( nullptr )
 {
     assert( _name != nullptr );
 
@@ -23,7 +24,11 @@ const CSymbol* CClassInfo::GetName() const
 
 std::string CClassInfo::GetStringRepresentation() const
 {
-    return "class " + name->GetString();
+    std::string S = "class " + name->GetString();
+    if( parent != nullptr ) {
+        S += " : " + parent->GetString();
+    }
+    return S;
 }
 
 
@@ -39,4 +44,11 @@ const CBlockScope *CClassInfo::GetScope() const
     assert( scope != nullptr );
 
     return scope.get();
+}
+
+void CClassInfo::SetParent( const CSymbol* _parent )
+{
+    assert( _parent != nullptr );
+
+    parent = _parent;
 }
