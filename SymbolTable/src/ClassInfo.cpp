@@ -22,6 +22,11 @@ const CSymbol* CClassInfo::GetName() const
     return name;
 }
 
+const CSymbol* CClassInfo::GetParent() const
+{
+    return parent;
+}
+
 std::string CClassInfo::GetStringRepresentation() const
 {
     std::string S = "class " + name->GetString();

@@ -14,6 +14,18 @@
 class CSymbolTable : public INameScope {
 public:
 
+    // добавляет имена из функции в область видимости, вызывается при входе в метод
+    CMethodInfo* InMethod( const CSymbol* methodName );
+
+    // удаляет имена добавленные при вызове InMethod
+    void OutMethod( const CSymbol* methodName );
+
+    // добавляет имена из класса в область видимости, вызавается при входе в класс
+    CClassInfo* InClass( const CSymbol* className );
+
+    // удаляет имена добавленные при вызове InClass
+    void OutClass( const CSymbol* className );
+
     // добавляет блок в области видимости
     void PushBlockScope( CBlockScope *scope );
 

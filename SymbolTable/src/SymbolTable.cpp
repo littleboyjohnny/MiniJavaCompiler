@@ -3,14 +3,71 @@
 #include <cassert>
 
 
-void CSymbolTable::PushBlockScope(CBlockScope *scope)
+CMethodInfo* CSymbolTable::InMethod( const CSymbol* methodName )
 {
+    assert( methodName != nullptr );
+
+    CMethodInfo* methodInfo = TryResolveMethod( methodName );
+    assert( methodInfo != nullptr );
+
+    PushBlockScope( methodInfo->GetScope() );
+
+    return methodInfo;
+}
+
+void CSymbolTable::OutMethod( const CSymbol *methodName )
+{
+    assert( methodName != nullptr );
+
+    CMethodInfo* methodInfo = TryResolveMethod( methodName );
+    assert( methodInfo != nullptr );
+
+    PopBlockScope();
+}
+
+CClassInfo* CSymbolTable::InClass( const CSymbol *className )
+{
+    assert( className != nullptr );
+
+    CClassInfo* classInfo = TryResolveClass( className );
+    assert( classInfo != nullptr );
+
+    if( classInfo->GetParent() != nullptr ) {
+        InClass( classInfo->GetParent() );
+    }
+
+    PushBlockScope( classInfo->GetScope() );
+
+    return classInfo;
+}
+
+void CSymbolTable::OutClass( const CSymbol *className )
+{
+    assert( className != nullptr );
+
+    CClassInfo* classInfo = TryResolveClass( className );
+    assert( classInfo != nullptr );
+
+    PopBlockScope();
+
+    if( classInfo->GetParent() != nullptr ) {
+        OutClass( classInfo->GetParent() );
+    }
+}
+
+
+void CSymbolTable::PushBlockScope( CBlockScope *scope )
+{
+    assert( scope != nullptr );
+
     blocks.push_back( scope );
 }
 
 
 CBlockScope* CSymbolTable::PopBlockScope()
 {
+    assert( !blocks.empty() );
+
     auto ret = blocks.back();
     blocks.pop_back();
     return ret;

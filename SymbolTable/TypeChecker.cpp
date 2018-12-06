@@ -73,17 +73,14 @@ void CTypeChecker::Visit( const CClassDeclaration *acceptable )
     assert( acceptable->className != nullptr );
 
     const CSymbol* className = CSymbol::GetIntern( acceptable->className->identifier );
-    CClassInfo* classInfo = table->TryResolveClass( className );
+    CClassInfo* classInfo = table->InClass( className );
     currentClass = classInfo;
-
-    assert( classInfo != nullptr );
-    table->PushBlockScope( classInfo->GetScope() );
 
     if( acceptable->methodDeclarationS != nullptr ) {
         acceptable->methodDeclarationS->Accept( this );
     }
 
-    table->PopBlockScope();
+    table->OutClass( className );
 }
 
 void CTypeChecker::Visit( const CMethodDeclarationList *acceptable )
@@ -102,10 +99,9 @@ void CTypeChecker::Visit( const CMethodDeclaration *acceptable )
     assert( acceptable->methodIdentifier != nullptr );
 
     const CSymbol* methodName = CSymbol::GetIntern( acceptable->methodIdentifier->identifier );
-    CMethodInfo* methodInfo = table->TryResolveMethod( methodName );
+    CMethodInfo* methodInfo = table->InMethod( methodName );
 
     assert( methodInfo != nullptr );
-    table->PushBlockScope( methodInfo->GetScope() );
 
     if( acceptable->statementS != nullptr ) {
         acceptable->statementS->Accept( this );
@@ -117,8 +113,7 @@ void CTypeChecker::Visit( const CMethodDeclaration *acceptable )
             std::cerr << "Invalid return type" << std::endl;
         }
     }
-
-    table->PopBlockScope();
+    table->OutMethod( methodName );
 }
 
 void CTypeChecker::Visit( const CCurlyBraceStatement *acceptable )

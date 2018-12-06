@@ -14,6 +14,7 @@ public:
     explicit CClassInfo( const CSymbol* _name );
 
     const CSymbol* GetName() const;
+    const CSymbol* GetParent() const;
     std::string GetStringRepresentation() const;
     CBlockScope* GetScope();
     const CBlockScope* GetScope() const;
