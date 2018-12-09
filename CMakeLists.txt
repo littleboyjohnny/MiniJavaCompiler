@@ -20,6 +20,8 @@ include_directories( ${CMAKE_HOME_DIRECTORY}/lexer )
 include_directories( ${CMAKE_HOME_DIRECTORY}/parser )
 include_directories( ${CMAKE_HOME_DIRECTORY}/AST )
 include_directories( ${CMAKE_HOME_DIRECTORY}/SymbolTable )
+include_directories( ${CMAKE_HOME_DIRECTORY}/StackFrame )
+include_directories( ${CMAKE_HOME_DIRECTORY}/IRTree )
 
 # генерируем лексический анализатор flex'ом
 add_custom_command(
@@ -82,7 +84,7 @@ target_link_libraries(lexertests gtest_main liblexer)
 add_definitions( -DPARSER_DEBUG )
 add_executable(parsertests tests/ParserTests.cpp)
 target_link_libraries(parsertests gtest_main libparser)
-#add_test(NAME example_test COMMAND example)
+remove_definitions( -DPARSER_DEBUG )
 #========================= GTest Section =====================================
 
 # создаем исполняемый фаил - берет имя фаила как параметр командной строки и отрисовывает AST в фаил build/ast.jpg
@@ -90,8 +92,11 @@ set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp AST/
 add_executable( AstBuilder ${ASTBUILDER_SRC} )
 target_link_libraries( AstBuilder liblexer libparser )
 
+#IRTree
+set( IRTREEBUILDER_SRC irtBuilder.cpp IRTree/IRTBuilder.cpp IRTree/IRTVisualiser.cpp )
+add_executable( IrtBuilder ${IRTREEBUILDER_SRC} )
+
 # временный таргет для проверки таблицы символов
-remove_definitions( -DPARSER_DEBUG )
 add_executable( SymbolTable SymbolTable/main.cpp SymbolTable/src/SymbolTable.cpp SymbolTable/src/BlockScope.cpp SymbolTable/src/Symbol.cpp SymbolTable/src/VariableInfo.cpp SymbolTable/src/MethodInfo.cpp SymbolTable/src/ClassInfo.cpp SymbolTable/SymbolTableBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp SymbolTable/CSymbolTableVisualizer.cpp SymbolTable/CSymbolTableVisualizer.h SymbolTable/TypeChecker.cpp SymbolTable/TypeChecker.h)
 target_link_libraries( SymbolTable liblexer libparser )
 
