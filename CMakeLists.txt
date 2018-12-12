@@ -93,7 +93,7 @@ add_executable( AstBuilder ${ASTBUILDER_SRC} )
 target_link_libraries( AstBuilder liblexer libparser )
 
 #IRTree
-set( IRTREEBUILDER_SRC irtBuilder.cpp IRTree/IRTBuilder.cpp IRTree/IRTVisualiser.cpp )
+set( IRTREEBUILDER_SRC irtBuilder.cpp IRTree/IRTBuilder.cpp IRTree/IRTVisualiser.cpp IRTree/include/EseqExp.hpp IRTree/include/MemExp.hpp IRTree/include/CallExp.hpp IRTree/include/ExpList.hpp IRTree/include/StmList.hpp IRTree/include/MoveStm.hpp IRTree/include/ExpStm.hpp IRTree/include/JumpStm.hpp IRTree/include/CJumpStm.hpp IRTree/include/SeqStm.hpp IRTree/include/LabelStm.hpp IRTree/include/BinOpExp.hpp)
 add_executable( IrtBuilder ${IRTREEBUILDER_SRC} )
 
 # временный таргет для проверки таблицы символов
