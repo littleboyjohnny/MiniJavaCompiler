@@ -21,6 +21,8 @@ public:
 
     void SetParent( const CSymbol* _parent );
 
+    int GetSize() const;
+
 private:
     const CSymbol* name;
     const CSymbol* parent;
