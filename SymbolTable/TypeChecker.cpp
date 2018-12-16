@@ -78,6 +78,9 @@ void CTypeChecker::Visit( const CClassDeclaration *acceptable )
     if( !hasExtensionLoop( className ) ) {
         CClassInfo* classInfo = table->InClass( className );
         currentClass = classInfo;
+        if( acceptable->extension != nullptr ) {
+            acceptable->extension->Accept( this );
+        }
         if( acceptable->methodDeclarationS != nullptr ) {
             acceptable->methodDeclarationS->Accept( this );
         }
@@ -538,4 +541,15 @@ bool CTypeChecker::_hasExtensionLoop( const CSymbol* className, std::unordered_s
             return _hasExtensionLoop( parent, vis );
         }
     }
+}
+
+void CTypeChecker::Visit( const CExtension *acceptable )
+{
+    assert( acceptable != nullptr );
+    assert( acceptable->className != nullptr );
+
+    const CSymbol* parentName = CSymbol::GetIntern( acceptable->className->identifier );
+    CClassInfo* parentInfo = table->TryResolveClass( parentName );
+    assert( parentInfo != nullptr );
+    currentClass->SetParent( parentInfo );
 }

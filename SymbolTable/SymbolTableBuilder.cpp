@@ -223,5 +223,5 @@ void CSymbolTableBuilder::Visit( const CExtension* acceptable )
 
     const CSymbol* parentName = CSymbol::GetIntern( acceptable->className->identifier );
 
-    currentClassInfo->SetParent( parentName );
+    currentClassInfo->SetParentName(parentName);
 }

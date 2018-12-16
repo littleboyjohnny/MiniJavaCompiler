@@ -234,7 +234,7 @@ class Tree{
     }
 
 
-    // Copy the child key to the parent until a leaf is
+    // Copy the child key to the parentName until a leaf is
     // found and remove the leaf. This is done with the
     // right subtree
     public boolean RemoveRight(Tree p_node, Tree c_node){
@@ -254,7 +254,7 @@ class Tree{
     }
 
 
-    // Copy the child key to the parent until a leaf is
+    // Copy the child key to the parentName until a leaf is
     // found and remove the leaf. This is done with the
     // left subtree
     public boolean RemoveLeft(Tree p_node, Tree c_node){

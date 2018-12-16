@@ -19,13 +19,16 @@ public:
     CBlockScope* GetScope();
     const CBlockScope* GetScope() const;
 
-    void SetParent( const CSymbol* _parent );
+    void SetParentName( const CSymbol *_parentName );
+    void SetParent( const CClassInfo* _parent );
 
     int GetSize() const;
 
 private:
     const CSymbol* name;
-    const CSymbol* parent;
+    const CSymbol* parentName;
+
+    const CClassInfo* parent;
 
     std::unique_ptr<CBlockScope> scope;
 };

@@ -40,6 +40,7 @@ public:
     void Visit( const CVarAssignmentStatement* acceptable );
     void Visit( const CWhileStatement* acceptable ) final;
     void Visit( const CBinaryOpExpression* acceptable );
+    void Visit( const CExtension* acceptable );
 
     // эти методы не нужны при проверке типов
     void Visit( const CAdditionalExpressionParam* acceptable ) final {};
@@ -48,7 +49,6 @@ public:
     void Visit( const CAdditionalParamS* acceptable ) final {};
     void Visit( const CClassDeclarationS* acceptable ) final {};
     void Visit( const CExpressionParamS* acceptable ) final {};
-    void Visit( const CExtension* acceptable ) final {};
     void Visit( const CMethodDeclarationS* acceptable ) final {};
     void Visit( const CParams* acceptable ) final {};
     void Visit( const CParam* acceptable ) final {};
@@ -72,8 +72,8 @@ private:
     // если при выводе типа произошла ошибка, то - nullptr
     const CSymbol* lastExpressionType;
 
-    // сохраняем текущий класс, нужно для this
-    const CClassInfo* currentClass;
+    // сохраняем текущий класс, нужно для this и для добавления информации о предке
+    CClassInfo* currentClass;
 
     // в этот вектор записывает Visit( CExpressionParamList )
     // сам вектор - локальный объект в Visit( CCallExpression )
