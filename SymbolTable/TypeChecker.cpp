@@ -393,6 +393,7 @@ void CTypeChecker::Visit( const CCallExpression *acceptable )
                     type = nullptr;
                 }
             } else {
+                std::cerr << "Method not found." << std::endl;
                 type = nullptr;
             }
         }
@@ -451,6 +452,9 @@ void CTypeChecker::Visit( const CIdentifierExpression *acceptable )
         std::cerr << "Class name is not allowed." << std::endl;
     } else if( type == CSymbolTable::SymbolType::METHOD ) {
         std::cerr << "Method name is not allowed." << std::endl;
+    } else if( type == CSymbolTable::UNDECLARED ) {
+        std::cerr << "Use of undeclared identifier" << std::endl;
+        exprType = nullptr;
     }
     lastExpressionType = exprType;
 }
