@@ -10,7 +10,7 @@ namespace IRTree {
     public:
         explicit CMemExp( const IExp* _exp ) : exp( _exp ) {}
 
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 

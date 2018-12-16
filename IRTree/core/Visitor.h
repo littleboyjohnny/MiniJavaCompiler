@@ -1,10 +1,9 @@
 #pragma once
 
-#include <zconf.h>
 #include "../IRTPredefines.h"
 
 namespace IRTree {
-    class IVisitor {
+    class IVisitorIRT {
     public:
         virtual void Visit(const CConstExp* acceptable) = 0;
         virtual void Visit(const CNameExp* acceptable) = 0;

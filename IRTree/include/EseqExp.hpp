@@ -11,7 +11,7 @@ namespace IRTree {
     public:
         explicit CEseqExp( const IStm* _stm, const IExp* _exp ) : stm(_stm), exp( _exp ) {}
 
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 

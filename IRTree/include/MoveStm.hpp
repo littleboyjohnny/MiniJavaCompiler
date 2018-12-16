@@ -11,7 +11,7 @@ namespace IRTree {
     public:
         explicit CMoveStm( const IExp* _dst, const IExp* _src ) : dst( _dst ), src( _src ) {}
 
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 

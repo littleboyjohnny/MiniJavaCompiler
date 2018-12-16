@@ -23,7 +23,7 @@ namespace IRTree {
                 : relOp( _relOp ), left( _left ),
                 right( _right ), ifTrue( _ifTrue ), ifFalse( _ifFalse ) {}
 
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 

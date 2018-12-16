@@ -11,7 +11,7 @@ namespace IRTree {
     public:
         explicit CCallExp( const IExp* _exp, const CExpList* _args ) : exp( _exp ), args(_args) {}
 
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 

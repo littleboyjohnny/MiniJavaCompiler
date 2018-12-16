@@ -10,7 +10,7 @@ namespace IRTree {
     public:
         explicit CSeqStm( const IStm* _left, const IStm* _right ) : left( _left ), right( _right ) {}
 
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 

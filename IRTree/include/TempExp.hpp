@@ -9,7 +9,7 @@ namespace IRTree {
     public:
         explicit CTempExp( const CTemp temp) {}
 
-        void Accept( IVisitor* visitor ) const {
+        void Accept( IVisitorIRT* visitor ) const {
             visitor->Visit( this );
         }
 

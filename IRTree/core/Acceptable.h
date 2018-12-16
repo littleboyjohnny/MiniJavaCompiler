@@ -2,11 +2,11 @@
 
 namespace IRTree {
 
-    class IVisitor;
+    class IVisitorIRT;
 
     class IAcceptable {
     public:
-        virtual void Accept( IVisitor *visitor ) const = 0;
+        virtual void Accept( IVisitorIRT *visitor ) const = 0;
     };
 
 }

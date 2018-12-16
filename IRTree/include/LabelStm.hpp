@@ -11,7 +11,7 @@ namespace IRTree {
     public:
         explicit CLabelStm( const  CLabel _label ) : label( _label ) {}
 
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 

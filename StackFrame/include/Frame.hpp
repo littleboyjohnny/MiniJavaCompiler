@@ -14,7 +14,11 @@ public:
     int FormalsCount() const ;
     const IAccess* Formal( int index ) const ;
     const IAccess* FindLocalOfFormal( const CSymbol* name ) const ;
-    void ExternalCall();
+    void ExternalCall(const std::string& name, const IRTree::IExp* exp);
+    IRTree::IExp* GetAddress() const;
+    const IRTree::CTemp* FP() const;
+    int WordSize() const;
+
 private:
     int formalsCount;
     int framePointer;

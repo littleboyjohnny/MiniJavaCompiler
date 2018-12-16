@@ -7,11 +7,9 @@ namespace IRTree {
 
     class CNameExp : public IExp {
     public:
-        explicit CNameExp(const CLabel _label) : label(_label) {
+        explicit CNameExp(const CLabel _label) : label(_label) {}
 
-        }
-
-        void Accept( IVisitor *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 
