@@ -13,6 +13,8 @@ public:
     const CSymbol* GetTypeName() const;
     std::string GetStringRepresentation() const;
 
+    int GetSize() const;
+
 private:
     const CSymbol* name;
     const CSymbol* typeName;

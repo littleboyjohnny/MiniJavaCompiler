@@ -57,3 +57,8 @@ void CClassInfo::SetParent( const CSymbol* _parent )
 
     parent = _parent;
 }
+
+int CClassInfo::GetSize() const
+{
+    return 4;
+}

@@ -29,3 +29,9 @@ std::string CVariableInfo::GetStringRepresentation() const
 {
     return typeName->GetString() + " " + name->GetString();
 }
+
+
+int CVariableInfo::GetSize() const
+{
+    return 4;
+}
