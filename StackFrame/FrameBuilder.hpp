@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../SymbolTable/include/SymbolTable.h"
-#include "include/X86MiniJavaFrame.h"
+#include "include/Frame.hpp"
 #include "FramesHolder.hpp"
 
 #include <vector>

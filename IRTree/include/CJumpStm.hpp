@@ -18,8 +18,8 @@ namespace IRTree {
         explicit CCJumpStm( const ERelOp _relOp,
                 const IExp* _left,
                 const IExp* _right ,
-                const CLabel _ifTrue,
-                const CLabel _ifFalse )
+                const CLabel* _ifTrue,
+                const CLabel* _ifFalse )
                 : relOp( _relOp ), left( _left ),
                 right( _right ), ifTrue( _ifTrue ), ifFalse( _ifFalse ) {}
 
@@ -31,8 +31,8 @@ namespace IRTree {
         const ERelOp relOp;
         std::unique_ptr<const IExp> left;
         std::unique_ptr<const IExp> right;
-        const CLabel ifTrue;
-        const CLabel ifFalse;
+        const CLabel* ifTrue;
+        const CLabel* ifFalse;
 
     };
 

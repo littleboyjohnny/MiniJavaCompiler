@@ -7,15 +7,19 @@ const CFramesHolder* CFrameBuilder::build(const CSymbolTable *table) {
         auto methodsNames = classInfo->GetScope()->GetMethodNames();
         for (auto methodName : methodsNames) {
             CMethodInfo* methodInfo = classInfo->GetScope()->TryResolveMethod( methodName );
-            CX86MiniJavaFrame* newFrame = new CX86MiniJavaFrame();
+            auto newFrame = new CFrame(className->GetString(), methodName->GetString());
 
             auto params = methodInfo->GetParameterNames();
             for (auto param : params) {
-                CVariableInfo* variableInfo = methodInfo->TryResolveParameter(param);
-                newFrame->AddFormal( variableInfo ) //TODO
+                newFrame->AddFormal( param->GetString() );
             }
 
-            framesHolder->AddFrame(newFrame);
+            auto localsNames = methodInfo->GetScope()->GetVariableNames();
+            for (auto local : localsNames) {
+                newFrame->AddLocal( local->GetString() );
+            }
+
+            framesHolder->AddFrame(new CSymbol(className->GetString() + "::" + methodName->GetString()), newFrame);
         }
     }
 }

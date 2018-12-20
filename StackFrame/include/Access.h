@@ -1,6 +1,10 @@
 #pragma once
 
+#include "include/Exp.h"
+#include "include/Temp.h"
+
 class IAccess {
-    virtual ~IAccess() {}
-    const IRTree::IExp* GetExp( const IRTree::CTemp* framePtr ) const = 0;
+public:
+    virtual ~IAccess() = default;
+    virtual const IRTree::IExp* GetExp() const = 0;
 };

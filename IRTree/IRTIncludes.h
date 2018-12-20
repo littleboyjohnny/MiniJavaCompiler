@@ -8,6 +8,8 @@
 #include "include/CallExp.hpp"
 #include "include/EseqExp.hpp"
 
+#include "include/ExpList.hpp"
+
 #include "include/MoveStm.hpp"
 #include "include/ExpStm.hpp"
 #include "include/JumpStm.hpp"

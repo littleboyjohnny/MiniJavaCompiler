@@ -5,6 +5,7 @@
 #include "ExpStm.hpp"
 #include "Temp.h"
 #include "CJumpStm.hpp"
+#include "ConstExp.hpp"
 
 namespace IRTree {
     class CExpConverter : public ISubtreeWrapper {
@@ -18,7 +19,13 @@ namespace IRTree {
         }
 
         const IRTree::IStm* ToConditional( const IRTree::CLabel* t, const IRTree::CLabel* f ) const {
-            return new CCJumpStm(CCJumpStm::ERelOp::LT, CConstExp(0), expr, t, f);
+            return new CCJumpStm(
+                        CCJumpStm::ERelOp::LT,
+                        new IRTree::CConstExp(0),
+                        expr,
+                        t,
+                        f
+            );
         }
     private:
         const IRTree::IExp* expr;
