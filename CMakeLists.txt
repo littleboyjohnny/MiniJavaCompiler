@@ -104,3 +104,12 @@ target_link_libraries( SymbolTable liblexer libparser )
 set( PARSEREXE_SRC parserexe.cpp )
 add_executable( ParserEXE ${PARSEREXE_SRC} )
 target_link_libraries( ParserEXE liblexer libparser )
+
+#========================= PVS-Studio Section ================================
+include( PVS-Studio.cmake )
+pvs_studio_add_target( TARGET SymbolTable.analyze
+        OUTPUT FORMAT errorfile
+        ANALYZE SymbolTable
+        LOG target.err
+        CONFIG ${CMAKE_HOME_DIRECTORY}/PVS-Studio.cfg )
+#========================= PVS-Studio Section ================================
