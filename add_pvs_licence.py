@@ -10,10 +10,10 @@ def main():
     p = Path(".")
 
     for file in p.rglob("*.[ch]pp"):
-        print(file)
         with open(file, "r") as f:
             lines = f.readlines()
         if header[0] not in lines:
+            print(file)
             lines = header + lines
             with open(file, "w") as f:
                 f.writelines(lines)
