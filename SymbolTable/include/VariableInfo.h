@@ -14,6 +14,7 @@ public:
     std::string GetStringRepresentation() const;
 
     int GetSize() const;
+    int GetOffset() const;
 
 private:
     const CSymbol* name;

@@ -37,3 +37,8 @@ int CVariableInfo::GetSize() const
 {
     return 4;
 }
+
+int CVariableInfo::GetOffset() const
+{
+    return offset;
+}
