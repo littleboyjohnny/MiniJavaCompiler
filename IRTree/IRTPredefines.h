@@ -9,6 +9,8 @@ namespace IRTree {
     class CCallExp;
     class CEseqExp;
 
+    class CExpList;
+
     class CMoveStm;
     class CExpStm;
     class CJumpStm;

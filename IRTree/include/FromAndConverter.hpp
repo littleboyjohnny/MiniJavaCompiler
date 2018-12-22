@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ConditionalWrapper.hpp"
+#include "include/CJumpStm.hpp"
 
 namespace IRTree {
     class CFromAndConverter : public CConditionalWrapper {
@@ -8,8 +9,8 @@ namespace IRTree {
         CFromAndConverter( const IRTree::IExp* _leftArg, const IRTree::IExp* _rightArg )
             : leftArg( _leftArg ), rightArg( _rightArg ) {}
 
-        virtual const IRTree::IStm* ToConditional( const IRTree::CLabel* t, const IRTree::CLabel* f ) {
-
+        const IRTree::IStm* ToConditional( const IRTree::CLabel* t, const IRTree::CLabel* f ) const override {
+            return new IRTree::CCJumpStm(CCJumpStm::ERelOp::LT, leftArg, rightArg, t, f);
         }
 
     private:

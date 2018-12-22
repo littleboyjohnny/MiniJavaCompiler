@@ -29,6 +29,8 @@ public:
     // добавляет блок в области видимости
     void PushBlockScope( CBlockScope *scope );
 
+    CBlockScope* BackBlockScope() const;
+
     // извлекает последний блок видимости
     CBlockScope* PopBlockScope();
 

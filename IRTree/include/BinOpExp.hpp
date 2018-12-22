@@ -11,16 +11,18 @@ namespace IRTree {
 
     class CBinOpExp : public IExp {
     public:
-        using EBinOp = CBinaryOpExpression::OpType;
-        /*
+        //using EBinOp = CBinaryOpExpression::OpType;
+
         enum class EBinOp
         {
             AND,
             PLUS,
             MINUS,
-            MULTIPLY
+            MULTIPLY,
+            LESS,
+            XOR
         };
-         */
+
 
         explicit CBinOpExp( const EBinOp _binOp,
                 const IExp* _left,

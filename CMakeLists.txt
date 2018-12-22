@@ -92,6 +92,11 @@ set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp AST/
 add_executable( AstBuilder ${ASTBUILDER_SRC} )
 target_link_libraries( AstBuilder liblexer libparser )
 
+#Frame
+set( STACKFRAME_EXE StackFrame/main.cpp )
+set( STACKFRAME_SRC StackFrame/FrameBuilder.cpp StackFrame/FramesHolder.hpp StackFrame/src/InFrameAccess.cpp StackFrame/src/InRegAccess.cpp StackFrame/src/Frame.cpp )
+add_executable( Frame ${STACKFRAME_EXE} ${STACKFRAME_SRC} )
+
 #IRTree
 set( IRTREEBUILDER_SRC irtBuilder.cpp IRTree/IRTBuilder.cpp IRTree/IRTVisualiser.cpp IRTree/include/EseqExp.hpp IRTree/include/MemExp.hpp IRTree/include/CallExp.hpp IRTree/include/ExpList.hpp IRTree/include/StmList.hpp IRTree/include/MoveStm.hpp IRTree/include/ExpStm.hpp IRTree/include/JumpStm.hpp IRTree/include/CJumpStm.hpp IRTree/include/SeqStm.hpp IRTree/include/LabelStm.hpp IRTree/include/BinOpExp.hpp)
 add_executable( IrtBuilder ${IRTREEBUILDER_SRC} )

@@ -64,6 +64,14 @@ void CSymbolTable::PushBlockScope( CBlockScope *scope )
 }
 
 
+CBlockScope* CSymbolTable::BackBlockScope() const
+{
+    assert( !blocks.empty() );
+
+    return blocks.back();
+}
+
+
 CBlockScope* CSymbolTable::PopBlockScope()
 {
     assert( !blocks.empty() );

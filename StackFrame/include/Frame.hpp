@@ -2,29 +2,34 @@
 
 #include "FrameInterface.h"
 #include "InFrameAccess.h"
-#include "VarInfo.hpp"
-#include "../../SymbolTable/include/Symbol.h"
-#include "../../SymbolTable/include/VariableInfo.h"
+#include "include/Symbol.h"
+#include "include/VariableInfo.h"
+#include "include/Temp.h"
+
 
 class CFrame : public IFrame {
+private:
+    const int wordSize = 4;
 public:
-    CFrame();
-    void AddFormal( const CVariableInfo* ) ;
-    void AddLocal( const CSymbol* name ) ;
-    int FormalsCount() const ;
-    const IAccess* Formal( int index ) const ;
-    const IAccess* FindLocalOfFormal( const CSymbol* name ) const ;
-    void ExternalCall(const std::string& name, const IRTree::IExp* exp);
-    IRTree::IExp* GetAddress() const;
-    const IRTree::CTemp* FP() const;
-    int WordSize() const;
+    CFrame( const std::string& nameClass, const std::string& nameMethod );
+    void AddFormal( const std::string& name ) override;
+    void AddLocal( const std::string& name ) override;
+    void AddToReg( const std::string& name ) override;
+    int FormalsCount() const override;
+    const IRTree::IExp* ExternalCall(const std::string& name, const IRTree::IExp* exp) const override;
+    const IRTree::IExp* GetAccess( const std::string& name ) const override;
+    const IRTree::CTemp* FP() const override;
+    int WordSize() const override;
+    const IRTree::CTemp* This() const override;
 
 private:
     int formalsCount;
-    int framePointer;
     int size;
-    int returnValue;
-    void* thisClass;  //TODO
-    std::vector<const CSymbol*> arguments;
-    std::map<const CSymbol*, CVarInfo*> symbolToInfo;
+    const IRTree::CTemp framePointer;
+    const IRTree::CTemp returnValue;
+    const IRTree::CTemp thisAddress;
+
+    const std::string methodName;
+
+    std::map<const CSymbol*, const IAccess*> hashAccess;
 };

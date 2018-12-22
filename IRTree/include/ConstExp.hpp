@@ -9,7 +9,7 @@ namespace IRTree {
     public:
         explicit CConstExp( int _value ) : value( _value ) {}
 
-        void Accept( IVisitorIRT *visitor ) const {
+        void Accept( IVisitorIRT *visitor ) const override {
             visitor->Visit( this );
         }
 

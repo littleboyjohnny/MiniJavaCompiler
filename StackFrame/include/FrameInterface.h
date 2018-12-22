@@ -11,13 +11,13 @@
 
 class IFrame {
 public:
-    virtual void AddFormal( const CVariableInfo* ) = 0;
-    virtual void AddLocal( const CSymbol* name ) = 0;
+    virtual void AddFormal( const std::string& name ) = 0;
+    virtual void AddLocal( const std::string& name ) = 0;
+    virtual void AddToReg( const std::string& name ) = 0;
     virtual int FormalsCount() const = 0;
-    virtual const IAccess* Formal( int index ) const  = 0;
-    virtual const IAccess* FindLocalOfFormal( const CSymbol* name ) const  = 0;
-    virtual void ExternalCall(const std::string& name, const IRTree::IExp* exp) = 0;
-    virtual IRTree::IExp* GetAddress() const = 0;
+    virtual const IRTree::IExp* ExternalCall(const std::string& name, const IRTree::IExp* exp) const = 0;
+    virtual const IRTree::IExp* GetAccess( const std::string& name ) const = 0;
     virtual const IRTree::CTemp* FP() const = 0;
+    virtual const IRTree::CTemp* This() const = 0;
     virtual int WordSize() const = 0;
 };

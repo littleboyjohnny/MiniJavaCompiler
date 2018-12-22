@@ -4,13 +4,15 @@
 #include <map>
 
 namespace IRTree {
-    //using CTemp = std::string;
     class CTemp {
     public:
+        explicit CTemp( const std::string& regName ) : label(regName) {}
 
+        const std::string& getName() const {
+            return label;
+        }
 
     private:
         std::string label;
-        std::map<>
     };
 }
