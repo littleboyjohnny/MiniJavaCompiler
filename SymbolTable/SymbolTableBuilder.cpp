@@ -20,6 +20,13 @@ CSymbolTableBuilder::CSymbolTableBuilder() :
     //
 }
 
+CSymbolTableBuilder::~CSymbolTableBuilder()
+{
+    for( auto ptr : scopes ) {
+        delete ptr;
+    }
+}
+
 
 std::unique_ptr<CSymbolTable> CSymbolTableBuilder::Build( const CGoal *acceptable )
 {

@@ -10,6 +10,7 @@
 class CSymbolTableBuilder : public IVisitor {
 public:
     CSymbolTableBuilder();
+    ~CSymbolTableBuilder();
 
     std::unique_ptr<CSymbolTable> Build( const CGoal* acceptable );
 
