@@ -15,7 +15,7 @@ namespace IRTree {
             visitor->Visit( this );
         }
 
-    private:
+
         std::unique_ptr<const IExp> dst;
         std::unique_ptr<const IExp> src;
     };

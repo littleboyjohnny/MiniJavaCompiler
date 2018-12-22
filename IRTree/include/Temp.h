@@ -6,13 +6,15 @@
 namespace IRTree {
     class CTemp {
     public:
-        explicit CTemp( const std::string& regName ) : label(regName) {}
+        explicit CTemp( const std::string& regName ) {
+            label = "REG::" + regName;
+        }
 
         const std::string& getName() const {
             return label;
         }
 
-    private:
+
         std::string label;
     };
 }

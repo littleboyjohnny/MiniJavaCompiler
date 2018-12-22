@@ -4,6 +4,15 @@
 #include <cassert>
 #include <ASTIncludes.h>
 
+const CCodeFragment* IRTree::CIRTBuilder::BuildAST( const CGoal * goal,
+                                                    const CSymbolTable* st,
+                                                    const CFramesHolder* fh ) {
+    framesHolder = fh;
+    symbolTable = st;
+    goal->Accept( this );
+    return head;
+}
+
 void IRTree::CIRTBuilder::Visit( const CGoal* acceptable ) {
     assert( acceptable != nullptr );
     assert( acceptable->mainClass != nullptr );
@@ -15,10 +24,22 @@ void IRTree::CIRTBuilder::Visit( const CGoal* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CMainClass* acceptable ) {
-    currClass = symbolTable->TryResolveClass( new CSymbol( acceptable->className->identifier ) );
-    if ( acceptable->statementS )
-        acceptable->statementS->Accept( this );
+    currClass = symbolTable->TryResolveClass( CSymbol::GetIntern( acceptable->className->identifier ) );
+    currMethod = currClass->GetScope()->TryResolveMethod( CSymbol::GetIntern( "main" ) );
+    currFrame = framesHolder->GetFrame( currClass->GetName()->GetString(), currMethod->GetName()->GetString() );
 
+    const IStm* body = nullptr;
+    if ( acceptable->statementS ) {
+        acceptable->statementS->Accept(this);
+        body = currWrapper->ToStm();
+    }
+
+    CCodeFragment* fragment = new CCodeFragment( currFrame, body, head );
+    head = fragment;
+
+    currWrapper = nullptr;
+    currFrame = nullptr;
+    currMethod = nullptr;
     currClass = nullptr;
 }
 
@@ -29,7 +50,7 @@ void IRTree::CIRTBuilder::Visit( const CClassDeclarationList* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CClassDeclaration* acceptable ) {
-    currClass = symbolTable->TryResolveClass(new CSymbol( acceptable->className->identifier ) );
+    currClass = symbolTable->TryResolveClass( CSymbol::GetIntern( acceptable->className->identifier ) );
 
     if ( acceptable->methodDeclarationS )
         acceptable->methodDeclarationS->Accept( this );
@@ -44,19 +65,28 @@ void IRTree::CIRTBuilder::Visit( const CMethodDeclarationList* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CMethodDeclaration* acceptable ) {
-    currMethod = currClass->GetScope()->TryResolveMethod( new CSymbol( acceptable->methodIdentifier->identifier ) );
-    currFrame = framesHolder->GetFrame( new CSymbol( currClass->GetName()->GetString() + "::"
-            + currMethod->GetName()->GetString()) );
+    currMethod = currClass->GetScope()->TryResolveMethod( CSymbol::GetIntern( acceptable->methodIdentifier->identifier ) );
+    currFrame = framesHolder->GetFrame( currClass->GetName()->GetString(), currMethod->GetName()->GetString());
 
+    const IStm* body = nullptr;
+    if ( acceptable->statementS ) {
+        acceptable->statementS->Accept(this);
+        body = currWrapper->ToStm();
+    }
 
+    CCodeFragment* fragment = new CCodeFragment( currFrame, body, head );
+    head = fragment;
 
-    acceptable->statementS->Accept( this );
-    auto body = currWrapper->ToStm();
-
+    currWrapper = nullptr;
+    currFrame = nullptr;
     currMethod = nullptr;
 }
 
 void IRTree::CIRTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) {
+    assert( acceptable->expression != nullptr );
+    assert( acceptable->indexExpression != nullptr );
+    assert( acceptable->arrayName != nullptr );
+
     acceptable->arrayName->Accept( this );
     const IExp* base = currWrapper->ToExp();
 
@@ -90,23 +120,34 @@ void IRTree::CIRTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CCurlyBraceStatement* acceptable ) {
-    acceptable->statementS->Accept( this );
-    currWrapper = new CStmConverterer( currWrapper->ToStm() );
+    if ( acceptable->statementS ) {
+        acceptable->statementS->Accept(this);
+        currWrapper = new CStmConverterer(currWrapper->ToStm());
+    } else {
+        currWrapper = new CStmConverterer( nullptr );
+    }
 }
 
 void IRTree::CIRTBuilder::Visit( const CCallExpression* acceptable ) {
+    assert( acceptable->expression != nullptr );
+    assert( acceptable->identifier != nullptr );
+
     acceptable->expression->Accept( this );
     const IExp* base = currWrapper->ToExp();
 
-    acceptable->identifier->Accept( this );
-    const IExp* method = currWrapper->ToExp();
+    //acceptable->identifier->Accept( this );
+    //const IExp* method = currWrapper->ToExp();
 
-    acceptable->expressionParamS->Accept( this );
+    if ( acceptable->expressionParamS ) {
+        acceptable->expressionParamS->Accept(this);
+    } else {
+        currList = nullptr;
+    }
 
     currWrapper = new CExpConverter(
                     new CCallExp(
                             new CNameExp(
-                                    new CLabel(currClass->GetName()->GetString() + "::" +
+                                    CLabel(currClass->GetName()->GetString() + "::" +
                                                std::string(acceptable->identifier->identifier))
                                     ),
                             currList
@@ -129,7 +170,31 @@ void IRTree::CIRTBuilder::Visit( const CIdentifierExpression* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CTerminalIdentifier* acceptable ) {
-    currWrapper = new CExpConverter( currFrame->GetAccess( acceptable->identifier ) );
+    const IExp* exp = currFrame->GetAccess( acceptable->identifier );
+    if (exp == nullptr) {
+        INameScope::SymbolType st = symbolTable->ResolveType( CSymbol::GetIntern( acceptable->identifier ) );
+        if (st == INameScope::SymbolType::VARIABLE) {
+            auto varInfo = currClass->GetScope()->TryResolveVariable(CSymbol::GetIntern(acceptable->identifier));
+            exp = new CMemExp(
+                    new CBinOpExp(
+                            CBinOpExp::EBinOp::PLUS,
+                            currFrame->GetAccess("this"),
+                            new CBinOpExp(
+                                    CBinOpExp::EBinOp::MULTIPLY,
+                                    new CBinOpExp(
+                                            CBinOpExp::EBinOp::PLUS,
+                                            new CConstExp(varInfo->GetOffset()),
+                                            new CConstExp(1)
+                                    ),
+                                    new CConstExp(currFrame->WordSize())
+                            )
+                    )
+            );
+        }
+    }
+
+    currWrapper = new CExpConverter( exp );
+
 }
 
 void IRTree::CIRTBuilder::Visit( const CTerminalIntliteral* acceptable ) {
@@ -140,6 +205,11 @@ void IRTree::CIRTBuilder::Visit( const CTerminalIntliteral* acceptable ) {
 
 void IRTree::CIRTBuilder::Visit( const CIfElseStatement* acceptable ) {
     static int counter = 0;
+
+    assert(acceptable->condition != nullptr);
+    assert(acceptable->ifStatement != nullptr);
+    assert(acceptable->elseStatement != nullptr);
+
     counter++;
     CLabel t(currClass->GetName()->GetString() + "::" +
              currMethod->GetName()->GetString() + "::" +
@@ -179,6 +249,8 @@ void IRTree::CIRTBuilder::Visit( const CIntliteralExpression* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CLengthExpression* acceptable ) {
+    assert( acceptable->expression != nullptr );
+
     acceptable->expression->Accept( this );
     currWrapper = new CExpConverter(
                     currWrapper->ToExp()
@@ -186,6 +258,8 @@ void IRTree::CIRTBuilder::Visit( const CLengthExpression* acceptable ) {
 } 
 
 void IRTree::CIRTBuilder::Visit( const CNewArrayExpression* acceptable ) {
+    assert( acceptable->expression != nullptr );
+
     acceptable->expression->Accept( this );
     currWrapper = new CExpConverter(
                     currFrame->ExternalCall(
@@ -197,30 +271,31 @@ void IRTree::CIRTBuilder::Visit( const CNewArrayExpression* acceptable ) {
                                             currWrapper->ToExp(),
                                             new CConstExp(1)
                                     ),
-                                    new CConstExp(currFrame->WordSize()
+                                    new CConstExp(currFrame->WordSize())
                             )
                     )
-            )
-    );
+                  );
 } 
 
 void IRTree::CIRTBuilder::Visit( const CNewIdentifierExpression* acceptable ) {
-    const CClassInfo* currClass = symbolTable->TryResolveClass(new CSymbol(acceptable->identifier->identifier));
-    int sizeOfClass = currClass->GetSize();
+    const CClassInfo* loacalClass = symbolTable->TryResolveClass( CSymbol::GetIntern(acceptable->identifier->identifier) );
+    int sizeOfClass = loacalClass->GetSize();
 
     currWrapper = new CExpConverter(
                     currFrame->ExternalCall(
                             "malloc",
                             new CBinOpExp(
-                                    CBinOpExp::EBinOp::MULTIPLY,
+                                    CBinOpExp::EBinOp::PLUS,
                                     new CConstExp(sizeOfClass),
-                                    new CConstExp(currFrame->WordSize())
+                                    new CConstExp(1)
                                     )
                             )
             );
 } 
 
 void IRTree::CIRTBuilder::Visit( const CNotExpression* acceptable ) {
+    assert( acceptable->expression != nullptr );
+
     acceptable->expression->Accept( this );
     currWrapper = new CExpConverter(
                     new CBinOpExp(CBinOpExp::EBinOp::XOR, new CConstExp(0), currWrapper->ToExp())
@@ -228,6 +303,8 @@ void IRTree::CIRTBuilder::Visit( const CNotExpression* acceptable ) {
 } 
 
 void IRTree::CIRTBuilder::Visit( const CParensExpression* acceptable ) {
+    assert( acceptable->expression != nullptr );
+
     acceptable->expression->Accept( this );
     currWrapper = new CExpConverter(
                     currWrapper->ToExp()
@@ -235,6 +312,8 @@ void IRTree::CIRTBuilder::Visit( const CParensExpression* acceptable ) {
 } 
 
 void IRTree::CIRTBuilder::Visit( const CPrintlnStatement* acceptable ) {
+    assert( acceptable->expression != nullptr );
+
     acceptable->expression->Accept( this );
     currWrapper = new CExpConverter(
                     currFrame->ExternalCall("println", currWrapper->ToExp())
@@ -242,6 +321,9 @@ void IRTree::CIRTBuilder::Visit( const CPrintlnStatement* acceptable ) {
 } 
 
 void IRTree::CIRTBuilder::Visit( const CSquarebracketsExpression* acceptable ) {
+    assert( acceptable->expression != nullptr );
+    assert( acceptable->squarebraketsExpression != nullptr );
+
     acceptable->expression->Accept( this );
     const IExp* base = currWrapper->ToExp();
 
@@ -281,7 +363,7 @@ void IRTree::CIRTBuilder::Visit( const CStatementList* acceptable ) {
 
 void IRTree::CIRTBuilder::Visit( const CThisExpression* acceptable ) {
     currWrapper = new CExpConverter(
-                    currFrame->GetAccess( currFrame->This()->getName() )
+                    currFrame->GetAccess( "this" )
             );
 } 
 

@@ -9,6 +9,7 @@
 #include "include/EseqExp.hpp"
 
 #include "include/ExpList.hpp"
+#include "include/Label.h"
 
 #include "include/MoveStm.hpp"
 #include "include/ExpStm.hpp"

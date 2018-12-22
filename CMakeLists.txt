@@ -88,24 +88,30 @@ remove_definitions( -DPARSER_DEBUG )
 #========================= GTest Section =====================================
 
 # создаем исполняемый фаил - берет имя фаила как параметр командной строки и отрисовывает AST в фаил build/ast.jpg
-set( ASTBUILDER_SRC astBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp AST/include/Type.hpp common/src/Switcher.cpp common/include/Switcher.h)
-add_executable( AstBuilder ${ASTBUILDER_SRC} )
+set( ASTBUILDER_EXE astBuilder.cpp )
+set( ASTBUILDER_SRC AST/ASTBuilder.cpp AST/ASTVisualiser.cpp AST/include/Type.hpp common/src/Switcher.cpp common/include/Switcher.h)
+add_executable( AstBuilder ${ASTBUILDER_EXE} ${ASTBUILDER_SRC} )
 target_link_libraries( AstBuilder liblexer libparser )
 
-#Frame
-set( STACKFRAME_EXE StackFrame/main.cpp )
-set( STACKFRAME_SRC StackFrame/FrameBuilder.cpp StackFrame/FramesHolder.hpp StackFrame/src/InFrameAccess.cpp StackFrame/src/InRegAccess.cpp StackFrame/src/Frame.cpp )
-add_executable( Frame ${STACKFRAME_EXE} ${STACKFRAME_SRC} )
-
-#IRTree
-set( IRTREEBUILDER_SRC irtBuilder.cpp IRTree/IRTBuilder.cpp IRTree/IRTVisualiser.cpp IRTree/include/EseqExp.hpp IRTree/include/MemExp.hpp IRTree/include/CallExp.hpp IRTree/include/ExpList.hpp IRTree/include/StmList.hpp IRTree/include/MoveStm.hpp IRTree/include/ExpStm.hpp IRTree/include/JumpStm.hpp IRTree/include/CJumpStm.hpp IRTree/include/SeqStm.hpp IRTree/include/LabelStm.hpp IRTree/include/BinOpExp.hpp)
-add_executable( IrtBuilder ${IRTREEBUILDER_SRC} )
-
 # временный таргет для проверки таблицы символов
-add_executable( SymbolTable SymbolTable/main.cpp SymbolTable/src/SymbolTable.cpp SymbolTable/src/BlockScope.cpp SymbolTable/src/Symbol.cpp SymbolTable/src/VariableInfo.cpp SymbolTable/src/MethodInfo.cpp SymbolTable/src/ClassInfo.cpp SymbolTable/SymbolTableBuilder.cpp AST/ASTBuilder.cpp AST/ASTVisualiser.cpp SymbolTable/CSymbolTableVisualizer.cpp SymbolTable/CSymbolTableVisualizer.h SymbolTable/TypeChecker.cpp SymbolTable/TypeChecker.h)
+set( SYMBOLTABLE_EXE SymbolTable/main.cpp )
+set( SYMBOLTABLE_SRC SymbolTable/src/SymbolTable.cpp SymbolTable/src/BlockScope.cpp SymbolTable/src/Symbol.cpp SymbolTable/src/VariableInfo.cpp SymbolTable/src/MethodInfo.cpp SymbolTable/src/ClassInfo.cpp SymbolTable/SymbolTableBuilder.cpp SymbolTable/CSymbolTableVisualizer.cpp SymbolTable/CSymbolTableVisualizer.h SymbolTable/TypeChecker.cpp SymbolTable/TypeChecker.h )
+add_executable( SymbolTable ${SYMBOLTABLE_EXE} ${SYMBOLTABLE_SRC} ${ASTBUILDER_SRC} )
 target_link_libraries( SymbolTable liblexer libparser )
 
 # временный таргет для проверки парсера
 set( PARSEREXE_SRC parserexe.cpp )
 add_executable( ParserEXE ${PARSEREXE_SRC} )
 target_link_libraries( ParserEXE liblexer libparser )
+
+#Frame
+set( STACKFRAME_EXE StackFrame/main.cpp )
+set( STACKFRAME_SRC StackFrame/FrameBuilder.cpp StackFrame/FramesHolder.hpp StackFrame/src/InFrameAccess.cpp StackFrame/src/InRegAccess.cpp StackFrame/src/Frame.cpp )
+add_executable( Frame ${STACKFRAME_EXE} ${STACKFRAME_SRC} ${ASTBUILDER_SRC} ${SYMBOLTABLE_SRC} )
+target_link_libraries( Frame liblexer libparser )
+
+#IRTree
+set( IRTREEBUILDER_EXE irtBuilder.cpp )
+set( IRTREEBUILDER_SRC IRTree/IRTBuilder.cpp IRTree/IRTVisualiser.cpp IRTree/include/EseqExp.hpp IRTree/include/MemExp.hpp IRTree/include/CallExp.hpp IRTree/include/ExpList.hpp IRTree/include/StmList.hpp IRTree/include/MoveStm.hpp IRTree/include/ExpStm.hpp IRTree/include/JumpStm.hpp IRTree/include/CJumpStm.hpp IRTree/include/SeqStm.hpp IRTree/include/LabelStm.hpp IRTree/include/BinOpExp.hpp)
+add_executable( IrtBuilder ${IRTREEBUILDER_EXE} ${IRTREEBUILDER_SRC} ${STACKFRAME_SRC} ${ASTBUILDER_SRC} ${SYMBOLTABLE_SRC} )
+target_link_libraries( IrtBuilder liblexer libparser )

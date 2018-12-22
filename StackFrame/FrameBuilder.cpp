@@ -1,6 +1,14 @@
 #include "FrameBuilder.hpp"
 
-const CFramesHolder* CFrameBuilder::build(const CSymbolTable *table) {
+CFrameBuilder::CFrameBuilder() {
+    framesHolder = new CFramesHolder();
+}
+
+CFrameBuilder::~CFrameBuilder() {
+    delete framesHolder;
+}
+
+const CFramesHolder* CFrameBuilder::build( std::unique_ptr<CSymbolTable>& table ) {
     auto classesNames = table->BackBlockScope()->GetClassNames();
     for (auto className : classesNames) {
         CClassInfo* classInfo = table->TryResolveClass( className );
@@ -19,9 +27,10 @@ const CFramesHolder* CFrameBuilder::build(const CSymbolTable *table) {
                 newFrame->AddLocal( local->GetString() );
             }
 
-            framesHolder->AddFrame(new CSymbol(className->GetString() + "::" + methodName->GetString()), newFrame);
+            framesHolder->AddFrame( newFrame );
         }
     }
+    return framesHolder;
 }
 
 const CFramesHolder* CFrameBuilder::getFramesHolder() const {

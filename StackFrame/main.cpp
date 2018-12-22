@@ -1,8 +1,11 @@
 #include "FrameBuilder.hpp"
 #include "FramesHolder.hpp"
 
+#include "../parser/parser.h"
+#include "../AST/ASTBuilder.h"
+#include "../SymbolTable/SymbolTableBuilder.h"
 
-int main() {
+int main( int argc, char** argv ) {
     freopen( argv[1], "r", stdin );
 
     IAcceptable * goal = nullptr;
@@ -15,5 +18,6 @@ int main() {
     std::unique_ptr<CSymbolTable> table = tableBuilder.Build( newGoal );
 
     CFrameBuilder* frameBuilder = new CFrameBuilder();
-    const CFramesHolder* framesHolder = frameBuilder->build(table);
+    const CFramesHolder* framesHolder = frameBuilder->build( table );
+
 }

@@ -13,7 +13,7 @@ const IRTree::IExp* CInFrameAccess::GetExp() const {
     return new IRTree::CMemExp(
                 new IRTree::CBinOpExp(
                             IRTree::CBinOpExp::EBinOp::PLUS,
-                            new IRTree::CTempExp( *framePtr ),
+                            new IRTree::CTempExp( framePtr ),
                             new IRTree::CConstExp( offset )
                         )
             );

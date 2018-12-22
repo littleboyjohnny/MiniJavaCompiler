@@ -4,15 +4,20 @@
 #include "../SymbolTable/include/Symbol.h"
 
 #include <map>
+#include <cassert>
 
 class CFramesHolder {
 public:
-    void AddFrame(const CSymbol* name, const IFrame* frame) {
-        frames[name] = frame;
+    void AddFrame(const IFrame* frame) {
+        assert( frame != nullptr );
+        std::string s = "FRAME::" + frame->GetClassName() + "::" + frame->GetMethodName();
+        const CSymbol* ident = CSymbol::GetIntern( s );
+        frames[ ident ] = frame;
     }
 
-    const IFrame* GetFrame( const CSymbol* name ) {
-        auto it = frames.find( name );
+    const IFrame* GetFrame( const std::string& nameClass, const std::string& nameMethod ) const {
+        std::string localName = "FRAME::" + nameClass + "::" + nameMethod;
+        auto it = frames.find( CSymbol::GetIntern( localName ) );
         if (it == frames.end()) {
             return nullptr;
         }

@@ -23,11 +23,12 @@ namespace IRTree {
                         CCJumpStm::ERelOp::LT,
                         new IRTree::CConstExp(0),
                         expr,
-                        t,
-                        f
+                        *t,
+                        *f
             );
         }
-    private:
+
+
         const IRTree::IExp* expr;
     };
 }

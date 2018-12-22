@@ -4,9 +4,10 @@
 #include <memory>
 #include <vector>
 
+#include "./core/Acceptable.h"
+
 namespace IRTree {
-    class CExpList
-    {
+    class CExpList : public IAcceptable {
     public:
         CExpList() = default;
 
@@ -20,7 +21,11 @@ namespace IRTree {
             expressions.emplace_back( expression );
         }
 
-    private:
+        void Accept( IVisitorIRT *visitor ) const {
+            visitor->Visit( this );
+        }
+
+
         std::vector<std::unique_ptr<const IExp>> expressions;
     };
 

@@ -10,6 +10,7 @@ namespace IRTree {
     class CEseqExp;
 
     class CExpList;
+    class CLabel;
 
     class CMoveStm;
     class CExpStm;

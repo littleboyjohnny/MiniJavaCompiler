@@ -23,6 +23,9 @@ namespace IRTree {
 
     class CIRTBuilder : public IVisitor {
     public:
+
+        const CCodeFragment* BuildAST( const CGoal *, const CSymbolTable*, const CFramesHolder* );
+
         void Visit( const CGoal* acceptable ) final;
         void Visit( const CMainClass* acceptable ) final;
         void Visit( const CClassDeclarationList* acceptable ) final;
@@ -73,12 +76,12 @@ namespace IRTree {
     private:
         IRTree::ISubtreeWrapper* currWrapper;
         const IFrame* currFrame;
-        CSymbolTable* symbolTable;
         CClassInfo* currClass;
         CMethodInfo* currMethod;
         CExpList* currList;
 
-        CFramesHolder* framesHolder;
+        const CSymbolTable* symbolTable;
+        const CFramesHolder* framesHolder;
 
         CCodeFragment* head = nullptr;
     };

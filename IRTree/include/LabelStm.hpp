@@ -9,13 +9,13 @@ namespace IRTree {
 
     class CLabelStm : public IStm {
     public:
-        explicit CLabelStm( const  CLabel _label ) : label( _label ) {}
+        explicit CLabelStm( const CLabel _label ) : label( _label ) {}
 
         void Accept( IVisitorIRT *visitor ) const {
             visitor->Visit( this );
         }
 
-    private:
+
         const CLabel label;
     };
 

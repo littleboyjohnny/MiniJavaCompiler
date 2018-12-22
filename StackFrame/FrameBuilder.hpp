@@ -8,7 +8,10 @@
 
 class CFrameBuilder {
 public:
-    const CFramesHolder* build(const CSymbolTable* table);
+    CFrameBuilder();
+    ~CFrameBuilder();
+
+    const CFramesHolder* build( std::unique_ptr<CSymbolTable>& table );
     const CFramesHolder* getFramesHolder() const;
 private:
     CFramesHolder* framesHolder;

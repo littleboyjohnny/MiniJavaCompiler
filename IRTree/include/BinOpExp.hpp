@@ -32,7 +32,7 @@ namespace IRTree {
             visitor->Visit( this );
         }
 
-    private:
+
         const EBinOp binOp;
         std::unique_ptr<const IExp> left;
         std::unique_ptr<const IExp> right;

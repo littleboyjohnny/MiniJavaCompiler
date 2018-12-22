@@ -20,5 +20,8 @@ namespace IRTree {
         virtual void Visit(const CSeqStm* acceptable) = 0;
         virtual void Visit(const CLabelStm* acceptable) = 0;
 
+        virtual void Visit(const CLabel* acceptable) = 0;
+        virtual void Visit(const CExpList* acceptable) = 0;
+
     };
 }

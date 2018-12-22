@@ -20,7 +20,7 @@ namespace IRTree {
             statements.emplace_back( expression );
         }
 
-    private:
+
         std::vector<std::unique_ptr<const IStm>> statements;
     };
 

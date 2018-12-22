@@ -2,13 +2,21 @@
 
 #include <string>
 
+#include "core/Acceptable.h"
+#include "core/Visitor.h"
+
 namespace IRTree {
-    //using CLabel = std::string;
-    class CLabel {
+
+    class CLabel : public IAcceptable {
     public:
         explicit CLabel( const std::string s ) : label(s) {}
 
-    private:
+        void Accept( IVisitorIRT *visitor ) const {
+            visitor->Visit( this );
+        }
+
+
         const std::string label;
     };
+
 }

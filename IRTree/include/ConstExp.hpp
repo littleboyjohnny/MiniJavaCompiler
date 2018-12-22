@@ -13,7 +13,7 @@ namespace IRTree {
             visitor->Visit( this );
         }
 
-    private:
+
         const int value;
     };
 

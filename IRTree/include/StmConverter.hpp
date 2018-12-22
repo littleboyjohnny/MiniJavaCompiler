@@ -21,7 +21,7 @@ namespace IRTree {
             return nullptr;
         }
 
-    private:
+
         const IRTree::IStm* stm;
     };
 }

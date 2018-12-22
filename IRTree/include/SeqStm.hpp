@@ -14,7 +14,7 @@ namespace IRTree {
             visitor->Visit( this );
         }
 
-    private:
+
         std::unique_ptr<const IStm> left;
         std::unique_ptr<const IStm> right;
     };

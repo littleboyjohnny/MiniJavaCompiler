@@ -4,45 +4,53 @@
 #include "include/ExpList.hpp"
 
 CFrame::CFrame( const std::string& nameClass, const std::string& nameMethod )
-    : framePointer(nameClass + "::" + nameMethod)
+    : framePointer(nameClass + "::" + nameMethod + "::FP")
     , thisAddress(nameClass + "::" + nameMethod + "::this")
     , returnValue(nameClass + "::" + nameMethod + "::return")
     , methodName( nameMethod )
-    {
-    AddToReg( framePointer.getName() );
-    AddToReg( returnValue.getName() );
-    AddToReg( thisAddress.getName() );
+    , className( nameClass ) {
+
+    AddToReg( "FP" );
+    AddToReg( "return" );
+    AddToReg( "this" );
+
+    size += wordSize;
+}
+
+void CFrame::AddToFrame( const std::string& name ) {
+    std::string ident = className + "::" + methodName + "::" + name;
+    hashAccess[ CSymbol::GetIntern( ident ) ] = new CInFrameAccess(&framePointer, size);
     size += wordSize;
 }
 
 void CFrame::AddFormal(const std::string& name) {
     formalsCount++;
-    hashAccess[new CSymbol(name)] = new CInFrameAccess(&framePointer, size);
-    size += wordSize;
+    AddToFrame( name );
 }
 
 void CFrame::AddLocal(const std::string& name) {
-    hashAccess[new CSymbol(name)] = new CInFrameAccess(&framePointer, size);
-    size += wordSize;
+    AddToFrame( name );
 }
 
 void CFrame::AddToReg(const std::string &name) {
-    hashAccess[new CSymbol(name)] = new CInRegAccess(
+    std::string ident = className + "::" + methodName + "::" + name;
+    hashAccess[ CSymbol::GetIntern( ident ) ] = new CInRegAccess(
                                         new IRTree::CTemp(
-                                                    "Reg::" + framePointer.getName() + "::" + name
+                                                className + "::" + methodName + "::" + name
                                         )
                                     );
 }
 
 const IRTree::IExp* CFrame::ExternalCall(const std::string &name, const IRTree::IExp *exp) const {
     return new IRTree::CCallExp(
-                new IRTree::CNameExp( new IRTree::CLabel( methodName ) ),
+                new IRTree::CNameExp( IRTree::CLabel( methodName ) ),
                 new IRTree::CExpList( exp )
             );
 }
 
 const IRTree::IExp* CFrame::GetAccess( const std::string& name ) const {
-    const CSymbol* acc = new CSymbol(name);
+    std::string ident = className + "::" + methodName + "::" + name;
+    const CSymbol* acc = CSymbol::GetIntern( ident );
     auto it = hashAccess.find( acc );
     if ( it != hashAccess.end() ) {
         return it->second->GetExp();
@@ -64,4 +72,12 @@ int CFrame::WordSize() const {
 
 const IRTree::CTemp* CFrame::This() const {
     return &thisAddress;
+}
+
+const std::string& CFrame::GetClassName() const {
+    return className;
+}
+
+const std::string& CFrame::GetMethodName() const {
+    return methodName;
 }

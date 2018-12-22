@@ -16,7 +16,7 @@ namespace IRTree {
             visitor->Visit( this );
         }
 
-    private:
+
         const CLabel target;
     };
 }
