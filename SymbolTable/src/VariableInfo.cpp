@@ -3,13 +3,15 @@
 #include <cassert>
 
 
-CVariableInfo::CVariableInfo( const CSymbol* _name, const CSymbol* _typeName )
+CVariableInfo::CVariableInfo( const CSymbol* _name, const CSymbol* _typeName, int _offset )
 {
     assert( _name != nullptr );
     assert( _typeName != nullptr );
+    assert( offset >= 0 );
 
     name = _name;
     typeName = _typeName;
+    offset = _offset;
 }
 
 

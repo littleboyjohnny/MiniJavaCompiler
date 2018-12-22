@@ -11,7 +11,8 @@
 
 
 CSymbolTableBuilder::CSymbolTableBuilder() :
-    currentMethodInfo( nullptr )
+    currentMethodInfo( nullptr ),
+    offset( 0 )
 {
     //
 }
@@ -53,7 +54,7 @@ void CSymbolTableBuilder::Visit( const CMainClass *acceptable )
     const CSymbol* returnType = CSymbol::GetIntern( "void" );
     const CSymbol* argName = CSymbol::GetIntern( acceptable->argName->identifier );
     const CSymbol* argType = CSymbol::GetIntern( "String[]" );
-    auto argInfo = new CVariableInfo( argName, argType );
+    auto argInfo = new CVariableInfo( argName, argType, 0 );
     auto methodInfo = new CMethodInfo( methodName, returnType );
     methodInfo->GetScope()->AddVariable( argName, argInfo );
     classInfo->GetScope()->AddMethod( methodName, methodInfo );
@@ -142,8 +143,10 @@ void CSymbolTableBuilder::Visit( const CVarDeclarationList *acceptable )
 {
     assert( acceptable != nullptr );
 
+    offset = 0;
     for( auto varDeclaration : acceptable->children ) {
         varDeclaration->Accept( this );
+        ++offset;
     }
 }
 
@@ -154,7 +157,7 @@ void CSymbolTableBuilder::Visit( const CVarDeclaration *acceptable )
     const CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
     const CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
 
-    auto varInfo = new CVariableInfo( varName, typeName );
+    auto varInfo = new CVariableInfo( varName, typeName, offset );
 
     CBlockScope::SymbolType type = scopes.back()->ResolveType( varName );
     if( type == CBlockScope::SymbolType::UNDECLARED ) {
@@ -168,8 +171,10 @@ void CSymbolTableBuilder::Visit( const CParamList* acceptable )
 {
     assert( acceptable != nullptr );
 
+    offset = 0;
     for( auto param : acceptable->children ) {
         param->Accept( this );
+        ++offset;
     }
 }
 
@@ -180,7 +185,7 @@ void CSymbolTableBuilder::Visit( const CParam* acceptable )
     const CSymbol* varName = CSymbol::GetIntern( acceptable->identifier->identifier );
     const CSymbol* typeName = CSymbol::GetIntern( acceptable->type->GetString() );
 
-    auto varInfo = new CVariableInfo( varName, typeName );
+    auto varInfo = new CVariableInfo( varName, typeName, offset );
 
     CBlockScope::SymbolType type = scopes.back()->ResolveType( varName );
     if( type == CBlockScope::SymbolType::UNDECLARED ) {

@@ -65,6 +65,7 @@ private:
     std::vector<CBlockScope*> scopes;
     CMethodInfo* currentMethodInfo;
     CClassInfo* currentClassInfo;
+    int offset;
 
     void onNameRedefinitionError( const CSymbol* name, const CBlockScope* scope );
 };

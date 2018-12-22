@@ -7,7 +7,7 @@
 
 class CVariableInfo : IInfo {
 public:
-    CVariableInfo( const CSymbol* _name, const CSymbol* _typeName );
+    CVariableInfo( const CSymbol* _name, const CSymbol* _typeName, int _offset );
 
     const CSymbol* GetName() const;
     const CSymbol* GetTypeName() const;
@@ -18,4 +18,6 @@ public:
 private:
     const CSymbol* name;
     const CSymbol* typeName;
+
+    int offset;
 };
