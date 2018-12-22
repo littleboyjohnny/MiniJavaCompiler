@@ -57,6 +57,7 @@ void CSymbolTableBuilder::Visit( const CMainClass *acceptable )
     auto argInfo = new CVariableInfo( argName, argType, 0 );
     auto methodInfo = new CMethodInfo( methodName, returnType );
     methodInfo->GetScope()->AddVariable( argName, argInfo );
+    methodInfo->RegisterAsParameter( argName );
     classInfo->GetScope()->AddMethod( methodName, methodInfo );
 
     scopes.back()->AddClass( className, classInfo );
