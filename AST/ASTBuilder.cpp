@@ -1,3 +1,6 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
 #include <string>
 #include <list>
 #include <vector>
@@ -5,7 +8,10 @@
 #include "ASTBuilder.h"
 #include "ASTIncludes.h"
 
-CASTBuilder::CASTBuilder() {
+CASTBuilder::CASTBuilder() :
+    ast( nullptr ),
+    child( nullptr )
+{
 
 }
 
@@ -15,7 +21,7 @@ CASTBuilder::~CASTBuilder() {
 
 const CGoal* CASTBuilder::BuildAST(const CGoal * goal) {
     goal->Accept( this );
-    ast = static_cast<const CGoal *>(child);
+    ast = dynamic_cast<const CGoal *>(child);
     return ast;
 }
 
@@ -24,7 +30,7 @@ void CASTBuilder::Visit( const CAdditionalExpressionParam* acceptable ) {
 
     if(acceptable->expression) {
         acceptable->expression->Accept(this);
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
         listHeadsExpressionParams.back()->children.push_back( expression );
     }
 
@@ -45,7 +51,7 @@ void CASTBuilder::Visit( const CAdditionalParam* acceptable ) {
 
     if (acceptable->param) {
         acceptable->param->Accept(this);
-        param = static_cast<const IParam *> ( child );
+        param = dynamic_cast<const IParam *> ( child );
         headParams->children.push_back( param );
     }
 }
@@ -67,15 +73,15 @@ void CASTBuilder::Visit( const CArrayAssignmentStatement* acceptable ) {
 
     if (acceptable->arrayName) {
         acceptable->arrayName->Accept(this);
-        arrayName = static_cast<const CTerminalIdentifier *> ( child );
+        arrayName = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
     if (acceptable->indexExpression) {
         acceptable->indexExpression->Accept(this);
-        indexExpression = static_cast<const IExpression *> ( child );
+        indexExpression = dynamic_cast<const IExpression *> ( child );
     }
     if (acceptable->expression) {
         acceptable->expression->Accept(this);
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
 
     arrayAssignmentStatement = new CArrayAssignmentStatement(arrayName, indexExpression, expression);
@@ -91,11 +97,11 @@ void CASTBuilder::Visit( const CClassDeclaration* acceptable ) {
 
     if (acceptable->className) {
         acceptable->className->Accept(this);
-        className = static_cast<const CTerminalIdentifier *> ( child );
+        className = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
     if (acceptable->extension) {
         acceptable->extension->Accept(this);
-        extension = static_cast<const IExtension *> ( child );
+        extension = dynamic_cast<const IExtension *> ( child );
     }
     if (acceptable->varDeclarationS) {
         varDeclarationList = new CVarDeclarationList();
@@ -119,7 +125,7 @@ void CASTBuilder::Visit( const CClassDeclarationS* acceptable ) {
     }
     if (acceptable->classDeclaration) {
         acceptable->classDeclaration->Accept(this);
-        classDeclaration = static_cast<const IClassDeclaration *> ( child );
+        classDeclaration = dynamic_cast<const IClassDeclaration *> ( child );
         headClassDeclarationS->children.push_back( classDeclaration );
     }
     child = classDeclaration;
@@ -148,11 +154,11 @@ void CASTBuilder::Visit( const CCallExpression* acceptable ) {
 
     if (acceptable->expression) {
         acceptable->expression->Accept(this);
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
     if (acceptable->identifier) {
         acceptable->identifier->Accept(this);
-        identifier = static_cast<const CTerminalIdentifier *> ( child );
+        identifier = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
     if (acceptable->expressionParamS) {
         expressionParamList = new CExpressionParamList();
@@ -170,7 +176,7 @@ void CASTBuilder::Visit( const CExpressionParamS* acceptable ) {
 
     if (acceptable->expression) {
         acceptable->expression->Accept(this);
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
         listHeadsExpressionParams.back()->children.push_back( expression );
     }
     if (acceptable->addittionalExpressionParamS) {
@@ -186,7 +192,7 @@ void CASTBuilder::Visit( const CExtension* acceptable ) {
 
     if (acceptable->className) {
         acceptable->className->Accept(this);
-        className = static_cast<const CTerminalIdentifier *> ( child );
+        className = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
 
     extension = new CExtension(className);
@@ -205,7 +211,7 @@ void CASTBuilder::Visit( const CGoal * acceptable ) {
 
     if ( acceptable->mainClass ) {
         acceptable->mainClass->Accept( this );
-        mainClass = static_cast<const IMainClass *> ( child );
+        mainClass = dynamic_cast<const IMainClass *> ( child );
     }
     if ( acceptable->classDeclarationS ) {
         classDeclarationList = new CClassDeclarationList();
@@ -223,7 +229,7 @@ void CASTBuilder::Visit( const CIdentifierExpression* acceptable ) {
 
     if (acceptable->identifier) {
         acceptable->identifier->Accept(this);
-        identifier = static_cast<const CTerminalIdentifier *> ( child );
+        identifier = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
 
     identifierExpression = new CIdentifierExpression( identifier );
@@ -238,15 +244,15 @@ void CASTBuilder::Visit( const CIfElseStatement* acceptable ) {
 
     if (acceptable->condition) {
         acceptable->condition->Accept(this);
-        condition = static_cast<const IExpression *> ( child );
+        condition = dynamic_cast<const IExpression *> ( child );
     }
     if (acceptable->ifStatement) {
         acceptable->ifStatement->Accept(this);
-        ifStatement = static_cast<const IStatement *> ( child );
+        ifStatement = dynamic_cast<const IStatement *> ( child );
     }
     if (acceptable->elseStatement) {
         acceptable->elseStatement->Accept(this);
-        elseStatement = static_cast<const IStatement *> ( child );
+        elseStatement = dynamic_cast<const IStatement *> ( child );
     }
 
     ifElseStatement = new CIfElseStatement(condition, ifStatement, elseStatement);
@@ -259,7 +265,7 @@ void CASTBuilder::Visit( const CIntliteralExpression* acceptable ) {
 
     if (acceptable->intliteral) {
         acceptable->intliteral->Accept(this);
-        intliteral = static_cast<const CTerminalIntliteral *> ( child );
+        intliteral = dynamic_cast<const CTerminalIntliteral *> ( child );
     }
     intliteralExpression = new CIntliteralExpression( intliteral );
     child = intliteralExpression;
@@ -276,7 +282,7 @@ void CASTBuilder::Visit( const CLengthExpression* acceptable ) {
 
     if( acceptable->expression ) {
         acceptable->expression->Accept( this );
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
 
     lengthExpression= new CLengthExpression(expression);
@@ -291,11 +297,11 @@ void CASTBuilder::Visit( const CMainClass* acceptable ) {
 
     if( acceptable->className ) {
         acceptable->className->Accept( this );
-        className = static_cast<const CTerminalIdentifier *> ( child );
+        className = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->argName ) {
         acceptable->argName->Accept( this );
-        argName = static_cast<const CTerminalIdentifier *> ( child );
+        argName = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->statementS ) {
         statementList = new CStatementList();
@@ -318,11 +324,11 @@ void CASTBuilder::Visit( const CMethodDeclaration* acceptable ) {
 
     if( acceptable->returnType ) {
         acceptable->returnType->Accept( this );
-        returnType = static_cast<const IType *> ( child );
+        returnType = dynamic_cast<const IType *> ( child );
     }
     if( acceptable->methodIdentifier ) {
         acceptable->methodIdentifier->Accept( this );
-        methodIdentifier = static_cast<const CTerminalIdentifier *> ( child );
+        methodIdentifier = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->params ) {
         paramList = new CParamList();
@@ -342,7 +348,7 @@ void CASTBuilder::Visit( const CMethodDeclaration* acceptable ) {
     }
     if( acceptable->returnExpression ) {
         acceptable->returnExpression->Accept( this );
-        returnExpression = static_cast<const IExpression *> ( child );
+        returnExpression = dynamic_cast<const IExpression *> ( child );
     }
 
     methodDeclaration = new CMethodDeclaration(returnType, methodIdentifier,
@@ -358,7 +364,7 @@ void CASTBuilder::Visit( const CMethodDeclarationS* acceptable ) {
     }
     if (acceptable->methodDeclaration) {
         acceptable->methodDeclaration->Accept(this);
-        methodDeclaration = static_cast<const IMethodDeclaration *> ( child );
+        methodDeclaration = dynamic_cast<const IMethodDeclaration *> ( child );
         headMethodDeclarationS->children.push_back(methodDeclaration);
     }
 
@@ -371,7 +377,7 @@ void CASTBuilder::Visit( const CNewArrayExpression* acceptable ) {
 
     if( acceptable->expression ) {
         acceptable->expression->Accept( this );
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
 
     newArrayExpression = new CNewArrayExpression( expression );
@@ -384,7 +390,7 @@ void CASTBuilder::Visit( const CNewIdentifierExpression* acceptable ) {
 
     if( acceptable->identifier ) {
         acceptable->identifier->Accept( this );
-        identifier = static_cast<const CTerminalIdentifier *> ( child );
+        identifier = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
 
     newIdentifierExpression = new CNewIdentifierExpression( identifier );
@@ -397,7 +403,7 @@ void CASTBuilder::Visit( const CNotExpression* acceptable ) {
 
     if( acceptable->expression ) {
         acceptable->expression->Accept( this );
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
 
     notExpression = new CNotExpression( expression );
@@ -409,7 +415,7 @@ void CASTBuilder::Visit( const CParams* acceptable ) {
 
     if( acceptable->param ) {
         acceptable->param->Accept( this );
-        param = static_cast<const IParam *> ( child );
+        param = dynamic_cast<const IParam *> ( child );
         headParams->children.push_back( param );
     }
     if( acceptable->additionalParamS ) {
@@ -426,11 +432,11 @@ void CASTBuilder::Visit( const CParam* acceptable ) {
 
     if( acceptable->type ) {
         acceptable->type->Accept( this );
-        type = static_cast<const IType *> ( child );
+        type = dynamic_cast<const IType *> ( child );
     }
     if( acceptable->identifier ) {
         acceptable->identifier->Accept( this );
-        identifier = static_cast<const CTerminalIdentifier *> ( child );
+        identifier = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
 
     param = new CParam(type, identifier);
@@ -443,7 +449,7 @@ void CASTBuilder::Visit( const CParensExpression* acceptable ) {
 
     if( acceptable->expression ) {
         acceptable->expression->Accept( this );
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
 
     parensExpression = new CParensExpression( expression );
@@ -456,7 +462,7 @@ void CASTBuilder::Visit( const CPrintlnStatement* acceptable ) {
 
     if( acceptable->expression ) {
         acceptable->expression->Accept( this );
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
 
     printlnStatement = new CPrintlnStatement(expression);
@@ -470,11 +476,11 @@ void CASTBuilder::Visit( const CSquarebracketsExpression* acceptable ) {
 
     if( acceptable->expression ) {
         acceptable->expression->Accept( this );
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
     if( acceptable->squarebraketsExpression ) {
         acceptable->squarebraketsExpression->Accept( this );
-        expressionInBrackets = static_cast<const IExpression *> ( child );
+        expressionInBrackets = dynamic_cast<const IExpression *> ( child );
     }
 
     squarebracketsExpression = new CSquarebracketsExpression(expression, expressionInBrackets);
@@ -486,7 +492,7 @@ void CASTBuilder::Visit( const CStatementS* acceptable ) {
 
     if( acceptable->statement ) {
         acceptable->statement->Accept( this );
-        statement = static_cast<const IStatement *> ( child );
+        statement = dynamic_cast<const IStatement *> ( child );
         listHeadsStatements.back()->children.push_back( statement );
     }
     if( acceptable->statementS ) {
@@ -523,11 +529,11 @@ void CASTBuilder::Visit( const CVarAssignmentStatement* acceptable ) {
 
     if( acceptable->varName ) {
         acceptable->varName->Accept( this );
-        varName = static_cast<const CTerminalIdentifier *> ( child );
+        varName = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
     if( acceptable->expression ) {
         acceptable->expression->Accept( this );
-        expression = static_cast<const IExpression *> ( child );
+        expression = dynamic_cast<const IExpression *> ( child );
     }
 
     varAssignmentStatement = new CVarAssignmentStatement(varName, expression);
@@ -541,11 +547,11 @@ void CASTBuilder::Visit( const CVarDeclaration* acceptable ) {
 
     if( acceptable->type ) {
         acceptable->type->Accept( this );
-        type = static_cast<const IType *> ( child );
+        type = dynamic_cast<const IType *> ( child );
     }
     if( acceptable->identifier ) {
         acceptable->identifier->Accept( this );
-        identifier = static_cast<const CTerminalIdentifier *> ( child );
+        identifier = dynamic_cast<const CTerminalIdentifier *> ( child );
     }
 
     varDeclaration = new CVarDeclaration(type, identifier);
@@ -560,7 +566,7 @@ void CASTBuilder::Visit( const CVarDeclarationS* acceptable ) {
     }
     if (acceptable->varDeclaration) {
         acceptable->varDeclaration->Accept(this);
-        varDeclaration = static_cast<const IVarDeclaration *> ( child );
+        varDeclaration = dynamic_cast<const IVarDeclaration *> ( child );
         headVarDeclarationS->children.push_back( varDeclaration );
     }
 
@@ -574,11 +580,11 @@ void CASTBuilder::Visit( const CWhileStatement* acceptable ) {
 
     if( acceptable->condition ) {
         acceptable->condition->Accept( this );
-        condition = static_cast<const IExpression *> ( child );
+        condition = dynamic_cast<const IExpression *> ( child );
     }
     if( acceptable->statement ) {
         acceptable->statement->Accept( this );
-        statement = static_cast<const IStatement *> ( child );
+        statement = dynamic_cast<const IStatement *> ( child );
     }
 
     whileStatement = new CWhileStatement(condition, statement);
@@ -592,11 +598,11 @@ void CASTBuilder::Visit( const CBinaryOpExpression* acceptable ) {
 
     if( acceptable->left ) {
         acceptable->left->Accept( this );
-        left = static_cast<const IExpression *> ( child );
+        left = dynamic_cast<const IExpression *> ( child );
     }
     if( acceptable->right ) {
         acceptable->right->Accept( this );
-        right = static_cast<const IExpression *> ( child );
+        right = dynamic_cast<const IExpression *> ( child );
     }
 
     binaryOpExpression = new CBinaryOpExpression(left, acceptable->opType, right);
