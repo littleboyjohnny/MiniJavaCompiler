@@ -12,17 +12,20 @@ class BS{
         int aux01 ;
         int aux02 ;
         int aux03 ;
+        int aux04 ;
 
-        a = 1 +;
-
-
-        aux01 = this.Init(sz, a +, - b);
-        aux02 = this.Print();
-        if (this.Search(8)) System.out.println(1) ;
-        else System.out.println(0) ;
         System.out.println(0) ;
-        System.out.println(0)  ;
-        System.out.println(0) ;
+        if ( 1<2 && 2<3 && 3<4 ) {
+            aux01 = 5;
+        } else {
+            size = size + 1;
+        }
+
+        while ( aux01 + aux02 < 1 ) {
+            size = 1;
+        }
+
+        number[0] = 1;
 
         return 999 ;
     }

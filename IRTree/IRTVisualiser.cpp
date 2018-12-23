@@ -1,6 +1,7 @@
 #include "IRTVisualiser.h"
 #include "IRTIncludes.h"
 
+#include <string>
 
 IRTree::CIRTVisualiser::CIRTVisualiser(const char* filename) {
     file = fopen( filename, "w" );
@@ -29,7 +30,8 @@ void IRTree::CIRTVisualiser::printEdge( const void * from, const void * to ) {
 }
 
 void IRTree::CIRTVisualiser::Visit(const CConstExp* acceptable) {
-    addLabel( acceptable, "ConstExp" );
+    std::string s = "ConstExp : " + std::to_string(acceptable->value);
+    addLabel( acceptable, s.c_str() );
 }
 
 void IRTree::CIRTVisualiser::Visit(const CNameExp* acceptable) {
@@ -41,8 +43,9 @@ void IRTree::CIRTVisualiser::Visit(const CNameExp* acceptable) {
 
 void IRTree::CIRTVisualiser::Visit(const CTempExp* acceptable) {
     if ( acceptable->temp ) {
-        printEdge( acceptable, acceptable->temp );
-        addLabel( acceptable->temp, acceptable->temp->label.c_str() );
+        const CTemp* const * uniqueAddress = &acceptable->temp;
+        printEdge( acceptable, uniqueAddress );
+        addLabel( uniqueAddress, acceptable->temp->label.c_str() );
     }
 
     addLabel(acceptable, "TempExp" );
@@ -60,10 +63,9 @@ void IRTree::CIRTVisualiser::Visit(const CBinOpExp* acceptable) {
         }
     };
 
-    char* t = new char[4];
+    char* t = new char(resolveOp( acceptable->binOp ));
     printEdge( acceptable, t );
-    char op =  resolveOp( acceptable->binOp );
-    addLabel( t, &op );
+    addLabel( t, t );
     //delete[] t;
 
     if ( acceptable->left ) {

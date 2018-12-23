@@ -73,6 +73,11 @@ void IRTree::CIRTBuilder::Visit( const CMethodDeclaration* acceptable ) {
         acceptable->statementS->Accept(this);
         body = currWrapper->ToStm();
     }
+    acceptable->returnExpression->Accept( this );
+    body = new CSeqStm(
+                body,
+                currWrapper->ToStm()
+            );
 
     CCodeFragment* fragment = new CCodeFragment( currFrame, body, head );
     head = fragment;
@@ -135,20 +140,15 @@ void IRTree::CIRTBuilder::Visit( const CCallExpression* acceptable ) {
     acceptable->expression->Accept( this );
     const IExp* base = currWrapper->ToExp();
 
-    //acceptable->identifier->Accept( this );
-    //const IExp* method = currWrapper->ToExp();
-
+    currList = new CExpList( base );
     if ( acceptable->expressionParamS ) {
         acceptable->expressionParamS->Accept(this);
-    } else {
-        currList = nullptr;
     }
 
     currWrapper = new CExpConverter(
                     new CCallExp(
                             new CNameExp(
-                                    CLabel(currClass->GetName()->GetString() + "::" +
-                                               std::string(acceptable->identifier->identifier))
+                                    CLabel( std::string( acceptable->identifier->identifier ) )
                                     ),
                             currList
                             )
@@ -157,12 +157,10 @@ void IRTree::CIRTBuilder::Visit( const CCallExpression* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CExpressionParamList* acceptable ) {
-    CExpList* expList = new CExpList();
     for ( int i = 0; i < acceptable->children.size(); i++ ) {
         acceptable->children[i]->Accept( this );
-        expList->Add( currWrapper->ToExp() );
+        currList->Add( currWrapper->ToExp() );
     }
-    currList = expList;
 }
 
 void IRTree::CIRTBuilder::Visit( const CIdentifierExpression* acceptable ) {
@@ -170,31 +168,31 @@ void IRTree::CIRTBuilder::Visit( const CIdentifierExpression* acceptable ) {
 }
 
 void IRTree::CIRTBuilder::Visit( const CTerminalIdentifier* acceptable ) {
-    const IExp* exp = currFrame->GetAccess( acceptable->identifier );
-    if (exp == nullptr) {
-        INameScope::SymbolType st = symbolTable->ResolveType( CSymbol::GetIntern( acceptable->identifier ) );
-        if (st == INameScope::SymbolType::VARIABLE) {
-            auto varInfo = currClass->GetScope()->TryResolveVariable(CSymbol::GetIntern(acceptable->identifier));
-            exp = new CMemExp(
-                    new CBinOpExp(
-                            CBinOpExp::EBinOp::PLUS,
-                            currFrame->GetAccess("this"),
-                            new CBinOpExp(
-                                    CBinOpExp::EBinOp::MULTIPLY,
-                                    new CBinOpExp(
-                                            CBinOpExp::EBinOp::PLUS,
-                                            new CConstExp(varInfo->GetOffset()),
-                                            new CConstExp(1)
-                                    ),
-                                    new CConstExp(currFrame->WordSize())
-                            )
-                    )
-            );
-        }
+    //INameScope::SymbolType st = symbolTable->ResolveType( CSymbol::GetIntern( acceptable->identifier ) );
+    const IExp* exp = nullptr;
+
+    auto varInfo = currClass->GetScope()->TryResolveVariable( CSymbol::GetIntern( acceptable->identifier ) );
+    if ( varInfo ) {
+        exp = new CMemExp(
+                new CBinOpExp(
+                        CBinOpExp::EBinOp::PLUS,
+                        currFrame->GetAccess("this"),
+                        new CBinOpExp(
+                                CBinOpExp::EBinOp::MULTIPLY,
+                                new CBinOpExp(
+                                        CBinOpExp::EBinOp::PLUS,
+                                        new CConstExp(varInfo->GetOffset()),
+                                        new CConstExp(1)
+                                ),
+                                new CConstExp(currFrame->WordSize())
+                        )
+                )
+        );
+    } else {
+        exp = currFrame->GetAccess( acceptable->identifier );
     }
 
     currWrapper = new CExpConverter( exp );
-
 }
 
 void IRTree::CIRTBuilder::Visit( const CTerminalIntliteral* acceptable ) {
@@ -218,6 +216,10 @@ void IRTree::CIRTBuilder::Visit( const CIfElseStatement* acceptable ) {
              currMethod->GetName()->GetString() + "::" +
              "___IfElseBody_" + (char)('0' + counter));
 
+    CLabel e(currClass->GetName()->GetString() + "::" +
+             currMethod->GetName()->GetString() + "::" +
+             "___IfEnd_" + (char)('0' + counter));
+
     acceptable->condition->Accept( this );
     auto conditional = currWrapper->ToConditional( &t, &f );
 
@@ -235,8 +237,14 @@ void IRTree::CIRTBuilder::Visit( const CIfElseStatement* acceptable ) {
                                     new CSeqStm(
                                             ifStm,
                                             new CSeqStm(
-                                                    new CLabelStm(f),
-                                                    elseStm
+                                                new CJumpStm(e),
+                                                new CSeqStm(
+                                                        new CLabelStm(f),
+                                                        new CSeqStm(
+                                                                elseStm,
+                                                                new CLabelStm(e)
+                                                        )
+                                                )
                                             )
                                     )
                             )
@@ -286,8 +294,8 @@ void IRTree::CIRTBuilder::Visit( const CNewIdentifierExpression* acceptable ) {
                             "malloc",
                             new CBinOpExp(
                                     CBinOpExp::EBinOp::PLUS,
-                                    new CConstExp(sizeOfClass),
-                                    new CConstExp(1)
+                                    new CConstExp( sizeOfClass ),
+                                    new CConstExp( currFrame->WordSize() )
                                     )
                             )
             );
@@ -446,19 +454,19 @@ void IRTree::CIRTBuilder::Visit( const CBinaryOpExpression* acceptable ) {
     };
 
     acceptable->left->Accept( this );
-    auto leftExp = currWrapper->ToExp();
+    const ISubtreeWrapper* leftExp = currWrapper;
 
     acceptable->right->Accept( this );
-    auto rightExp = currWrapper->ToExp();
+    const ISubtreeWrapper* rightExp = currWrapper;
 
     if (acceptable->opType == CBinaryOpExpression::OpType::LESS) {
-        currWrapper = new CRelativeCmpWrapper( CCJumpStm::ERelOp::LT, leftExp, rightExp );
+        currWrapper = new CRelativeCmpWrapper( CCJumpStm::ERelOp::LT, leftExp->ToExp(), rightExp->ToExp() );
     } else if ( acceptable->opType == CBinaryOpExpression::OpType::AND ) {
         currWrapper = new CFromAndConverter( leftExp, rightExp );
     } else {
         currWrapper = new CExpConverter(
                         new CBinOpExp(
-                                resolveOp(acceptable->opType), leftExp, rightExp
+                                resolveOp(acceptable->opType), leftExp->ToExp(), rightExp->ToExp()
                             )
                 );
     }

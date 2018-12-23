@@ -43,7 +43,7 @@ void CFrame::AddToReg(const std::string &name) {
 
 const IRTree::IExp* CFrame::ExternalCall(const std::string &name, const IRTree::IExp *exp) const {
     return new IRTree::CCallExp(
-                new IRTree::CNameExp( IRTree::CLabel( methodName ) ),
+                new IRTree::CNameExp( IRTree::CLabel( name ) ),
                 new IRTree::CExpList( exp )
             );
 }

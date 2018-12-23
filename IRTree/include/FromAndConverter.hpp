@@ -2,19 +2,34 @@
 
 #include "ConditionalWrapper.hpp"
 #include "include/CJumpStm.hpp"
+#include "include/LabelStm.hpp"
+#include "include/SeqStm.hpp"
 
 namespace IRTree {
     class CFromAndConverter : public CConditionalWrapper {
+
     public:
-        CFromAndConverter( const IRTree::IExp* _leftArg, const IRTree::IExp* _rightArg )
-            : leftArg( _leftArg ), rightArg( _rightArg ) {}
+        CFromAndConverter( const IRTree::ISubtreeWrapper* _leftArg, const IRTree::ISubtreeWrapper* _rightArg )
+            : leftArg( _leftArg ), rightArg( _rightArg ) {
+
+            static int counter = 0;
+            index = counter++;
+        }
 
         const IRTree::IStm* ToConditional( const IRTree::CLabel* t, const IRTree::CLabel* f ) const override {
-            return new IRTree::CCJumpStm(CCJumpStm::ERelOp::LT, leftArg, rightArg, *t, *f);
+            CLabel loc( std::string("___FromAndNext_") + (char)('0' + index) );
+            return new CSeqStm(
+                        leftArg->ToConditional( &loc, f ),
+                        new CSeqStm(
+                                    new CLabelStm( loc ),
+                                    rightArg->ToConditional( t, f )
+                                )
+                    );
         }
 
 
-        const IRTree::IExp* leftArg;
-        const IRTree::IExp* rightArg;
+        const IRTree::ISubtreeWrapper* leftArg;
+        const IRTree::ISubtreeWrapper* rightArg;
+        int index;
     };
 }
