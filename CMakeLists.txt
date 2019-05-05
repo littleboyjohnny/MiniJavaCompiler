@@ -115,3 +115,12 @@ set( IRTREEBUILDER_EXE irtBuilder.cpp )
 set( IRTREEBUILDER_SRC IRTree/IRTBuilder.cpp IRTree/IRTVisualiser.cpp IRTree/include/EseqExp.hpp IRTree/include/MemExp.hpp IRTree/include/CallExp.hpp IRTree/include/ExpList.hpp IRTree/include/StmList.hpp IRTree/include/MoveStm.hpp IRTree/include/ExpStm.hpp IRTree/include/JumpStm.hpp IRTree/include/CJumpStm.hpp IRTree/include/SeqStm.hpp IRTree/include/LabelStm.hpp IRTree/include/BinOpExp.hpp)
 add_executable( IrtBuilder ${IRTREEBUILDER_EXE} ${IRTREEBUILDER_SRC} ${STACKFRAME_SRC} ${ASTBUILDER_SRC} ${SYMBOLTABLE_SRC} )
 target_link_libraries( IrtBuilder liblexer libparser )
+
+#========================= PVS-Studio Section ================================
+include( PVS-Studio.cmake )
+pvs_studio_add_target( TARGET SymbolTable.analyze
+        OUTPUT FORMAT errorfile
+        ANALYZE SymbolTable
+        LOG target.err
+        CONFIG ${CMAKE_HOME_DIRECTORY}/PVS-Studio.cfg )
+#========================= PVS-Studio Section ================================
