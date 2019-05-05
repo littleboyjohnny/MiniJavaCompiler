@@ -22,6 +22,10 @@ const CFramesHolder* CFrameBuilder::build( std::unique_ptr<CSymbolTable>& table 
                 newFrame->AddFormal( param->GetString() );
             }
 
+            /*TODO(LittleBoyJohnny, Issue): здесь получаем также аргументы функции
+             * и поэтому расположение остальных переменных на стеке съезжает,
+             * а также перезаписываются аргументы, обработанные выше
+             */
             auto localsNames = methodInfo->GetScope()->GetVariableNames();
             for (auto local : localsNames) {
                 newFrame->AddLocal( local->GetString() );
